@@ -1,0 +1,70 @@
+%% start of file `beamerthemeMPI.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
+\mode<presentation>
+
+\usefonttheme{MPI}
+\useoutertheme{MPI}
+\useinnertheme{MPI}
+% \usecolortheme{MPI}
+% \usecolortheme{MPIGrav}
+\usecolortheme{MPIGravMixed}
+
+
+% \setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize item}{$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}{\textbullet}
+\setlength{\leftmargini}{1.25em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
+
+
+% \setbeamertemplate{items}[circle]
+% \setbeamercolor{itemize item}{fg=\chosencolor}
+% \setbeamercolor{itemize subitem}{fg=\chosencolor}
+
+% \setbeamertemplate{enumerate items}[circle]
+% \setbeamercolor{item projected}{fg=white,bg=\chosencolor}
+
+% \setbeamercolor{block title}{fg=white,bg=\chosencolor}
+% \setbeamerfont{block title}{series=\bfseries\small}
+% \setbeamercolor{block body}{fg=black,bg=gray!5}
+
+
+% \setbeamercolor{background canvas}{bg = \chosencolor}
+
+
+% -- Change spacing in document
+\fontdimen2\font=3pt % Increase space between words, found original one too small -> see https://tex.stackexchange.com/questions/23921/how-to-shorten-shrink-spaces-between-words. Has to be IN document for some reason
+\linespread{1.1} % Increase space between lines (found original one too small)
+
+
+% -- Following just copied to make stuff work
+\newcommand{\smallframetitle}{%
+  % % \setbeamertemplate{frametitle}{\vskip0.15\paperheight\insertframetitle}
+  % \setbeamertemplate{frametitle}{\vskip0.08\paperheight\insertframetitle}
+  % \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+}
+
+
+\definecolor{BerkeleyGold}{RGB}{193,129,45}
+\definecolor{Medalist}{HTML}{C4820E}
+\definecolor{BerkeleyBlueText}{RGB}{48,99,126}
+\definecolor{FoundersRock}{HTML}{3B7EA1}
+\definecolor{BerkeleyTableGold}{RGB}{222,157,46}
+\definecolor{CaliforniaGold}{HTML}{FDB515}
+\definecolor{BerkeleyTableBlue1}{RGB}{207,226,234}
+\definecolor{BerkeleyTableBlue2}{RGB}{232,241,245}
+\definecolor{BerkeleyBlue}{HTML}{003262}
+
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
+\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
+\rowcolors{2}{BerkeleyTableBlue1}{BerkeleyTableBlue2}
+\AtBeginEnvironment{tabular}{\color{black}}
+
+\mode
+<all>

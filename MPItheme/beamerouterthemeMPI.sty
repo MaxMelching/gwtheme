@@ -1,0 +1,83 @@
+\mode<presentation>
+
+
+\def\headerskip{0.0667\paperheight}
+
+
+
+\usepackage{calc}  % For length calculations to work
+
+% -- Note: for this particular package, paths are strange because we compile from main.tex
+\usepackage[
+    % templatefile="MPItheme/generic_template.txt",
+    % templatefile="MPItheme/eccentric_template.txt",
+    % templatefile="MPItheme/generic_template_w_noise.txt",
+    % -- Fancy:
+    templatefile="MPItheme/generic_template_no_noise.txt",
+    backgroundsignal="MPItheme/generic_template_w_noise.txt",
+    % 
+    % templatefile="MPItheme/eccentric_template_no_noise.txt",
+    % backgroundsignal="MPItheme/eccentric_template_w_noise.txt",
+    % -- General stuff
+    leftpadding=0.6\paperwidth,
+    rightpadding=0.006\paperwidth,
+    signalheight=2.4em,
+    % -- Activate following two for above code to be used
+    declaretitlebox=false,
+    signalupshift=-0.0667\paperheight-2.25em,  % \headerskip minus estimate of font height
+]{gwbar}
+
+\usepackage{tikz}
+
+\tikzset{
+    gwbar@linelayerone/.style={
+        fg,
+        smooth,
+        thick,
+	},
+    gwbar@linelayertwo/.style={
+        % opacity=0.2,
+        bg!50,  % Nicer for transparent titlebox
+        % gray!50!bg,  % Nicer for gwbar titlebox
+		smooth,
+        thick,
+	},
+}
+
+
+\setbeamertemplate{headline}[gwbar]
+
+
+\setbeamersize{text margin left=2em, text margin right=2em}
+
+% \setbeamertemplate{footline}{%
+%     \vskip0.15\paperheight%
+% }
+
+\setbeamertemplate{footline}{}  % Don't see how previous one makes a difference
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{caption}[numbered]
+
+
+
+\pgfdeclareimage[height=0.1\paperheight]{logo}{MPI-AEI_wide_E_neg_cmyk}
+
+% -- Note: name, framenumber could also be set in footline
+% -- TODO: maybe this would be better to hide stuff on titleframe e.g.
+\setbeamertemplate{background}{%
+    \begin{tikzpicture}[overlay,remember picture]
+      \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
+
+    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south east) {\pgfuseimage{logo}};
+
+    \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
+    % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
+    
+    \node[anchor=south,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south) {\textcolor{bg}{\sffamily\bfseries\small\insertframenumber/\inserttotalframenumber}};
+    \end{tikzpicture}%
+}
+
+\mode
+<all>

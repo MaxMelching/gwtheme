@@ -1,0 +1,26 @@
+% \RequirePackage{fontspec}
+% \usepackage{fontspec}
+
+% % \setromanfont{Georgia}
+% \setromanfont{Heuristica}
+% % \setsansfont[Scale=MatchLowercase]{Open Sans}
+% \setsansfont[Scale=MatchLowercase]{Heuristica}
+% % \usefonttheme{serif}
+
+
+% -- For pdflatex
+\usepackage{heuristica}
+\usefonttheme{serif}
+
+\usepackage[notext, onlyrm, widermath, noamsmath, notextcomp]{kpfonts}
+\renewcommand{\rmdefault}{ptm} % ptm for times -> does this have an effect?
+
+
+% -- General Settings
+\setbeamerfont{title}{family=\rmfamily,size=\Huge}
+\setbeamerfont{author}{size=\Large}
+
+
+\setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
+\setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+\setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}

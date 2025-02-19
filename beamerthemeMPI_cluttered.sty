@@ -1,0 +1,183 @@
+% beamerthemeUCBerkeley.sty v1.2 (January 5, 2021)
+% by Overleaf (LianTze Lim, Ryan Looney)
+\ProvidesPackage{beamerthemeUCBerkeley}
+
+\RequirePackage{silence}
+\WarningsOff[mathdesign/mdbch]
+
+\RequirePackage{etoolbox}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[charter,expert]{mathdesign}
+% \RequirePackage[scaled=.96,oldstyle]{XCharter}
+% \RequirePackage[default,scale=0.96,osfigures]{opensans}
+\RequirePackage{fontspec}
+\setromanfont{Georgia}
+% \setromanfont{Heuristica}
+% \setsansfont[Scale=MatchLowercase]{Open Sans}
+\setsansfont[Scale=MatchLowercase]{Heuristica}
+% \usefonttheme{serif}
+
+\RequirePackage{tikz}
+
+
+\definecolor{BerkeleyGold}{RGB}{193,129,45}
+\definecolor{Medalist}{HTML}{C4820E}
+\definecolor{BerkeleyBlueText}{RGB}{48,99,126}
+\definecolor{FoundersRock}{HTML}{3B7EA1}
+\definecolor{BerkeleyTableGold}{RGB}{222,157,46}
+\definecolor{CaliforniaGold}{HTML}{FDB515}
+\definecolor{BerkeleyTableBlue1}{RGB}{207,226,234}
+\definecolor{BerkeleyTableBlue2}{RGB}{232,241,245}
+\definecolor{BerkeleyBlue}{HTML}{003262}
+
+
+\definecolor{MPIGreen}{HTML}{007977}
+\definecolor{MPIGravRed}{HTML}{ad0000}
+\definecolor{MPIGravRedFaint}{HTML}{cf7c7c}
+
+
+\setbeamertemplate{title page}[default][left]
+\setbeamerfont{title}{family=\rmfamily,size=\Huge}
+\setbeamerfont{author}{size=\Large}
+
+\setbeamersize{text margin left=2em, text margin right=2em}
+
+% \def\headerskip{0.1\paperheight}
+\def\headerskip{0.0667\paperheight}
+% \def\headerskip{0pt}
+
+\setbeamertemplate{frametitle}{\vskip\headerskip\insertframetitle} 
+% \setbeamertemplate{frametitle}{\vskip\headerskip\insertframetitle\par\insertframesubtitle} 
+% \setbeamertemplate{frametitle}{\vskip\headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \setbeamertemplate{frametitle}{\vskip\headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+
+% \def\headerskip{0pt}
+% \setbeamertemplate{frametitle}{%
+%     \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+%     \@tempdima=\textwidth%
+%     \advance\@tempdima by\beamer@leftmargin%
+%     \advance\@tempdima by\beamer@rightmargin%
+%     \begin{beamercolorbox}[sep=0.3cm,left,wd=\the\@tempdima]{frametitle}%
+%         \usebeamerfont{frametitle}%
+%         \vbox{}\vskip-1ex%
+%         \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+%         \strut\insertframetitle\strut\par%
+%         {%
+%         \ifx\insertframesubtitle\@empty%
+%         \else%
+%         {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
+%         \fi
+%         }%
+%         \vskip-1ex%
+%         \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+%     \end{beamercolorbox}%
+% }
+
+
+
+\usepackage[
+    % templatefile={"eccentric_template.txt"},
+    leftpadding=0.6\paperwidth,
+    signalheight=2.4em,
+    % -- Activate following two for above code to be used
+    declaretitlebox=false,
+    % yshiftpicture=-\headerskip-2.1em,  % Subtract font height
+]{gwbar}
+
+\setlength{\gwbar@yshiftpicture}{-\headerskip-2.25em}  % Subtract font height
+
+\setbeamertemplate{headline}[gwbar]
+
+% -- In case declaretitlebox is not set (or set to true), the following line must be activated
+% \setbeamertemplate{frametitle}[gwbar]
+
+
+\definecolor{MPIColor}{named}{MPIGreen}
+% \definecolor{MPIColor}{named}{MPIGravRed}
+
+
+\tikzset{
+    gwbar@linelayerone/.style={
+        % MPIGravRed,
+        fg,
+        smooth,
+        thick,
+	},
+    gwbar@linelayertwo/.style={
+        % MPIGravRedFaint,
+        % opacity=0.2,
+        bg!50,  % Nicer for transparent titlebox
+        % gray!50!bg,  % Nicer for gwbar titlebox
+		smooth,
+        thick,
+	},
+}
+
+
+% -- Older usage
+% \usepackage[
+%     signalheight=2.4em,
+%     % yshiftpicture=-\headerskip-2.1em,  % Subtract font height
+% ]{simplergwbar}
+
+% % \setlength{\gwbar@yshiftpicture}{-\headerskip-2.25em}  % Subtract font height
+% \setlength{\gwbar@yshiftpicture}{-3.51em}  % For custom titlebox
+
+
+
+\setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
+\setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+\setbeamerfont{block title}{family=\rmfamily,size=\large}
+% \setbeamercolor{titlelike}{fg=Medalist}
+% \setbeamercolor{titlelike}{fg=MPIGravRed,bg=MPIGravRed!40}
+% \setbeamercolor{titlelike}{fg=MPIGravRed,bg=MPIGravRed!36}
+% \setbeamercolor{headline}{fg=MPIGravRed,bg=MPIGravRed!36}
+\setbeamercolor{normal text}{fg=BerkeleyBlue}
+\setbeamercolor{structure}{fg=BerkeleyBlue}
+% \setbeamercolor{block title}{fg=Medalist}
+\setbeamercolor{titlelike}{fg=MPIColor,bg=MPIColor!36}
+\setbeamercolor{headline}{fg=MPIColor,bg=MPIColor!36}
+\setbeamercolor{block title}{fg=MPIColor}
+
+% \setbeamertemplate{itemize item}{{\color{MPIColor}\textbullet}}
+\setbeamertemplate{itemize item}{{\color{MPIColor}$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{{\color{MPIColor}--}}
+\setbeamertemplate{itemize subsubitem}{{\color{MPIColor}\textbullet}}
+\setlength{\leftmargini}{1.25em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
+
+% \pgfdeclareimage[height=0.0777\paperheight]{logo}{MPI-AEI_wide_E_color_cmyk}
+\pgfdeclareimage[height=0.1\paperheight]{logo}{MPI-AEI_wide_E_neg_cmyk}
+
+\setbeamertemplate{background}{%
+\begin{tikzpicture}[overlay,remember picture]
+    \fill[MPIColor] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.18\paperheight) -- (current page.south east) -- cycle;  
+    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south east) {\pgfuseimage{logo}};%
+    \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{white}{\bfseries\normalsize\MakeUppercase\insertauthor}};%
+\end{tikzpicture}%
+}
+
+\setbeamertemplate{footline}{%
+\vskip0.15\paperheight
+}
+
+\newcommand{\smallframetitle}{%
+  % % \setbeamertemplate{frametitle}{\vskip0.15\paperheight\insertframetitle}
+  % \setbeamertemplate{frametitle}{\vskip0.08\paperheight\insertframetitle}
+  % \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+}
+\newcommand{\normalframetitle}{%
+  % % \setbeamertemplate{frametitle}{\vskip0.2\paperheight\insertframetitle} 
+  % \setbeamertemplate{frametitle}{\vskip0.1\paperheight\insertframetitle} 
+  % \setbeamerfont{frametitle}{size=\LARGE,series=\mdseries}
+}
+
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
+\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
+\rowcolors{2}{BerkeleyTableBlue1}{BerkeleyTableBlue2}
+\AtBeginEnvironment{tabular}{\color{black}}

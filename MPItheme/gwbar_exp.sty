@@ -1,0 +1,436 @@
+%% start of file `gwbar.sty'.
+%% Copyright 2024 Max Melching (m-melching@web.de).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gwbar}
+
+% -- Option definitions
+\newcommand{\gwbar@templatefilename}{"generic_template.txt"}
+
+\newlength{\gwbar@leftpadding}  % Where signal starts, measured from left end of frame
+\setlength{\gwbar@leftpadding}{0.6\textwidth} % Some fiducial default values
+
+\newlength{\gwbar@rightpadding}  % Where signal ends, measured from right end of frame
+\setlength{\gwbar@rightpadding}{0.1\paperwidth} % Some fiducial default value
+
+% \newcommand{\gwbar@signalheight@given}{}
+\newcommand{\gwbar@signalheight@given}{"frametitleheight"}
+% -- Not a length for convenient comparisons, despite being slightly less robust
+% -- because it can now be any value. We choose some default that does not make
+% -- sense here for comparisons later in code.
+
+\newlength{\gwbar@signalupshift}  % Amount by which signal is shifted up from where frametitle ends and subtitle begins
+% \setlength{\gwbar@signalupshift}{0pt}
+\setlength{\gwbar@signalupshift}{3pt}  % Fiducial default value
+
+\newlength{\gwbar@bottompadding@nosubtitle}
+\setlength{\gwbar@bottompadding@nosubtitle}{0pt}
+\newlength{\gwbar@bottompadding@withsubtitle}
+\setlength{\gwbar@bottompadding@withsubtitle}{0pt}
+
+\def\gwbar@declaretitlebox{true}
+
+\def\gwbar@backgroundtemplatefilename{"none"}
+
+
+\RequirePackage{xkeyval}
+\DeclareOptionX{templatefile}{\renewcommand{\gwbar@templatefilename}{#1}}
+\DeclareOptionX{leftpadding}{\setlength{\gwbar@leftpadding}{#1}}
+\DeclareOptionX{rightpadding}{\setlength{\gwbar@rightpadding}{#1}}
+\DeclareOptionX{signalheight}{\renewcommand{\gwbar@signalheight@given}{#1}}
+\DeclareOptionX{signalupshift}{\setlength{\gwbar@signalupshift}{#1}}
+\DeclareOptionX{bottompaddingnosubtitle}{\setlength{\gwbar@bottompadding@nosubtitle}{#1}}
+\DeclareOptionX{bottompaddingwithsubtitle}{\setlength{\gwbar@bottompadding@withsubtitle}{#1}}
+\DeclareOptionX{declaretitlebox}{\renewcommand{\gwbar@declaretitlebox}{#1}}
+\DeclareOptionX{backgroundsignal}{\renewcommand{\gwbar@backgroundtemplatefilename}{#1}}
+\ProcessOptionsX
+
+
+% -- Dependencies
+\RequirePackage{calc}  % For length calculations
+\RequirePackage{xifthen}
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+
+\RequirePackage{beamerbasecompatibility}  % Standard for beamer packages
+
+
+% -- Note: credits for box measuring code to
+% -- https://tex.stackexchange.com/questions/401377/adjust-logo-height-to-match-frametitle-box-height
+% -- (this is where all the "<- NEW" markers come from). The rest is mine.
+
+
+% -- Boxes and box lengths
+\newsavebox{\beamer@titlebox}% <- NEW
+\newlength{\gwbar@frametitleheight}% <- NEW
+\newsavebox{\beamer@titleboxnosubtitle}% <- NEW
+\newlength{\gwbar@frametitleheightnosubtitle}% <- NEW
+\newsavebox{\gwbar@subtitlebox}
+\newlength{\gwbar@subtitleboxheight}
+
+
+% -- More gwbar lengths
+\newlength{\gwbar@signalheight}  % Set automatically in template (at the moment)
+\setlength{\gwbar@signalheight}{2em}  % Set some default
+\newlength{\gwbar@signalwidth}  % Calculated based on leftpadding, rightpadding
+
+\newlength{\gwbar@yshiftpicture}  % Calculated automatically in template
+
+
+% -- Define custom styles for all elements, so that they can be customized easily
+\tikzset{
+    gwbar@linelayerone/.style={
+        fg,
+        smooth,
+        line width=0.7pt,
+	},
+    gwbar@linelayertwo/.style={
+        gray!50,
+        opacity=0.42,
+		smooth,
+        line width=0.7pt,
+	},
+    gwbar@fillinglayerone/.style={
+        fill,
+        white,  % Default color of frame background canvas
+	},
+    gwbar@fillinglayertwo/.style={
+        fill,
+        bg,
+	},
+}
+
+
+\newlength{\gwbar@linelayerone@linewidth}
+\newlength{\gwbar@linelayertwo@linewidth}
+\newlength{\gwbar@linewidthshift}
+
+
+
+\defbeamertemplate{frametitle}{gwbar}{%
+    % -- Box measurements first
+    % -- NOTE: not having blank lines is important for spacing reasons.
+    % -- Always put a comment in.
+    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+    \@tempdima=\textwidth%
+    \advance\@tempdima by\beamer@leftmargin%
+    \advance\@tempdima by\beamer@rightmargin%
+    % 
+    % 
+    \sbox{\beamer@titleboxnosubtitle}{% <- NEW
+        \begin{beamercolorbox}[sep=0.3cm,left,wd=\the\@tempdima]{frametitle}%
+            \usebeamerfont{frametitle}%
+            \vbox{}\vskip-1ex%
+            \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+            \strut\insertframetitle\strut\par%
+            \vskip-1ex%
+            \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+        \end{beamercolorbox}%
+    }% <- NEW
+    % 
+    % 
+    \sbox{\beamer@titlebox}{% <- NEW
+        \begin{beamercolorbox}[sep=0.3cm,left,wd=\the\@tempdima]{frametitle}%
+            \usebeamerfont{frametitle}%
+            \vbox{}\vskip-1ex%
+            \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+            \strut\insertframetitle\strut\par%
+            {%
+            \ifx\insertframesubtitle\@empty%
+            \else%
+            {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
+            \fi
+            }%
+            \vskip-1ex%
+            \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+        \end{beamercolorbox}%
+    }% <- NEW
+    \usebox{\beamer@titlebox}% <- NEW
+    % 
+    \settoheight{\gwbar@frametitleheight}{\usebox{\beamer@titlebox}}% <- NEW
+    \addtolength{\gwbar@frametitleheight}{\headheight}%
+    % 
+    \settoheight{\gwbar@frametitleheightnosubtitle}{\usebox{\beamer@titleboxnosubtitle}}% <- NEW
+    \addtolength{\gwbar@frametitleheightnosubtitle}{\headheight}%
+    % 
+    % 
+    \setlength{\gwbar@yshiftpicture}{-\gwbar@frametitleheightnosubtitle}%
+    % 
+    \setlength{\gwbar@signalwidth}{\paperwidth - \gwbar@leftpadding - \gwbar@rightpadding}%
+    \ifthenelse{\equal{\gwbar@signalheight@given}{"frametitleheight"}}{%
+        \setlength{\gwbar@signalheight}{\gwbar@frametitleheightnosubtitle - \gwbar@signalupshift}%
+        % -- -\gwbar@signalupshift to account for potential asymmetry.
+    }{%
+        \ifthenelse{\equal{\gwbar@signalheight@given}{"framesubtitleheight"}}{%
+            \ifx\insertframesubtitle\@empty%
+                % -- Problem: setting and unsetting the framesubtitle and reading
+                % -- out the height of \beamer@titlebox in between does not work.
+                % -- Thus we have to redefine a new box with a placeholder at
+                % -- framesubtitle and this is what \gwbar@subtitlebox is for.
+                \sbox{\gwbar@subtitlebox}{%
+                    \begin{beamercolorbox}[sep=0.3cm,left,wd=\the\@tempdima]{frametitle}%
+                        \usebeamerfont{frametitle}%
+                        \vbox{}\vskip-1ex%
+                        \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+                        \strut\insertframetitle\strut\par%
+                        {%
+                        {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}Frame Subtitle\strut\par}%
+                        }%
+                        \vskip-1ex%
+                        \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+                    \end{beamercolorbox}%
+                }%
+                % 
+                \settoheight{\gwbar@subtitleboxheight}{\usebox{\gwbar@subtitlebox}}%
+                \addtolength{\gwbar@subtitleboxheight}{\headheight}%
+            \else%
+                \setlength{\gwbar@subtitleboxheight}{\gwbar@frametitleheight}%
+            \fi%
+                % 
+                \setlength{\gwbar@signalheight}{\gwbar@subtitleboxheight - \gwbar@frametitleheightnosubtitle + \gwbar@signalupshift}%
+        }{%
+            % -- Numerical input has been given
+            \setlength{\gwbar@signalheight}{\gwbar@signalheight@given}%
+        }%
+    }%
+    % 
+    % 
+    \begin{tikzpicture}[
+        remember picture,
+        overlay,
+        shift={($(current page.north west)+(0pt,\gwbar@yshiftpicture)$)},
+    ]
+        % -- NOTE: order in this picture matters for color and overlay etc
+        % -- (which is why we often have part one and two). Also, spaces don't
+        % -- matter in tikzpictures, so at least no issues with that.
+
+
+        % -- Get maximum linewidth of stuff, so that covering works properly.
+        % -- NOTE: setlength alone does not work because scope is local. To set
+        % -- globally, in a way compatible with the calc package, we need some extras.
+        % -- Cf. https://tex.stackexchange.com/questions/119730/global-scope-or-permanent-length-or-savebox
+        \begin{scope}[gwbar@linelayerone]
+            \setlength{\gwbar@linelayerone@linewidth}{\pgflinewidth}
+            \global\gwbar@linelayerone@linewidth=\gwbar@linelayerone@linewidth
+        \end{scope}
+        \begin{scope}[gwbar@linelayertwo]
+            \setlength{\gwbar@linelayertwo@linewidth}{\pgflinewidth}
+            \global\gwbar@linelayertwo@linewidth=\gwbar@linelayertwo@linewidth
+        \end{scope}
+        % NOTE: \pgfkeysifdefined would not work if value is thick, we need numerical value
+        \pgfmathsetmacro{\gwbar@maxlinewidth}{max(\gwbar@linelayerone@linewidth, \gwbar@linelayertwo@linewidth)}
+        \setlength{\gwbar@linewidthshift}{\gwbar@maxlinewidth pt + \gwbar@maxlinewidth pt}  % Take double as safety bed
+
+
+        % -- Account for linewidth in fitting of heights
+        \ifthenelse{\equal{\gwbar@signalheight@given}{"frametitleheight"}}{
+            \addtolength{\gwbar@signalheight}{-\gwbar@maxlinewidth pt}
+            % \addtolength{\gwbar@signalheight}{-\gwbar@linewidthshift}
+        }{
+            \ifthenelse{\equal{\gwbar@signalheight@given}{"framesubtitleheight"}}{
+                \addtolength{\gwbar@signalheight}{-\gwbar@maxlinewidth pt}
+                % \addtolength{\gwbar@signalheight}{-\gwbar@linewidthshift}
+            }{
+                % -- If custom signalheight is given, we don't mess with that
+            }
+        }
+
+
+        % -- First Layer ------------------------------------------------------
+        \ifx\insertframesubtitle\@empty%
+            % -- Important in case where signalupshift is non-zero (and if no framesubtitle is set)
+            \ifdim\gwbar@signalupshift=0pt
+            \else
+                \draw[
+                    gwbar@fillinglayerone,
+                    shift={(0, -\gwbar@frametitleheight + \gwbar@frametitleheightnosubtitle)},
+                ] (0, 0) rectangle (\paperwidth, \gwbar@signalupshift);
+            \fi
+        \fi
+
+
+        % -- Plot part of signal that is visible for current progress
+        \begin{scope}[
+            x=\gwbar@signalwidth,
+            y=\gwbar@signalheight,
+        ]
+            \draw[
+                gwbar@linelayerone,
+                shift={(\gwbar@leftpadding, \gwbar@signalupshift)},
+            ] plot file {\gwbar@templatefilename};
+            % NOTE: signal is assumed ot have times in [0,1] and maximum amplitude of +1/-1
+        \end{scope}
+
+        \draw[
+            gwbar@linelayerone,
+            shift={(0, \gwbar@signalupshift)},
+        ] (0, 0) -- (\gwbar@leftpadding, 0);
+
+
+        \draw[
+            gwbar@linelayerone,
+            shift={(0, \gwbar@signalupshift)},
+        ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+
+
+        % -- Second Layer -----------------------------------------------------
+        \draw[
+            gwbar@linelayertwo,
+            shift={(0, \gwbar@signalupshift)},
+            ] (0, 0) -- (\gwbar@leftpadding, 0);
+
+        % -- Hide part of signal for progress bar effect
+        \draw[
+            gwbar@fillinglayerone,
+            shift={(\gwbar@leftpadding, 0)},
+        ] ({(\paperwidth - \gwbar@leftpadding) * \insertframenumber / \inserttotalframenumber}, -\gwbar@signalheight + \gwbar@signalupshift - \gwbar@linewidthshift)
+        rectangle (\paperwidth - \gwbar@leftpadding, 0);
+
+        % -- Refill titlebox
+        \draw[
+            gwbar@fillinglayertwo,
+            shift={(\gwbar@leftpadding, 0)},
+        ] ({(\paperwidth - \gwbar@leftpadding) * \insertframenumber / \inserttotalframenumber}, \gwbar@frametitleheight)
+        rectangle (\paperwidth - \gwbar@leftpadding, -\gwbar@frametitleheight + \gwbar@frametitleheightnosubtitle);
+
+
+        \ifx\insertframesubtitle\@empty%
+            % -- Paint over difference between titlebox and upshifted signal
+            \draw[
+                gwbar@fillinglayerone,
+                shift={(\gwbar@leftpadding, -\gwbar@frametitleheight + \gwbar@frametitleheightnosubtitle)},
+            ] ({(\paperwidth - \gwbar@leftpadding) * \insertframenumber / \inserttotalframenumber}, 0pt)
+            rectangle (\paperwidth - \gwbar@leftpadding, \gwbar@signalupshift);
+        \fi
+
+
+        % -- Hide part of signal + right padding to get progress bar effect
+        \begin{scope}[
+            x=\gwbar@signalwidth,
+            y=\gwbar@signalheight,
+        ]
+            \draw[
+                gwbar@linelayertwo,
+                shift={(\gwbar@leftpadding, \gwbar@signalupshift)},
+                ] plot file {\gwbar@templatefilename};
+            % NOTE: signal is assumed ot have times in [0,1] and maximum amplitude of +1/-1
+        \end{scope}
+
+        \draw[
+            gwbar@linelayertwo,
+            shift={(0, \gwbar@signalupshift)},
+        ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+    \end{tikzpicture}%
+    % 
+    % \usebox{\beamer@titlebox}% <- NEW
+    % -- Account for some of the offset, while not pushing into the signal
+    % \vspace*{-\gwbar@signalupshift}% TODO: decide whether this helps
+    \ifx\insertframesubtitle\@empty%
+        \vspace*{0.25\gwbar@signalheight}%
+        \vspace*{\gwbar@bottompadding@nosubtitle}%
+    \else%
+        \vspace*{\gwbar@bottompadding@withsubtitle}%
+    \fi%
+}
+
+
+% \ifthenelse{\equal{\gwbar@signalheight@given}{"framesubtitleheight"}}{%
+%     \begin{frame}<0>[noframenumbering]{Frame Title}{Frame Subtitle}
+%     \end{frame}
+% }{%
+% }
+
+
+
+\ifthenelse{\equal{\gwbar@declaretitlebox}{true}}{}{%
+\setlength{\gwbar@signalheight}{\gwbar@signalheight@given}
+% \setlength{\gwbar@signalheight}{1em}
+\setlength{\gwbar@signalwidth}{\paperwidth - \gwbar@leftpadding - \gwbar@rightpadding}%
+\setlength{\gwbar@yshiftpicture}{\gwbar@signalupshift}
+% 
+% 
+% \addtobeamertemplate{frametitle}{}{%
+\defbeamertemplate{headline}{gwbar}{%
+    % \usebeamertemplate*{simplergwbar}
+    % \simplergwbar
+    % \usebeamertemplate*{frametitle}[gwbar]
+    % 
+    \begin{tikzpicture}[
+        remember picture,
+        overlay,
+        shift={($(current page.north west)+(0pt,\gwbar@yshiftpicture)$)},
+    ]
+        % -- Order matters, first one is supposed to serve as background signal
+        \begin{scope}[
+            gwbar@linelayertwo,
+        ]   
+            \begin{scope}[
+                x=\gwbar@signalwidth,%+\gwbar@rightpadding,
+                y=\gwbar@signalheight,
+                shift={(\gwbar@leftpadding, 0pt)},  % Shifting here is important for clipping to work
+            ]
+                \ifthenelse{\equal{\gwbar@backgroundtemplatefilename}{"none"}}{
+                    \clip ({(\gwbar@signalwidth + \gwbar@rightpadding) * \insertframenumber / \inserttotalframenumber}, -1) rectangle ({\gwbar@signalwidth + \gwbar@rightpadding}, 1);
+                    
+                    \draw[
+                % shift={(\gwbar@leftpadding, 0pt)},
+                    ] plot file {\gwbar@templatefilename};
+                }{
+                    \draw[
+                % shift={(\gwbar@leftpadding, 0pt)},
+                    ] plot file {\gwbar@backgroundtemplatefilename};
+                }
+            
+            \draw[
+                shift={(-\gwbar@leftpadding, 0pt)},
+            ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+            \end{scope}
+
+            % \draw[
+            %     % shift={(\gwbar@leftpadding+\gwbar@signalwidth, 0pt)},
+            % ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+        \end{scope}
+        
+        \begin{scope}[
+            gwbar@linelayerone,
+        ]
+            \draw[
+            ] (0, 0) -- (\gwbar@leftpadding, 0);
+            
+            \begin{scope}[
+                x=\gwbar@signalwidth,%+\gwbar@rightpadding,
+                y=\gwbar@signalheight,
+                shift={(\gwbar@leftpadding, 0pt)},  % Shifting here is important for clipping to work
+            ]
+                \clip[
+                % shift={(\gwbar@leftpadding, 0pt)},
+                % ](0, -1) rectangle ({(\paperwidth - \gwbar@rightpadding) * \insertframenumber / \inserttotalframenumber}, 1);
+                ](0, -1) rectangle ({(\gwbar@signalwidth + \gwbar@rightpadding) * \insertframenumber / \inserttotalframenumber}, 1);
+                
+                \draw[
+                % shift={(\gwbar@leftpadding, 0pt)},
+                ] plot file {\gwbar@templatefilename};
+            
+            \draw[
+                shift={(-\gwbar@leftpadding, 0pt)},
+            ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+            \end{scope}
+
+            % \draw[
+            %     % shift={(\gwbar@leftpadding+\gwbar@signalwidth, 0pt)},
+            % ] ({\paperwidth - \gwbar@rightpadding}, 0) -- (\paperwidth, 0);
+        \end{scope}
+    
+    \end{tikzpicture}%
+}
+% 
+% \addtobeamertemplate{title page}{}{%
+%   \setbeamertemplate{headline}{}%
+% }
+}

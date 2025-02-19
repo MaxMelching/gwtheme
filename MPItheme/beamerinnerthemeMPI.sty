@@ -1,0 +1,104 @@
+\mode<presentation>
+
+% \def\headerskip{0.1\paperheight}
+\def\headerskip{0.0667\paperheight}
+% \def\headerskip{0pt}
+
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle}
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle\par\insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+
+\defbeamertemplate{frametitle}{customMPI}{%
+    \vskip\headerskip%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    % \insertframetitle%
+    \strut\insertframetitle%\strut\par%
+    \ifx\insertframesubtitle\@empty%
+    \else%
+        % \ -- \ \insertframesubtitle%
+        {%
+            \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+            \ -- \ \insertframesubtitle%
+            % \strut\par%
+        }%
+    \fi%
+    % -- Comment following line to hide framenumber
+    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
+}
+
+\setbeamertemplate{frametitle}[customMPI]
+
+
+\setbeamertemplate{title page}[default][left]
+
+
+% \defbeamertemplate{title page}{defaultnoheadline}{%
+%     \setbeamertemplate{title page}[default][left]%
+%     % \usebeamertemplate{title page}[default][left]%
+%     % \setbeamertemplate{headline}{}%
+% }
+
+
+% \defbeamertemplate{title page}{defaultnoheadline}{%
+%     % Temporarily deactivate the headline for the title page
+%     \setbeamertemplate{headline}{}
+%     \begin{center}
+%         \usebeamertemplate{title page}[default][left] % Use the default title page laying out with your customization
+%     \end{center}
+% }
+
+% \setbeamertemplate{title page}[defaultnoheadline]
+
+\setbeamertemplate{title page}{
+  % % \begin{minipage}{0.3\textwidth}%
+  % %     \includegraphics[width=0.3\textwidth]{pictures/aeilogo.png}
+  % % \end{minipage}%
+  % % \begin{minipage}{0.3\textwidth}%
+  % %     \includegraphics[0.3\textwidth]{pictures/group_logo.png}
+  % % \end{minipage}%
+  % % \begin{minipage}{0.3\textwidth}%
+  % %     \includegraphics[0.3\textwidth]{pictures/logo_luh.jpg}
+  % % \end{minipage}%
+  % \begin{figure}[h]
+  %   \centering
+  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/aeilogo.png}}\hspace*{0.15\textwidth}
+  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.1\textwidth}
+  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/group_logo.png}}\hspace*{0.1\textwidth}
+  %   % \subfloat{\includegraphics[height=2\baselineskip]{pictures/logo_luh.jpg}}
+  %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.06\textwidth}
+  %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/group_logo.png}}\hspace*{0.06\textwidth}
+  %   \subfloat{\includegraphics[height=2.2\baselineskip]{pictures/logo_luh.jpg}}
+  % \end{figure}
+  % % \vbox{}
+  \vfill
+  \begingroup
+    \begin{beamercolorbox}[sep=8pt,center,rounded=true,shadow=true]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip0.5em\par
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \par
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \par
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \endgroup
+  \vfill
+}
+
+
+\mode
+<all>
