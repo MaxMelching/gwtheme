@@ -6,7 +6,6 @@
 
 % -- Fore XeLatex (inherited from Berkeley theme) ----------
 % \RequirePackage{fontspec}
-% \usepackage{fontspec}
 
 % % \setromanfont{Georgia}
 % \setromanfont{Heuristica}
@@ -16,10 +15,10 @@
 
 
 % -- For pdflatex (my preferred choice) ----------
-\usepackage{heuristica}
+\RequirePackage{heuristica}
 \usefonttheme{serif}
 
-\usepackage[notext, onlyrm, widermath, noamsmath, notextcomp]{kpfonts}
+\RequirePackage[notext, onlyrm, widermath, noamsmath, notextcomp]{kpfonts}
 \renewcommand{\rmdefault}{ptm} % ptm for times -> does this have an effect?
 
 
@@ -33,3 +32,8 @@
 
 \setbeamerfont{author in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}
 \setbeamerfont{framenumber in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}
+
+\setbeamerfont{caption}{size=\footnotesize}
+
+\setbeamerfont{sectiontitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
+\setbeamerfont{sectionsubtitle}{family=\rmfamily,series=\mdseries,size=\Large}

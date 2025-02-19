@@ -21,7 +21,75 @@
 \setbeamersize{text margin left=2em, text margin right=2em}
 
 
+% -- Captions and TOC
 \setbeamertemplate{caption}[numbered]  % How captions of floats appear
+
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[square]%[subsections numbered]
+
+
+% -- Section and subsection page ----------
+% -> adapted from: https://github.com/pcafrica/focus-beamertheme/blob/main/beamerinnerthemefocus.sty
+\defbeamertemplate*{section page}{MPI}{%
+    {%
+        \begin{tikzpicture}[overlay, remember picture]
+            \usebeamercolor[bg]{section page}
+            % \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
+            \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.52\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
+        \end{tikzpicture}%
+    }
+    
+    \vspace{-2.5\baselineskip}
+    \begin{minipage}[b][0.45\paperheight]{\textwidth}
+        \usebeamerfont{sectiontitle}
+        \usebeamercolor[fg]{section page}
+        \let\hyperlink\@secondoftwo\insertsection
+    \end{minipage}
+
+    \vspace{\baselineskip}
+    \begin{minipage}[t][0.5\paperheight]{\textwidth}
+        % \usebeamerfont{subsectiontitle}
+        % \usebeamercolor[bg]{section page}
+        % \insertsubsection
+    \end{minipage}
+}
+
+
+\defbeamertemplate*{subsection page}{MPI}{%
+    {%
+        \begin{tikzpicture}[overlay, remember picture]
+            \usebeamercolor[bg]{subsection page}
+            \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
+        \end{tikzpicture}%
+    }
+    
+    \vspace{-2.5\baselineskip}
+    \begin{minipage}[b][0.45\paperheight]{\textwidth}
+        \usebeamerfont{sectiontitle}
+        \usebeamercolor[fg]{subsection page}
+        \let\hyperlink\@secondoftwo\insertsection
+    \end{minipage}
+    
+    \vspace{\baselineskip}
+    \begin{minipage}[t][0.5\paperheight]{\textwidth}
+        \usebeamerfont{subsectiontitle}
+        \usebeamercolor[bg]{subsection page}
+        \insertsubsection
+    \end{minipage}
+}
+
+
+\AtBeginSection[]{%
+    \begin{frame}[plain, noframenumbering]{}
+        \sectionpage
+    \end{frame}%
+}
+
+% \AtBeginSubsection[]{%
+%     \begin{frame}[plain, noframenumbering]{}
+%         \subsectionpage
+%     \end{frame}%
+% }
 
 
 % -- Title page ----------
@@ -77,38 +145,38 @@
 % }
 
 
-\usepackage{tikz}
-\usetikzlibrary{calc}
+\RequirePackage{tikz}
 
-\setbeamertemplate{title page}{%
-  % % \begin{minipage}{0.3\textwidth}%
-  % %     \includegraphics[width=0.3\textwidth]{pictures/aeilogo.png}
-  % % \end{minipage}%
-  % % \begin{minipage}{0.3\textwidth}%
-  % %     \includegraphics[0.3\textwidth]{pictures/group_logo.png}
-  % % \end{minipage}%
-  % % \begin{minipage}{0.3\textwidth}%
-  % %     \includegraphics[0.3\textwidth]{pictures/logo_luh.jpg}
-  % % \end{minipage}%
-  % \begin{figure}[h]
-  %   \centering
-  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/aeilogo.png}}\hspace*{0.15\textwidth}
-  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.1\textwidth}
-  %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/group_logo.png}}\hspace*{0.1\textwidth}
-  %   % \subfloat{\includegraphics[height=2\baselineskip]{pictures/logo_luh.jpg}}
-  %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.06\textwidth}
-  %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/group_logo.png}}\hspace*{0.06\textwidth}
-  %   \subfloat{\includegraphics[height=2.2\baselineskip]{pictures/logo_luh.jpg}}
-  % \end{figure}
-  % % \vbox{}
+
+\titlegraphic{
+  \def\themeMPI@logoheight{1.8\baselineskip}
+  \def\themeMPI@logoboxwidth{0.28\paperwidth}
+  \begin{beamercolorbox}[center]{titlegraphic}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        \centering
+        \includegraphics[height=\themeMPI@logoheight]{logos/luh_logo_rgb_0_81_158.png}
+      \end{minipage}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        \centering
+        \includegraphics[height=\themeMPI@logoheight]{logos/group_logo.pdf}
+      \end{minipage}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        \centering
+        \includegraphics[height=\themeMPI@logoheight]{logos/MPI-AEI_wide_E_color_cmyk.pdf}
+      \end{minipage}%
+  \end{beamercolorbox}%
+}
+
+
+\defbeamertemplate*{title page}{MPI}{%
   \vfill%
   \begingroup%
-    \begin{tikzpicture}[overlay,remember picture]
-          \usebeamercolor[bg]{titlelike}
-          \fill (current page.north west) -- +(0, -0.5\paperheight) -- +(\paperwidth, -0.42\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
-    \end{tikzpicture}%
+    % \begin{tikzpicture}[overlay,remember picture]
+    %       \usebeamercolor[bg]{titlelike}
+    %       \fill (current page.north west) -- +(0, -0.5\paperheight) -- +(\paperwidth, -0.42\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
+    % \end{tikzpicture}%
     \vskip-4em\par%
-    \setbeamercolor{titlelike}{bg=}%  Temporarily disable
+    \setbeamercolor{titlelike}{bg=,}%  Temporarily disable
     \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,center]{title}%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
@@ -129,11 +197,13 @@
     \begin{beamercolorbox}[sep=8pt,center]{date}%
       \usebeamerfont{date}\insertdate
     \end{beamercolorbox}%
-    \vskip0.5em%
+    \vskip1.5em%
     {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}%
+    % 
   \endgroup%
   \vfill%
 }
+% -- No need to use \setbeamertemplate{title page}[MPI]
 
 
 \mode

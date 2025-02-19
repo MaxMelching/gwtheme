@@ -11,13 +11,13 @@
 
 \def\themeMPI@headerskip{0.0667\paperheight}  % Padding from top
 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle}
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle\par\insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeMPI@headerskip\insertframetitle}
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeMPI@headerskip\insertframetitle\par\insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
 
-\defbeamertemplate{frametitle}{customMPI}{%
+\defbeamertemplate*{frametitle}{MPI}{%
     \vskip\themeMPI@headerskip%
     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
     % \insertframetitle%
@@ -34,15 +34,16 @@
     % -- Comment following line to hide framenumber
     % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
 }
+% -- No need to use \setbeamertemplate{frametitle}[MPI]
 
-\setbeamertemplate{frametitle}[customMPI]
+% TODO: check if section is defined and use this? Or check frametitle first and then section?
 
 
 
-\usepackage{calc}  % For length calculations to work
+\RequirePackage{calc}  % For length calculations to work
 
 % -- Note: for this particular package, paths are strange because we compile from main.tex
-\usepackage[
+\RequirePackage[
     % templatefile="MPItheme/generic_template.txt",
     % templatefile="MPItheme/eccentric_template.txt",
     % templatefile="MPItheme/generic_template_w_noise.txt",
@@ -63,7 +64,7 @@
 
 
 
-\usepackage{tikz}
+\RequirePackage{tikz}
 
 \tikzset{
     gwbar@linelayerone/.style={
@@ -98,7 +99,8 @@
 
 \pgfdeclareimage[height=0.1\paperheight]{themeMPI@background_logo}{logos/MPI-AEI_wide_E_neg_cmyk}  % White goes best with most colors
 
-\setbeamertemplate{background}{%
+
+\defbeamertemplate*{background}{MPI}{%
     \begin{tikzpicture}[overlay,remember picture]%
       \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
 
@@ -110,19 +112,20 @@
     % \node[anchor=south,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south) {\textcolor{bg}{\sffamily\bfseries\small\insertframenumber/\inserttotalframenumber}};
     \end{tikzpicture}%
 }
+% -- No need to use \setbeamertemplate{background}[MPI]
 
 
 % -- Footline and navigation symbols ----------
 \setbeamertemplate{navigation symbols}{}
 
 
-% \setbeamertemplate{footline}{%
+% \defbeamertemplate*{footline}{%
 %     \vskip0.15\paperheight%
 % }
 
-% \setbeamertemplate{footline}{}  % Don't see how previous one makes a difference
+% \defbeamertemplate*{footline}{}  % Don't see how previous one makes a difference
 
-% \setbeamertemplate{footline}{%
+% \defbeamertemplate*{footline}{%
 %   \leavevmode%
 %   \hbox{%
 %   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{author in head/foot}%
@@ -144,8 +147,8 @@
 % }
 
 
-\usepackage{appendixnumberbeamer}
-\usepackage{etoolbox}
+\RequirePackage{appendixnumberbeamer}
+\RequirePackage{etoolbox}
 
 % -- Initialize a toggle for appendix
 \newtoggle{inappendix}
@@ -156,15 +159,15 @@
 % -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
 
 
-\setbeamertemplate{footline}{%
+\defbeamertemplate*{footline}{MPI}{%
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
     \hspace\themeMPI@footvertshift
     {%
         \usebeamerfont{author in head/foot}%
-        \MakeUppercase\insertauthor%
-        % \MakeUppercase\insertshortauthor% Does not work, for some reason -> thus, if you intend to use this, define the short author with MakeUppercase already
+        % \MakeUppercase\insertauthor%
+        \MakeUppercase\insertshortauthor% Does not actually make stuff uppercase, for some reason -> thus, if you intend to use this, define the short author with MakeUppercase already
     }%
     \iftoggle{inappendix}{%
         % -- Do not show framenumber in appendix (where progressbar also stops)
@@ -183,6 +186,8 @@
   }%
   \vskip0pt%
 }
+% -- No need to use \setbeamertemplate{footline}[MPI]
+
 
 
 \mode

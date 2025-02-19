@@ -14,9 +14,9 @@
 
 \title[Your Short Title]{Your Presentation}
 \subtitle{Your subtitle (if there's one)}
-\author{Your Name}
+% \author{Your Name \and Another Name}
 % \author[Your name (short)]{Your Name}
-% \author[\MakeUppercase{Your name (short)}]{Your Name}  % For use with \insertshortauthor in footline
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
 \institute{Your Faculty/Department}
 \date{Date of Presentation}
 
@@ -24,20 +24,21 @@
 
 \begin{document}
 
-{
-% \setbeamertemplate{headline}{}  % We do not want GW on here
-% \setbeamertemplate{background}{
-%     \includegraphics[]{MPItheme/title_bg.pdf}
-% }
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+% \setbeamertemplate{background}{}
+\setbeamertemplate{background}{\tikz[overlay,remember picture]\node[opacity=0.1] at (current page.center){\includegraphics[height=\paperheight]{logos/waves3.png}};}
+% \setbeamertemplate{background}{\tikz[overlay,remember picture]\node[opacity=0.1,anchor=south east] at (current page.south east){\includegraphics[height=0.5\paperheight,keepaspectratio]{logos/waves3.png}};}
 \begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
   \titlepage
 \end{frame}
 }
 
-% Uncomment these lines for an automatically generated outline.
-%\begin{frame}{Outline}
-%  \tableofcontents
-%\end{frame}
+
+\begin{frame}{Outline}
+  \hypersetup{linkcolor=black}
+  \tableofcontents[sectionstyle=shaded/show, hideallsubsections]
+\end{frame}
 
 \section{Introduction}
 
