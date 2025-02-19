@@ -1,3 +1,10 @@
+%% start of file `beamerfontthemeMPI.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
+
+% -- Fore XeLatex (inherited from Berkeley theme) ----------
 % \RequirePackage{fontspec}
 % \usepackage{fontspec}
 
@@ -8,7 +15,7 @@
 % % \usefonttheme{serif}
 
 
-% -- For pdflatex
+% -- For pdflatex (my preferred choice) ----------
 \usepackage{heuristica}
 \usefonttheme{serif}
 
@@ -16,11 +23,13 @@
 \renewcommand{\rmdefault}{ptm} % ptm for times -> does this have an effect?
 
 
-% -- General Settings
+% -- General Settings ----------
 \setbeamerfont{title}{family=\rmfamily,size=\Huge}
 \setbeamerfont{author}{size=\Large}
-
 
 \setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
 \setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
 \setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
+
+\setbeamerfont{author in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}
+\setbeamerfont{framenumber in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}

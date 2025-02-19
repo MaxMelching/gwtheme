@@ -1,7 +1,41 @@
+%% start of file `beamerouterthemeMPI.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 \mode<presentation>
+% -- Purpose of this file: specify stuff that does not belong to content of the slide, such as headline, footline, background, frametitle
 
 
-\def\headerskip{0.0667\paperheight}
+% -- Frametitle and headline ----------
+
+\def\themeMPI@headerskip{0.0667\paperheight}  % Padding from top
+
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle}
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle\par\insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{customMPI}{\vskip\themeMPI@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+
+\defbeamertemplate{frametitle}{customMPI}{%
+    \vskip\themeMPI@headerskip%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    % \insertframetitle%
+    \strut\insertframetitle%\strut\par%
+    \ifx\insertframesubtitle\@empty%
+    \else%
+        % \ -- \ \insertframesubtitle%
+        {%
+            \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+            \ -- \ \insertframesubtitle%
+            % \strut\par%
+        }%
+    \fi%
+    % -- Comment following line to hide framenumber
+    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
+}
+
+\setbeamertemplate{frametitle}[customMPI]
 
 
 
@@ -24,8 +58,9 @@
     signalheight=2.4em,
     % -- Activate following two for above code to be used
     declaretitlebox=false,
-    signalupshift=-0.0667\paperheight-2.25em,  % \headerskip minus estimate of font height
+    signalupshift=-0.0667\paperheight-2.25em,  % \themeMPI@headerskip minus estimate of font height
 ]{gwbar}
+
 
 \usepackage{tikz}
 
@@ -38,7 +73,7 @@
     gwbar@linelayertwo/.style={
         % opacity=0.2,
         bg!50,  % Nicer for transparent titlebox
-        % gray!50!bg,  % Nicer for gwbar titlebox
+        % gray!50!bg,  % Nicer for gwbar titlebox (default)
 		smooth,
         thick,
 	},
@@ -47,18 +82,12 @@
 
 \setbeamertemplate{headline}[gwbar]
 
+% -- For use of default frametitle with GW, activate following template
+% \setbeamertemplate{frametitle}[gwbar]
 
-\setbeamersize{text margin left=2em, text margin right=2em}
 
-% \setbeamertemplate{footline}{%
-%     \vskip0.15\paperheight%
-% }
+% -- Background ----------
 
-\setbeamertemplate{footline}{}  % Don't see how previous one makes a difference
-
-\setbeamertemplate{navigation symbols}{}
-
-\setbeamertemplate{caption}[numbered]
 
 
 
@@ -66,18 +95,98 @@
 
 % -- Note: name, framenumber could also be set in footline
 % -- TODO: maybe this would be better to hide stuff on titleframe e.g.
+% \def\themeMPI@footupshift{0.025\paperheight}
+% \def\themeMPI@footvertshift{0.025\paperheight}
+\newlength{\themeMPI@footupshift}
+\newlength{\themeMPI@footvertshift}
+\setlength{\themeMPI@footupshift}{0.025\paperheight}
+\setlength{\themeMPI@footvertshift}{0.025\paperheight}
+
 \setbeamertemplate{background}{%
     \begin{tikzpicture}[overlay,remember picture]
       \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
 
-    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south east) {\pgfuseimage{logo}};
+    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeMPI@footvertshift,yshift=\themeMPI@footupshift] at (current page.south east) {\pgfuseimage{logo}};
 
-    \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
-    % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
+    % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
+    % % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
     
-    \node[anchor=south,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south) {\textcolor{bg}{\sffamily\bfseries\small\insertframenumber/\inserttotalframenumber}};
+    % \node[anchor=south,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south) {\textcolor{bg}{\sffamily\bfseries\small\insertframenumber/\inserttotalframenumber}};
     \end{tikzpicture}%
 }
+
+
+% -- Footline and navigation symbols ----------
+\setbeamertemplate{navigation symbols}{}
+
+
+% \setbeamertemplate{footline}{%
+%     \vskip0.15\paperheight%
+% }
+
+% \setbeamertemplate{footline}{}  % Don't see how previous one makes a difference
+
+% \setbeamertemplate{footline}{%
+%   \leavevmode%
+%   \hbox{%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{author in head/foot}%
+%     \usebeamerfont{author in head/foot}%
+%     \hspace\themeMPI@footvertshift%\vspace\themeMPI@footupshift%
+%     \strut\MakeUppercase\insertshortauthor{}\strut\par%
+%     % \vspace\themeMPI@footupshift%
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{framenumber in head/foot}%
+%     \usebeamerfont{framenumber in head/foot}%
+%     % \hspace\themeMPI@footvertshift%\vspace\themeMPI@footupshift%
+%     \insertframenumber{}/\inserttotalframenumber{}%
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+%     % 
+%   \end{beamercolorbox}%
+%   }%
+%   \vskip0pt%
+% }
+
+
+\usepackage{appendixnumberbeamer}
+\usepackage{etoolbox}
+
+% -- Initialize a toggle for appendix
+\newtoggle{inappendix}
+\settoggle{inappendix}{false}
+
+% -- Patch the \appendix command to set the toggle to true
+\pretocmd{\appendix}{\global\toggletrue{inappendix}}{}{}
+% -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
+
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+    \hspace\themeMPI@footvertshift
+    {%
+        \usebeamerfont{author in head/foot}%
+        \MakeUppercase\insertshortauthor{}%
+    }%
+    \iftoggle{inappendix}{%
+        % -- Do not show framenumber in appendix (where progressbar also stops)
+    }{%
+    \hfill%
+    {%
+        \usebeamerfont{framenumber in head/foot}%
+        \insertframenumber{}/\inserttotalframenumber{}%
+        }%
+    }%
+    \vspace{0.5\themeMPI@footupshift}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+    % \hspace\themeMPI@footvertshift%\vspace\themeMPI@footupshift%
+  \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
 
 \mode
 <all>

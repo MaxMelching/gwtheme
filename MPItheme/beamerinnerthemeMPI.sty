@@ -1,55 +1,32 @@
+%% start of file `beamerinnerthemeMPI.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 \mode<presentation>
 
-% \def\headerskip{0.1\paperheight}
-\def\headerskip{0.0667\paperheight}
-% \def\headerskip{0pt}
+% -- Purpose of this file: specify how things look that make up content of the frame. For example style of enumerations etc or the table of contents
 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle}
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle\par\insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{customMPI}{\vskip\headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
-
-\defbeamertemplate{frametitle}{customMPI}{%
-    \vskip\headerskip%
-    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-    % \insertframetitle%
-    \strut\insertframetitle%\strut\par%
-    \ifx\insertframesubtitle\@empty%
-    \else%
-        % \ -- \ \insertframesubtitle%
-        {%
-            \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-            \ -- \ \insertframesubtitle%
-            % \strut\par%
-        }%
-    \fi%
-    % -- Comment following line to hide framenumber
-    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
-}
-
-\setbeamertemplate{frametitle}[customMPI]
+% -- Appearance and margins for items ----------
+% \setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize item}{$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}{\textbullet}
+\setlength{\leftmargini}{1.25em}
+\setlength{\leftmarginii}{1em}
+\setlength{\leftmarginiii}{1em}
 
 
-\setbeamertemplate{title page}[default][left]
+% -- Text margins
+\setbeamersize{text margin left=2em, text margin right=2em}
 
 
-% \defbeamertemplate{title page}{defaultnoheadline}{%
-%     \setbeamertemplate{title page}[default][left]%
-%     % \usebeamertemplate{title page}[default][left]%
-%     % \setbeamertemplate{headline}{}%
-% }
+\setbeamertemplate{caption}[numbered]  % How captions of floats appear
 
 
-% \defbeamertemplate{title page}{defaultnoheadline}{%
-%     % Temporarily deactivate the headline for the title page
-%     \setbeamertemplate{headline}{}
-%     \begin{center}
-%         \usebeamertemplate{title page}[default][left] % Use the default title page laying out with your customization
-%     \end{center}
-% }
+% -- Title page ----------
 
-% \setbeamertemplate{title page}[defaultnoheadline]
+% \setbeamertemplate{title page}[default][left]
 
 \setbeamertemplate{title page}{
   % % \begin{minipage}{0.3\textwidth}%
