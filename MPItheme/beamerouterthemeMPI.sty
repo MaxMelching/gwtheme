@@ -62,6 +62,7 @@
 ]{gwbar}
 
 
+
 \usepackage{tikz}
 
 \tikzset{
@@ -80,7 +81,7 @@
 }
 
 
-\setbeamertemplate{headline}[gwbar]
+\setbeamertemplate{headline}[gwbar]  % -- Requires frametitle that is transparent, otherwise invisible
 
 % -- For use of default frametitle with GW, activate following template
 % \setbeamertemplate{frametitle}[gwbar]
@@ -88,13 +89,6 @@
 
 % -- Background ----------
 
-
-
-
-\pgfdeclareimage[height=0.1\paperheight]{logo}{MPI-AEI_wide_E_neg_cmyk}
-
-% -- Note: name, framenumber could also be set in footline
-% -- TODO: maybe this would be better to hide stuff on titleframe e.g.
 % \def\themeMPI@footupshift{0.025\paperheight}
 % \def\themeMPI@footvertshift{0.025\paperheight}
 \newlength{\themeMPI@footupshift}
@@ -102,11 +96,13 @@
 \setlength{\themeMPI@footupshift}{0.025\paperheight}
 \setlength{\themeMPI@footvertshift}{0.025\paperheight}
 
+\pgfdeclareimage[height=0.1\paperheight]{themeMPI@background_logo}{logos/MPI-AEI_wide_E_neg_cmyk}  % White goes best with most colors
+
 \setbeamertemplate{background}{%
-    \begin{tikzpicture}[overlay,remember picture]
+    \begin{tikzpicture}[overlay,remember picture]%
       \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
 
-    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeMPI@footvertshift,yshift=\themeMPI@footupshift] at (current page.south east) {\pgfuseimage{logo}};
+    \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeMPI@footvertshift,yshift=\themeMPI@footupshift] at (current page.south east) {\pgfuseimage{themeMPI@background_logo}};
 
     % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
     % % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
@@ -167,7 +163,8 @@
     \hspace\themeMPI@footvertshift
     {%
         \usebeamerfont{author in head/foot}%
-        \MakeUppercase\insertshortauthor{}%
+        \MakeUppercase\insertauthor%
+        % \MakeUppercase\insertshortauthor% Does not work, for some reason -> thus, if you intend to use this, define the short author with MakeUppercase already
     }%
     \iftoggle{inappendix}{%
         % -- Do not show framenumber in appendix (where progressbar also stops)
@@ -175,7 +172,7 @@
     \hfill%
     {%
         \usebeamerfont{framenumber in head/foot}%
-        \insertframenumber{}/\inserttotalframenumber{}%
+        \insertframenumber/\inserttotalframenumber%
         }%
     }%
     \vspace{0.5\themeMPI@footupshift}%

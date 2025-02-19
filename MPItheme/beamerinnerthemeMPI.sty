@@ -28,7 +28,59 @@
 
 % \setbeamertemplate{title page}[default][left]
 
-\setbeamertemplate{title page}{
+% \setbeamertemplate{title page}{
+%   % % \begin{minipage}{0.3\textwidth}%
+%   % %     \includegraphics[width=0.3\textwidth]{pictures/aeilogo.png}
+%   % % \end{minipage}%
+%   % % \begin{minipage}{0.3\textwidth}%
+%   % %     \includegraphics[0.3\textwidth]{pictures/group_logo.png}
+%   % % \end{minipage}%
+%   % % \begin{minipage}{0.3\textwidth}%
+%   % %     \includegraphics[0.3\textwidth]{pictures/logo_luh.jpg}
+%   % % \end{minipage}%
+%   % \begin{figure}[h]
+%   %   \centering
+%   %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/aeilogo.png}}\hspace*{0.15\textwidth}
+%   %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.1\textwidth}
+%   %   % \subfloat{\includegraphics[height=2.5\baselineskip]{pictures/group_logo.png}}\hspace*{0.1\textwidth}
+%   %   % \subfloat{\includegraphics[height=2\baselineskip]{pictures/logo_luh.jpg}}
+%   %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/MPI-AEI_hoch_D_color_rgb-1.png}}\hspace*{0.06\textwidth}
+%   %   \subfloat{\includegraphics[height=3\baselineskip]{pictures/group_logo.png}}\hspace*{0.06\textwidth}
+%   %   \subfloat{\includegraphics[height=2.2\baselineskip]{pictures/logo_luh.jpg}}
+%   % \end{figure}
+%   % % \vbox{}
+%   \vfill
+%   \begingroup
+%     \begin{beamercolorbox}[sep=8pt,center,rounded=true,shadow=true]{title}
+%       \usebeamerfont{title}\inserttitle\par%
+%       \ifx\insertsubtitle\@empty%
+%       \else%
+%         \vskip0.25em%
+%         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+%       \fi%     
+%     \end{beamercolorbox}%
+%     \vskip0.5em\par
+%     \begin{beamercolorbox}[sep=8pt,center]{author}
+%       \usebeamerfont{author}\insertauthor
+%     \end{beamercolorbox}
+%     \par
+%     \begin{beamercolorbox}[sep=8pt,center]{institute}
+%       \usebeamerfont{institute}\insertinstitute
+%     \end{beamercolorbox}
+%     \par
+%     \begin{beamercolorbox}[sep=8pt,center]{date}
+%       \usebeamerfont{date}\insertdate
+%     \end{beamercolorbox}\vskip0.5em
+%     {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+%   \endgroup
+%   \vfill
+% }
+
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\setbeamertemplate{title page}{%
   % % \begin{minipage}{0.3\textwidth}%
   % %     \includegraphics[width=0.3\textwidth]{pictures/aeilogo.png}
   % % \end{minipage}%
@@ -49,9 +101,15 @@
   %   \subfloat{\includegraphics[height=2.2\baselineskip]{pictures/logo_luh.jpg}}
   % \end{figure}
   % % \vbox{}
-  \vfill
-  \begingroup
-    \begin{beamercolorbox}[sep=8pt,center,rounded=true,shadow=true]{title}
+  \vfill%
+  \begingroup%
+    \begin{tikzpicture}[overlay,remember picture]
+          \usebeamercolor[bg]{titlelike}
+          \fill (current page.north west) -- +(0, -0.5\paperheight) -- +(\paperwidth, -0.42\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
+    \end{tikzpicture}%
+    \vskip-4em\par%
+    \setbeamercolor{titlelike}{bg=}%  Temporarily disable
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,center]{title}%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
       \else%
@@ -59,21 +117,22 @@
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
       \fi%     
     \end{beamercolorbox}%
-    \vskip0.5em\par
-    \begin{beamercolorbox}[sep=8pt,center]{author}
+    \vskip5.5em\par
+    \begin{beamercolorbox}[sep=8pt,center]{author}%
       \usebeamerfont{author}\insertauthor
-    \end{beamercolorbox}
+    \end{beamercolorbox}%
     \par
-    \begin{beamercolorbox}[sep=8pt,center]{institute}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}%
       \usebeamerfont{institute}\insertinstitute
-    \end{beamercolorbox}
+    \end{beamercolorbox}%
     \par
-    \begin{beamercolorbox}[sep=8pt,center]{date}
+    \begin{beamercolorbox}[sep=8pt,center]{date}%
       \usebeamerfont{date}\insertdate
-    \end{beamercolorbox}\vskip0.5em
-    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
-  \endgroup
-  \vfill
+    \end{beamercolorbox}%
+    \vskip0.5em%
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}%
+  \endgroup%
+  \vfill%
 }
 
 

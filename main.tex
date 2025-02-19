@@ -1,7 +1,8 @@
 %% Requires compilation with XeLaTeX or LuaLaTeX
-\documentclass[10pt,xcolor={table,dvipsnames}]{beamer}
+\documentclass[10pt]{beamer}
+\usepackage[dvipsnames,table,x11names]{xcolor}
 
-% -- Onclude theme
+% -- Include theme
 \makeatletter
 \def\input@path{{./MPItheme/}}
 \makeatother
@@ -14,14 +15,21 @@
 \title[Your Short Title]{Your Presentation}
 \subtitle{Your subtitle (if there's one)}
 \author{Your Name}
+% \author[Your name (short)]{Your Name}
+% \author[\MakeUppercase{Your name (short)}]{Your Name}  % For use with \insertshortauthor in footline
 \institute{Your Faculty/Department}
 \date{Date of Presentation}
+
+
 
 \begin{document}
 
 {
 % \setbeamertemplate{headline}{}  % We do not want GW on here
-\begin{frame}[plain, noframenumbering]  % Equivalent to previous line
+% \setbeamertemplate{background}{
+%     \includegraphics[]{MPItheme/title_bg.pdf}
+% }
+\begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
   \titlepage
 \end{frame}
 }
