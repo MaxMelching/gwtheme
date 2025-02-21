@@ -3,37 +3,75 @@
 %
 % Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
 
+\RequirePackage{etoolbox}
+\newtoggle{xetexorluatex}
 
-% -- Fore XeLatex (inherited from Berkeley theme) ----------
-% \RequirePackage{fontspec}
+\RequirePackage{iftex}
+\ifXeTeX
+    \toggletrue{xetexorluatex}
+\fi
+\ifLuaTeX
+    \toggletrue{xetexorluatex}
+\fi
+\ifPDFTeX
+    \togglefalse{xetexorluatex}
+\fi
 
-% % \setromanfont{Georgia}
-% \setromanfont{Heuristica}
-% % \setsansfont[Scale=MatchLowercase]{Open Sans}
-% \setsansfont[Scale=MatchLowercase]{Heuristica}
-% % \usefonttheme{serif}
+% -- Note: my personal preference is to switch on LuaTex in the Overleaf compiler, because the Trebuchet Font looks much better than the sans-version of Heuristica (or any replacement for the sans font I to date)
+
+\iftoggle{xetexorluatex}{
+    % -- Loading Fonts ----------
+    \RequirePackage{fontspec}  % Use fontspec for system fonts
+    \setmainfont{Georgia}
+    % \setmainfont{Heuristica}  % Both are looking good
+    \usefonttheme{serif}
+    
+    % \newfontfamily\trebuchet{Trebuchet MS}
+    \setsansfont{Trebuchet MS}  % Better, can use \sffamily instead of having to use \trebuchet
+    % \setsansfont[Scale=MatchLowercase]{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
+    % \setsansfont{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
 
 
-% -- For pdflatex (my preferred choice) ----------
-\RequirePackage{heuristica}
-\usefonttheme{serif}
+    % -- Actual Settings ----------
+    \setbeamerfont{title}{family=\sffamily,size=\Huge}
+    \setbeamerfont{author}{family=\sffamily,size=\Large}
+    \setbeamerfont{date}{family=\sffamily,size=\normalsize}
+    \setbeamerfont{institute}{family=\sffamily,size=\small}
+    
+    \setbeamerfont{sectiontitle}{family=\sffamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{sectionsubtitle}{family=\sffamily,series=\mdseries,size=\Large}
+    
+    \setbeamerfont{frametitle}{family=\sffamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{framesubtitle}{family=\sffamily,series=\mdseries,size=\Large}
+    \setbeamerfont{headline}{family=\rmfamily,series=\mdseries,size=\small}
+    \setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
+    
+    \setbeamerfont{author in head/foot}{family=\sffamily,series=\bfseries,size=\scriptsize}
+    \setbeamerfont{framenumber in head/foot}{family=\sffamily,series=\bfseries,size=\scriptsize}
+    
+    \setbeamerfont{caption}{size=\footnotesize}
+}{
+    % -- Loading Fonts ----------
+    \RequirePackage{heuristica}
+    \usefonttheme{serif}
 
-\RequirePackage[notext, onlyrm, widermath, noamsmath, notextcomp]{kpfonts}
-\renewcommand{\rmdefault}{ptm} % ptm for times -> does this have an effect?
 
-
-% -- General Settings ----------
-\setbeamerfont{title}{family=\rmfamily,size=\Huge}
-\setbeamerfont{author}{size=\Large}
-
-\setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
-\setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
-\setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
-
-\setbeamerfont{author in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}
-\setbeamerfont{framenumber in head/foot}{family=\sffamily,series=\bfseries,size=\footnotesize}
-
-\setbeamerfont{caption}{size=\footnotesize}
-
-\setbeamerfont{sectiontitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
-\setbeamerfont{sectionsubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    % -- Actual Settings ----------
+    \setbeamerfont{title}{family=\rmfamily,size=\Huge}
+    \setbeamerfont{author}{family=\rmfamily,size=\Large}
+    \setbeamerfont{date}{family=\rmfamily,size=\normalsize}
+    \setbeamerfont{institute}{family=\rmfamily,size=\small}
+    
+    \setbeamerfont{sectiontitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{sectionsubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    
+    \setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    \setbeamerfont{headline}{family=\rmfamily,series=\mdseries,size=\small}
+    \setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
+    
+    \setbeamerfont{author in head/foot}{family=\sffamily,series=\bfseries,size=\scriptsize}
+    \setbeamerfont{framenumber in head/foot}{family=\sffamily,series=\bfseries,size=\scriptsize}
+    
+    \setbeamerfont{caption}{size=\footnotesize}
+}

@@ -38,6 +38,33 @@
 
 % TODO: check if section is defined and use this? Or check frametitle first and then section?
 
+\defbeamertemplate{frametitle}{MPIsection}{%
+    \vskip\themeMPI@headerskip%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    % \insertframetitle%
+    \ifx\insertframetitle\@empty%
+    \strut\insertsection%
+    \else%
+    \strut\insertframetitle%
+    \fi%
+    {%
+        \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+        \ifx\insertframesubtitle\@empty%
+            \ifx\insertsubsection\@empty%
+            \else%
+                \ -- \ \insertsubsection%
+            \fi%
+        \else%
+            \ -- \ \insertframesubtitle%
+        \fi%
+    }%
+    % -- Comment following line to hide framenumber
+    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
+}
+
+% -- Not the default. To activate, uncomment next line
+% \setbeamertemplate{frametitle}[MPIsection]
+
 
 
 \RequirePackage{calc}  % For length calculations to work
@@ -48,7 +75,8 @@
     % templatefile="MPItheme/eccentric_template.txt",
     % templatefile="MPItheme/generic_template_w_noise.txt",
     % -- Fancy:
-    templatefile="MPItheme/generic_template_no_noise.txt",
+    % templatefile="MPItheme/generic_template_no_noise.txt",
+    templatefile="MPItheme/generic_template_no_noise_whitened.txt",
     backgroundsignal="MPItheme/generic_template_w_noise.txt",
     % 
     % templatefile="MPItheme/eccentric_template_no_noise.txt",
@@ -56,10 +84,11 @@
     % -- General stuff
     leftpadding=0.6\paperwidth,
     rightpadding=0.006\paperwidth,
-    signalheight=2.4em,
+    signalheight=20pt,  % Using em here is bad, has different values depending on fontsize, i.e. in particular different when using in frametitle or headline
     % -- Activate following two for above code to be used
     declaretitlebox=false,
-    signalupshift=-0.0667\paperheight-2.25em,  % \themeMPI@headerskip minus estimate of font height
+    signalupshift=-0.0667\paperheight-24pt,  % \themeMPI@headerskip minus estimate of font height. Only use if gwbar is added to beamertheme
+% ]{gwbar_v1}
 ]{gwbar}
 
 
@@ -83,6 +112,8 @@
 
 
 \setbeamertemplate{headline}[gwbar]  % -- Requires frametitle that is transparent, otherwise invisible
+% \addtobeamertemplate{frametitle}{}{\drawgwbar}  % For use with gwbar, in case you do not want to use above frametitle template and headline is hidden behind frametitle
+
 
 % -- For use of default frametitle with GW, activate following template
 % \setbeamertemplate{frametitle}[gwbar]
