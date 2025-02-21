@@ -94,6 +94,8 @@
 
 
 % -- Title page ----------
+\RequirePackage{tikz}
+\RequirePackage{calc}
 
 % \setbeamertemplate{title page}[default][left]
 
@@ -146,9 +148,6 @@
 % }
 
 
-\RequirePackage{tikz}
-
-
 \titlegraphic{
   \def\themeMPI@logoheight{1.8\baselineskip}
   \def\themeMPI@logoboxwidth{0.28\paperwidth}
@@ -169,16 +168,18 @@
 }
 
 
-\defbeamertemplate*{title page}{MPI}{%
+\defbeamertemplate{title page}{BMGroup}{%
   \vfill%
   \begingroup%
     % \begin{tikzpicture}[overlay,remember picture]
     %       \usebeamercolor[bg]{titlelike}
     %       \fill (current page.north west) -- +(0, -0.5\paperheight) -- +(\paperwidth, -0.42\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
     % \end{tikzpicture}%
+    % 
+    {\tikz[overlay,remember picture]\node[opacity=0.1] at (current page.center){\includegraphics[height=\paperheight]{logos/waves3.png}};}%
+    % {\tikz[overlay,remember picture]\node[opacity=0.1,anchor=south east] at (current page.south east){\includegraphics[height=0.5\paperheight,keepaspectratio]{logos/waves3.png}};}%
     \vskip-4em\par%
-    \setbeamercolor{titlelike}{bg=,}%  Temporarily disable
-    \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,center]{title}%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,center,ignorebg]{title}%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
       \else%
@@ -186,15 +187,15 @@
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
       \fi%     
     \end{beamercolorbox}%
-    \vskip5.5em\par
+    \vskip5.5em\par%
     \begin{beamercolorbox}[sep=8pt,center]{author}%
       \usebeamerfont{author}\insertauthor
     \end{beamercolorbox}%
-    \par
+    \par%
     \begin{beamercolorbox}[sep=8pt,center]{institute}%
       \usebeamerfont{institute}\insertinstitute
     \end{beamercolorbox}%
-    \par
+    \par%
     \begin{beamercolorbox}[sep=8pt,center]{date}%
       \usebeamerfont{date}\insertdate
     \end{beamercolorbox}%
@@ -204,7 +205,131 @@
   \endgroup%
   \vfill%
 }
-% -- No need to use \setbeamertemplate{title page}[MPI]
+
+
+
+% \titlegraphic{
+%   \def\themeMPI@logoheight{1.8\baselineskip}
+%   \def\themeMPI@logoboxwidth{0.28\paperwidth}
+%   \begin{beamercolorbox}[center]{titlegraphic}%
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         \centering
+%         \includegraphics[height=\themeMPI@logoheight]{logos/luh_logo_rgb_0_81_158.png}
+%       \end{minipage}%
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         \centering
+%         \includegraphics[height=\themeMPI@logoheight]{logos/group_logo.pdf}
+%       \end{minipage}%
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         \centering
+%         \includegraphics[height=\themeMPI@logoheight]{logos/MPI-AEI_wide_E_neg_cmyk.pdf}
+%       \end{minipage}%
+%   \end{beamercolorbox}%
+% }
+
+% -- V2, with logos stacked on top
+% \titlegraphic{
+%   \def\themeMPI@logoheight{1.8\baselineskip}
+%   \def\themeMPI@logopadding{1.2\baselineskip}
+%   \def\themeMPI@logoboxwidth{0.28\paperwidth}
+%   \begin{beamercolorbox}[right]{titlegraphic}%
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         % \centering
+%         \raggedleft
+%         \includegraphics[height=\themeMPI@logoheight]{logos/group_logo.pdf}
+%       \end{minipage}
+%       \par
+%       \vspace*{\themeMPI@logopadding}
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         % \centering
+%         \raggedleft
+%         \includegraphics[height=\themeMPI@logoheight]{logos/luh_logo_rgb_0_81_158.png}
+%       \end{minipage}
+%       \par
+%       \vspace*{\themeMPI@logopadding}
+%       \begin{minipage}{\themeMPI@logoboxwidth}%
+%         % \centering
+%         \raggedleft
+%         \includegraphics[height=\themeMPI@logoheight]{logos/MPI-AEI_wide_E_neg_cmyk.pdf}
+%       \end{minipage}
+%   \end{beamercolorbox}%
+% }
+
+
+% -- V3, with reduced number of logos (sorry Frank)
+\titlegraphic{
+  \def\themeMPI@logoheight{1.8\baselineskip}
+  \def\themeMPI@logoboxwidth{0.3\paperwidth}
+  \begin{beamercolorbox}[center]{titlegraphic}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        % \centering
+        \raggedleft
+        \includegraphics[height=\themeMPI@logoheight]{logos/luh_logo_rgb_0_81_158.png}
+      \end{minipage}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        \tikz[overlay, remember picture]{\node (0,0) {};}  % Just need to make it non-empty
+      \end{minipage}%
+      \begin{minipage}{\themeMPI@logoboxwidth}%
+        \centering
+        \includegraphics[height=\themeMPI@logoheight]{logos/MPI-AEI_wide_E_neg_cmyk.pdf}
+      \end{minipage}%
+  \end{beamercolorbox}%
+}
+
+
+\def\themeMPI@titlepage@leftskip{0.1\paperwidth}
+
+\defbeamertemplate{title page}{MPI}{%
+    \begin{tikzpicture}[overlay,remember picture]%
+        % -- V1
+        % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
+
+        
+        % -- V2
+        % \fill[bg] (current page.south west) -- +(0, 0.1\paperheight) -- +(\paperwidth, 0.2\paperheight) -- (current page.south east) -- cycle;
+        
+        % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
+
+
+        % -- V3, as none of the above go particularly well with the titlegraphics on the bottom
+        \fill[fg!50!bg] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
+    
+        \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
+
+        \node[anchor=north east, xshift=8pt, yshift=40pt] at (current page.north east) {\includegraphics[height=0.5\paperheight]{logos/pferd-links_Weiss.png}};
+        
+        % \node[anchor=south west, xshift=-20pt, yshift=-4pt] at (current page.south west) {\includegraphics[height=0.4\paperheight]{logos/pferd-links_gruen.png}};
+        
+        \node[anchor=south west, xshift=-20pt, yshift=-4pt] at (current page.south west) {\includegraphics[height=0.4\paperheight]{logos/Leibniz-GanzkФrper-Gruen.png}};
+    
+    \end{tikzpicture}%
+    % 
+    \par%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeMPI@titlepage@leftskip,ignorebg]{title}%
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip2.5em\par%
+    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeMPI@titlepage@leftskip]{author}%
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}%
+    \par%
+    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeMPI@titlepage@leftskip]{institute}%
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}%
+    \par%
+    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeMPI@titlepage@leftskip]{date}%
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}%
+}
+
+
+% \setbeamertemplate{title page}[BMGroup]
+\setbeamertemplate{title page}[MPI]
 
 
 \mode

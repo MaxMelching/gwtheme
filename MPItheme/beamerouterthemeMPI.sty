@@ -21,18 +21,19 @@
     \vskip\themeMPI@headerskip%
     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
     % \insertframetitle%
-    \strut\insertframetitle%\strut\par%
+    \strut\insertframetitle{} \strut%\par%
     \ifx\insertframesubtitle\@empty%
     \else%
         % \ -- \ \insertframesubtitle%
         {%
             \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-            \ -- \ \insertframesubtitle%
+            \ \textbf{---} \ \insertframesubtitle%
+            % \ \textbullet \ \insertframesubtitle%
             % \strut\par%
         }%
     \fi%
     % -- Comment following line to hide framenumber
-    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
+    % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
 }
 % -- No need to use \setbeamertemplate{frametitle}[MPI]
 
@@ -52,18 +53,23 @@
         \ifx\insertframesubtitle\@empty%
             \ifx\insertsubsection\@empty%
             \else%
-                \ -- \ \insertsubsection%
+                \ \textbf{---} \ \insertsubsection%
+                % \ \textbullet \ \insertsubsection%
             \fi%
         \else%
-            \ -- \ \insertframesubtitle%
+            \ \textbf{---} \ \insertframesubtitle%
+            % \ \textbullet \ \insertframesubtitle%
         \fi%
     }%
     % -- Comment following line to hide framenumber
-    % \hfill{\normalsize\insertframenumber/\inserttotalframenumber}%
+    % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
 }
 
 % -- Not the default. To activate, uncomment next line
 % \setbeamertemplate{frametitle}[MPIsection]
+
+
+% TODO: rather start new line for subsection?
 
 
 

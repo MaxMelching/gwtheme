@@ -21,16 +21,20 @@
 
 \iftoggle{xetexorluatex}{
     % -- Loading Fonts ----------
-    \RequirePackage{fontspec}  % Use fontspec for system fonts
+    \RequirePackage{fontspec}
     \setmainfont{Georgia}
-    % \setmainfont{Heuristica}  % Both are looking good
+    % \setmainfont{Heuristica}  % Really similar to Georgia, which is good
     \usefonttheme{serif}
     
     % \newfontfamily\trebuchet{Trebuchet MS}
     \setsansfont{Trebuchet MS}  % Better, can use \sffamily instead of having to use \trebuchet
     % \setsansfont[Scale=MatchLowercase]{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
     % \setsansfont{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
+    % \setsansfont{HelveticaNeue}
 
+    % -- Other sans families to test
+    % \RequirePackage{caladea,carlito}
+    
 
     % -- Actual Settings ----------
     \setbeamerfont{title}{family=\sffamily,size=\Huge}
