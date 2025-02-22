@@ -1,16 +1,17 @@
-%% start of file `beamerthemeMPI.sty'.
+%% start of file `beamerthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
 % Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
 
 \mode<presentation>
 
-\usefonttheme{MPI}
-\useoutertheme{MPI}
-\useinnertheme{MPI}
+\usefonttheme{GW}
+\useoutertheme{GW}
+\useinnertheme{GW}
 % \usecolortheme{MPI}
 % \usecolortheme{MPIGrav}
-\usecolortheme{MPIGravMixed}
+% \usecolortheme{MPIGravMixed}
+\usecolortheme{Caltech}
 
 
 % -- Change spacing in document
@@ -26,6 +27,9 @@
 }
 
 
+\RequirePackage{array}
+\RequirePackage{colortbl}
+
 \definecolor{BerkeleyGold}{RGB}{193,129,45}
 \definecolor{Medalist}{HTML}{C4820E}
 \definecolor{BerkeleyBlueText}{RGB}{48,99,126}
@@ -36,11 +40,11 @@
 \definecolor{BerkeleyTableBlue2}{RGB}{232,241,245}
 \definecolor{BerkeleyBlue}{HTML}{003262}
 
-\renewcommand{\arraystretch}{1.2}
-\newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
-\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
-\rowcolors{2}{BerkeleyTableBlue1}{BerkeleyTableBlue2}
-\AtBeginEnvironment{tabular}{\color{black}}
+% \renewcommand{\arraystretch}{1.2}
+% \newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
+% \newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
+% \rowcolors{2}{BerkeleyTableBlue1}{BerkeleyTableBlue2}
+% \AtBeginEnvironment{tabular}{\color{black}}
 
 \mode
 <all>

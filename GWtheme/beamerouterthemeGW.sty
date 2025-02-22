@@ -1,4 +1,4 @@
-%% start of file `beamerouterthemeCaltech.sty'.
+%% start of file `beamerouterthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
 % Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
@@ -9,16 +9,16 @@
 
 % -- Frametitle and headline ----------
 
-\def\themeCaltech@headerskip{0.0667\paperheight}  % Padding from top
+\def\themeGW@headerskip{0.0667\paperheight}  % Padding from top
 
-% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle}
-% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle\par\insertframesubtitle} 
-% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle}
+% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle\par\insertframesubtitle} 
+% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
 
-\defbeamertemplate*{frametitle}{MPI}{%
-    \vskip\themeCaltech@headerskip%
+\defbeamertemplate*{frametitle}{GW}{%
+    \vskip\themeGW@headerskip%
     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
     % \insertframetitle%
     \strut\insertframetitle{} \strut%\par%
@@ -35,12 +35,12 @@
     % -- Comment following line to hide framenumber
     % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
 }
-% -- No need to use \setbeamertemplate{frametitle}[MPI]
+% -- No need to use \setbeamertemplate{frametitle}[GW]
 
 % TODO: check if section is defined and use this? Or check frametitle first and then section?
 
-\defbeamertemplate{frametitle}{MPIsection}{%
-    \vskip\themeCaltech@headerskip%
+\defbeamertemplate{frametitle}{GWsection}{%
+    \vskip\themeGW@headerskip%
     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
     % \insertframetitle%
     \ifx\insertframetitle\@empty%
@@ -66,7 +66,7 @@
 }
 
 % -- Not the default. To activate, uncomment next line
-% \setbeamertemplate{frametitle}[MPIsection]
+% \setbeamertemplate{frametitle}[GWsection]
 
 
 % TODO: rather start new line for subsection?
@@ -77,25 +77,25 @@
 
 % -- Note: for this particular package, paths are strange because we compile from main.tex
 \RequirePackage[
-    % templatefile="MPItheme/generic_template.txt",
-    % templatefile="MPItheme/eccentric_template.txt",
-    % templatefile="MPItheme/generic_template_w_noise.txt",
+    % templatefile="GWtheme/generic_template.txt",
+    % templatefile="GWtheme/eccentric_template.txt",
+    % templatefile="GWtheme/generic_template_w_noise.txt",
     % -- Fancy:
-    % templatefile="MPItheme/generic_template_no_noise.txt",
-    templatefile="MPItheme/generic_template_no_noise_whitened.txt",
-    backgroundsignal="MPItheme/generic_template_w_noise.txt",
+    % templatefile="GWtheme/generic_template_no_noise.txt",
+    templatefile="GWtheme/generic_template_no_noise_whitened.txt",
+    backgroundsignal="GWtheme/generic_template_w_noise.txt",
     % 
-    % templatefile="MPItheme/eccentric_template_no_noise.txt",
-    % backgroundsignal="MPItheme/eccentric_template_w_noise.txt",
+    % templatefile="GWtheme/eccentric_template_no_noise.txt",
+    % backgroundsignal="GWtheme/eccentric_template_w_noise.txt",
     % -- General stuff
     leftpadding=0.6\paperwidth,
     rightpadding=0.006\paperwidth,
     signalheight=20pt,  % Using em here is bad, has different values depending on fontsize, i.e. in particular different when using in frametitle or headline
     % -- Activate following two for above code to be used
     declaretitlebox=false,
-    signalupshift=-0.0667\paperheight-24pt,  % \themeCaltech@headerskip minus estimate of font height. Only use if gwbar is added to beamertheme
+    signalupshift=-0.0667\paperheight-24pt,  % \themeGW@headerskip minus estimate of font height. Only use if gwbar is added to beamertheme
 % ]{gwbar_v1}
-]{../GWtheme/gwbar}
+]{gwbar}
 
 
 
@@ -126,105 +126,127 @@
 
 
 % -- Background ----------
+
+% \def\themeGW@footupshift{0.025\paperheight}
+% \def\themeGW@footvertshift{0.025\paperheight}
+\newlength{\themeGW@footupshift}
+\newlength{\themeGW@footvertshift}
+\setlength{\themeGW@footupshift}{0.025\paperheight}
+\setlength{\themeGW@footvertshift}{0.025\paperheight}
+
+
+\defbeamertemplate*{background}{GW}{%
+    \begin{tikzpicture}[overlay,remember picture]%
+        \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
+
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
+        % TODO: figure out why this inserts two pictures on normal frame
+        \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\pgfuseimage{logo}};
+
+    % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
+    % % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
+    
+    % \node[anchor=south,inner sep=0pt,draw=none,xshift=-0.025\paperheight,yshift=0.025\paperheight] at (current page.south) {\textcolor{bg}{\sffamily\bfseries\small\insertframenumber/\inserttotalframenumber}};
+    \end{tikzpicture}%
+}
+% -- No need to use \setbeamertemplate{background}[GW]
+
+
+% -- Second template, with fancy pattern
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{calc}
 
-\def\themeCaltech@squaresize{3pt}
+\def\themeGW@squaresize{4pt}
 
 \tikzset{
     fillsquare1/.style={
-        black!12!CaltechDarkBlue,  % Slightly darker version of background
         black!12!fg,
         line width=0.8pt,
     },
     fillsquarepath1/.style={
-        % CaltechDarkBlue!90,
-        % CaltechDarkBlue,
         fg,
         postaction=decorate,
         decoration={
             markings,
             mark = between positions 0 and 1 step 1/8 with {
-                \draw[fillsquare1] (-\themeCaltech@squaresize, -\themeCaltech@squaresize) rectangle (\themeCaltech@squaresize, \themeCaltech@squaresize);
+                \draw[fillsquare1] (-\themeGW@squaresize, -\themeGW@squaresize) rectangle (\themeGW@squaresize, \themeGW@squaresize);
             },
         },
     },
     fillsquare2/.style={
-        % CaltechDarkBlue!90!CaltechLightGrey,
-        fg!90!CaltechLightGrey,
+        % fg!90!gray,
+        fg!92!white,
         line width=0.8pt,
         },
     fillsquarepath2/.style={
-        % CaltechDarkBlue,
         fg,
         postaction=decorate,
         decoration={
             markings,
             mark = between positions 0 and 1 step 1/8 with {
-                \draw[fillsquare2] (-\themeCaltech@squaresize, -\themeCaltech@squaresize) rectangle (\themeCaltech@squaresize, \themeCaltech@squaresize);
+                \draw[fillsquare2] (-\themeGW@squaresize, -\themeGW@squaresize) rectangle (\themeGW@squaresize, \themeGW@squaresize);
             },
         },
     },
 }
 
 
-\newlength{\themeCaltech@MeanFootHeight}
-% \setlength{\themeCaltech@MeanFootHeight}{0.08\paperwidth}
-\setlength{\themeCaltech@MeanFootHeight}{0.1\paperwidth}
-
-% \def\RelShift{-\themeCaltech@MeanFootHeight}
-% \def\RelShift{-0.5\themeCaltech@MeanFootHeight}
-
-\newlength{\themeCaltech@PatternCommonShift}
-\newlength{\themeCaltech@PatternRelativeShift}
-
-\setlength{\themeCaltech@PatternCommonShift}{0pt}
-\setlength{\themeCaltech@PatternRelativeShift}{-0.5\themeCaltech@MeanFootHeight}  % Roughly matches website
+\newlength{\themeGW@MeanFootHeight}
+% \setlength{\themeGW@MeanFootHeight}{0.08\paperwidth}
+\setlength{\themeGW@MeanFootHeight}{0.1\paperwidth}
 
 
-\newlength{\themeCaltech@footupshift}
-\newlength{\themeCaltech@footvertshift}
-\setlength{\themeCaltech@footupshift}{0.25\themeCaltech@MeanFootHeight}
-\setlength{\themeCaltech@footvertshift}{0.25\themeCaltech@MeanFootHeight}
+\newlength{\themeGW@PatternCommonShift}
+\newlength{\themeGW@PatternRelativeShift}
+
+\setlength{\themeGW@PatternCommonShift}{0pt}
+\setlength{\themeGW@PatternRelativeShift}{-0.5\themeGW@MeanFootHeight}  % Roughly matches website
 
 
-\defbeamertemplate*{background}{Caltech}{%
+% \newlength{\themeGW@footupshift}
+% \newlength{\themeGW@footvertshift}
+% \setlength{\themeGW@footupshift}{0.25\themeGW@MeanFootHeight}
+% \setlength{\themeGW@footvertshift}{0.25\themeGW@MeanFootHeight}
+
+
+\defbeamertemplate*{background}{GWWithPattern}{%
     \begin{tikzpicture}[overlay,remember picture]%
-        \clip (current page.south west) -- +(0, 0.85\themeCaltech@MeanFootHeight) -- +(\paperwidth, 1.15\themeCaltech@MeanFootHeight) -- (current page.south east) -- cycle;
-        \fill[fg] (current page.south west) -- +(0, \themeCaltech@MeanFootHeight+5pt) -- +(\paperwidth, \themeCaltech@MeanFootHeight+5pt) -- (current page.south east) -- cycle;
+        \clip (current page.south west) -- +(0, 0.85\themeGW@MeanFootHeight) -- +(\paperwidth, 1.15\themeGW@MeanFootHeight) -- (current page.south east) -- cycle;
+        \fill[fg] (current page.south west) -- +(0, \themeGW@MeanFootHeight+5pt) -- +(\paperwidth, \themeGW@MeanFootHeight+5pt) -- (current page.south east) -- cycle;
 
     
         \begin{scope}[
             shift=(current page.south west),
         ]
-            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeCaltech@MeanFootHeight)}
+            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeGW@MeanFootHeight)}
             \pgfmathsetmacro{\LastIndex}{2*\LastIndex+1}  % +1 to make sure we do not encounter rounding errors
             \pgfmathround{\LastIndex}
             \let\LastIndexInt\pgfmathresult
             \foreach \i in {0, 2, 4, ..., \LastIndexInt} {
                 \draw[
                     fillsquarepath1,
-                    shift={(\i*\themeCaltech@MeanFootHeight + \themeCaltech@PatternCommonShift, 0)},
+                    shift={(\i*\themeGW@MeanFootHeight + \themeGW@PatternCommonShift, 0)},
                 ] (0, 0)
-                    -- ++(\themeCaltech@MeanFootHeight, \themeCaltech@MeanFootHeight)
-                    -- ++(\themeCaltech@MeanFootHeight, -\themeCaltech@MeanFootHeight);
+                    -- ++(\themeGW@MeanFootHeight, \themeGW@MeanFootHeight)
+                    -- ++(\themeGW@MeanFootHeight, -\themeGW@MeanFootHeight);
                 
                 \draw[
                     fillsquarepath2,
-                    shift={(\i*\themeCaltech@MeanFootHeight + \themeCaltech@PatternCommonShift + \themeCaltech@PatternRelativeShift, 0)},
+                    shift={(\i*\themeGW@MeanFootHeight + \themeGW@PatternCommonShift + \themeGW@PatternRelativeShift, 0)},
                 ] (0, 0)
-                    -- ++(\themeCaltech@MeanFootHeight, \themeCaltech@MeanFootHeight)
-                    -- ++(\themeCaltech@MeanFootHeight, -\themeCaltech@MeanFootHeight);
+                    -- ++(\themeGW@MeanFootHeight, \themeGW@MeanFootHeight)
+                    -- ++(\themeGW@MeanFootHeight, -\themeGW@MeanFootHeight);
             }
         \end{scope}
             
         % -- Order matters, we want this in foreground
-        % \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeCaltech@footvertshift,yshift=\themeCaltech@footupshift] at (current page.south east) {\pgfuseimage{themeCaltech@background_logo}};
-        % \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeCaltech@footvertshift,yshift=\themeCaltech@footupshift] at (current page.south east) {\insertlogo};
-        \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeCaltech@footvertshift,yshift=\themeCaltech@footupshift] at (current page.south east) {\pgfuseimage{logo}};
+        % \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
+        \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\pgfuseimage{logo}};
     \end{tikzpicture}%
 }
-% -- No need to use \setbeamertemplate{background}[Caltech]
+
+% -- Not the default. To activate, uncomment next line
+\setbeamertemplate{background}[GWWithPattern]
 
 
 % -- Footline and navigation symbols ----------
@@ -242,13 +264,13 @@
 %   \hbox{%
 %   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{author in head/foot}%
 %     \usebeamerfont{author in head/foot}%
-%     \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+%     \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
 %     \strut\MakeUppercase\insertshortauthor{}\strut\par%
-%     % \vspace\themeCaltech@footupshift%
+%     % \vspace\themeGW@footupshift%
 %   \end{beamercolorbox}%
 %   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{framenumber in head/foot}%
 %     \usebeamerfont{framenumber in head/foot}%
-%     % \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+%     % \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
 %     \insertframenumber{}/\inserttotalframenumber{}%
 %   \end{beamercolorbox}%
 %   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
@@ -271,11 +293,11 @@
 % -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
 
 
-\defbeamertemplate*{footline}{MPI}{%
+\defbeamertemplate*{footline}{GW}{%
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
-    \hspace\themeCaltech@footvertshift%
+    \hspace\themeGW@footvertshift%
     {%
         \usebeamerfont{author in head/foot}%
         % \MakeUppercase\insertauthor%
@@ -292,12 +314,12 @@
     }%
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
-    % \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+    % \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
   \end{beamercolorbox}%
   }%
-  \vspace{0.5\themeCaltech@footupshift}%
-  }
-% -- No need to use \setbeamertemplate{footline}[MPI]
+  \vspace{\themeGW@footupshift}%
+}
+% -- No need to use \setbeamertemplate{footline}[GW]
 
 
 \mode
