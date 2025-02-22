@@ -97,8 +97,6 @@
 \RequirePackage{tikz}
 \RequirePackage{calc}
 
-% \setbeamertemplate{title page}[default][left]
-
 
 \def\themeGW@titlepage@leftskip{0.1\paperwidth}
 
@@ -115,7 +113,10 @@
 
 
         % -- V3, as none of the above go particularly well with the titlegraphics on the bottom
-        \fill[fg!50!bg] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
+        \fill[
+            % fg!50!bg,
+            fg,
+        ] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
     
         \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
     \end{tikzpicture}%
@@ -178,7 +179,10 @@
 
 
         % -- V3, as none of the above go particularly well with the titlegraphics on the bottom
-        \fill[fg!50!bg] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
+        \fill[
+            % fg!50!bg,
+            fg,
+        ] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
     
         \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
 
@@ -214,8 +218,9 @@
 }
 
 
-% \setbeamertemplate{title page}[BMGroup]
-\setbeamertemplate{title page}[MPIGrav]
+% \setbeamertemplate{title page}[default][left]
+\setbeamertemplate{title page}[GW]
+% \setbeamertemplate{title page}[MPIGrav]
 
 
 \mode

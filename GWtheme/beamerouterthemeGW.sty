@@ -209,7 +209,7 @@
 % \setlength{\themeGW@footvertshift}{0.25\themeGW@MeanFootHeight}
 
 
-\defbeamertemplate*{background}{GWWithPattern}{%
+\defbeamertemplate{background}{GWWithPattern}{%
     \begin{tikzpicture}[overlay,remember picture]%
         \clip (current page.south west) -- +(0, 0.85\themeGW@MeanFootHeight) -- +(\paperwidth, 1.15\themeGW@MeanFootHeight) -- (current page.south east) -- cycle;
         \fill[fg] (current page.south west) -- +(0, \themeGW@MeanFootHeight+5pt) -- +(\paperwidth, \themeGW@MeanFootHeight+5pt) -- (current page.south east) -- cycle;
@@ -246,7 +246,7 @@
 }
 
 % -- Not the default. To activate, uncomment next line
-\setbeamertemplate{background}[GWWithPattern]
+% \setbeamertemplate{background}[GWWithPattern]
 
 
 % -- Footline and navigation symbols ----------
