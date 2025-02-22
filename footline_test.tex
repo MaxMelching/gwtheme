@@ -31,9 +31,12 @@
     fillsquare1/.style={
         % CaltechGreenGrey,
         % CaltechDarkGrey,
-        CaltechDarkBlue,  % Slightly darker version of background
+        % CaltechDarkBlue,  % Slightly darker version of background
+        % CaltechDarkBlue!90!CaltechDarkGrey,  % Slightly darker version of background
+        black!12!CaltechDarkBlue,  % Slightly darker version of background
         % rotate=45,
-        line width=1pt,
+        % line width=1pt,
+        line width=0.8pt,
         % minimum size=10pt,
         % inner sep=0pt,
         % outer sep=0pt,
@@ -45,7 +48,8 @@
     },
     fillsquarepath1/.style={
         % fg,
-        CaltechDarkBlue!90,
+        % CaltechDarkBlue!90,
+        CaltechDarkBlue,
         postaction=decorate,
         decoration={
             markings,
@@ -58,14 +62,17 @@
     },
     fillsquare2/.style={
         % fg!70!CaltechLightGrey,
-        CaltechDarkBlue!70!CaltechLightGrey,
+        % CaltechDarkBlue!70!CaltechLightGrey,
+        CaltechDarkBlue!90!CaltechLightGrey,
         % rotate=45,
-        line width=1pt,
+        % line width=1pt,
+        line width=0.8pt,
         % opacity=0.5,
     },
     fillsquarepath2/.style={
         % fg,
-        CaltechDarkBlue!90,
+        % CaltechDarkBlue!90,
+        CaltechDarkBlue,
         postaction=decorate,
         decoration={
             markings,
@@ -90,18 +97,28 @@
 \begin{document}
 
 \begin{frame}
+
+{\rmfamily\LARGE\mdseries
+\color{CaltechDarkGrey}  % The more I look at it, the more I like it
+% \color{CaltechDarkBlue!80}
+This is some rather length introductory text}
+
 \begin{tikzpicture}[overlay,remember picture]%
     \clip (current page.south west) -- +(0, 0.85\MeanFootHeight) -- +(\paperwidth, 1.15\MeanFootHeight) -- (current page.south east) -- cycle;
+    % TODO: could also do clipping just on sectionpage, where we then have
+    % the other colored box with same angle on top of the frame. And on the
+    % regular frames, we have straight line
     
-    
+
     % \fill[CaltechDarkBlue] (current page.south west) -- +(0, 0) -- +(\testwidth, \testheight) -- (current page.south east) -- cycle;
     
     \fill[
-        CaltechDarkBlue!90
+        % CaltechDarkBlue!90,
+        CaltechDarkBlue,
     % ] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
     ] (current page.south west) -- +(0, \MeanFootHeight+5pt) -- +(\paperwidth, \MeanFootHeight+5pt) -- (current page.south east) -- cycle;
 
-    \draw[fillsquare1,shift=(current page.south)] (0, 0) rectangle (\squaresize, \squaresize) {};
+    % \draw[fillsquare1,shift=(current page.south)] (0, 0) rectangle (\squaresize, \squaresize) {};
     % \fill[CaltechGreenGrey, rotate=45, shift=(current page.south)] (0, 0) rectangle (\squaresize, \squaresize);
 
 
@@ -113,6 +130,10 @@
     \draw[
         fillsquarepath1,
     ] (0, 0) -- (2, 2);
+
+
+    % -- Testing out fontcolor
+    % \node[shift={(0, -0.1\paperwidth)}] at (current page.north) {\LARGE\color{CaltechDarkGrey}Test};
 
 
     % \draw[
@@ -287,7 +308,13 @@
     %         -- ++(\MeanFootHeight, \MeanFootHeight)
     %         -- ++(\MeanFootHeight, -\MeanFootHeight);
     % }
-    \foreach \i in {0, 2, 4, ..., 8} {
+
+    % \foreach \i in {0, 2, 4, ..., 8} {  % 8 must be set manually
+    \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\MeanFootHeight)}
+    \pgfmathsetmacro{\LastIndex}{2*\LastIndex+1}  % +1 to make sure we do not encounter rounding errors
+    \pgfmathround{\LastIndex}
+    \let\LastIndexInt\pgfmathresult
+    \foreach \i in {0, 2, 4, ..., \LastIndexInt} {
         \draw[
             fillsquarepath1,
             shift={(\i*\MeanFootHeight, 0)},

@@ -1,0 +1,306 @@
+%% start of file `beamerouterthemeCaltech.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
+\mode<presentation>
+% -- Purpose of this file: specify stuff that does not belong to content of the slide, such as headline, footline, background, frametitle
+
+
+% -- Frametitle and headline ----------
+
+\def\themeCaltech@headerskip{0.0667\paperheight}  % Padding from top
+
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle}
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle\par\insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
+% \defbeamertemplate{frametitle}{MPI}{\vskip\themeCaltech@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
+
+\defbeamertemplate*{frametitle}{MPI}{%
+    \vskip\themeCaltech@headerskip%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    % \insertframetitle%
+    \strut\insertframetitle{} \strut%\par%
+    \ifx\insertframesubtitle\@empty%
+    \else%
+        % \ -- \ \insertframesubtitle%
+        {%
+            \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+            \ \textbf{---} \ \insertframesubtitle%
+            % \ \textbullet \ \insertframesubtitle%
+            % \strut\par%
+        }%
+    \fi%
+    % -- Comment following line to hide framenumber
+    % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
+}
+% -- No need to use \setbeamertemplate{frametitle}[MPI]
+
+% TODO: check if section is defined and use this? Or check frametitle first and then section?
+
+\defbeamertemplate{frametitle}{MPIsection}{%
+    \vskip\themeCaltech@headerskip%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+    % \insertframetitle%
+    \ifx\insertframetitle\@empty%
+    \strut\insertsection%
+    \else%
+    \strut\insertframetitle%
+    \fi%
+    {%
+        \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+        \ifx\insertframesubtitle\@empty%
+            \ifx\insertsubsection\@empty%
+            \else%
+                \ \textbf{---} \ \insertsubsection%
+                % \ \textbullet \ \insertsubsection%
+            \fi%
+        \else%
+            \ \textbf{---} \ \insertframesubtitle%
+            % \ \textbullet \ \insertframesubtitle%
+        \fi%
+    }%
+    % -- Comment following line to hide framenumber
+    % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
+}
+
+% -- Not the default. To activate, uncomment next line
+% \setbeamertemplate{frametitle}[MPIsection]
+
+
+% TODO: rather start new line for subsection?
+
+
+
+\RequirePackage{calc}  % For length calculations to work
+
+% -- Note: for this particular package, paths are strange because we compile from main.tex
+\RequirePackage[
+    % templatefile="MPItheme/generic_template.txt",
+    % templatefile="MPItheme/eccentric_template.txt",
+    % templatefile="MPItheme/generic_template_w_noise.txt",
+    % -- Fancy:
+    % templatefile="MPItheme/generic_template_no_noise.txt",
+    templatefile="MPItheme/generic_template_no_noise_whitened.txt",
+    backgroundsignal="MPItheme/generic_template_w_noise.txt",
+    % 
+    % templatefile="MPItheme/eccentric_template_no_noise.txt",
+    % backgroundsignal="MPItheme/eccentric_template_w_noise.txt",
+    % -- General stuff
+    leftpadding=0.6\paperwidth,
+    rightpadding=0.006\paperwidth,
+    signalheight=20pt,  % Using em here is bad, has different values depending on fontsize, i.e. in particular different when using in frametitle or headline
+    % -- Activate following two for above code to be used
+    declaretitlebox=false,
+    signalupshift=-0.0667\paperheight-24pt,  % \themeCaltech@headerskip minus estimate of font height. Only use if gwbar is added to beamertheme
+% ]{gwbar_v1}
+]{gwbar}
+
+
+
+\RequirePackage{tikz}
+
+\tikzset{
+    gwbar@linelayerone/.style={
+        fg,
+        smooth,
+        thick,
+	},
+    gwbar@linelayertwo/.style={
+        % opacity=0.2,
+        bg!50,  % Nicer for transparent titlebox
+        % gray!50!bg,  % Nicer for gwbar titlebox (default)
+		smooth,
+        thick,
+	},
+}
+
+
+\setbeamertemplate{headline}[gwbar]  % -- Requires frametitle that is transparent, otherwise invisible
+% \addtobeamertemplate{frametitle}{}{\drawgwbar}  % For use with gwbar, in case you do not want to use above frametitle template and headline is hidden behind frametitle
+
+
+% -- For use of default frametitle with GW, activate following template
+% \setbeamertemplate{frametitle}[gwbar]
+
+
+% -- Background ----------
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{calc}
+
+\def\themeCaltech@squaresize{3pt}
+
+\tikzset{
+    fillsquare1/.style={
+        black!12!CaltechDarkBlue,  % Slightly darker version of background
+        % black!12!fg,
+        line width=0.8pt,
+    },
+    fillsquarepath1/.style={
+        % CaltechDarkBlue!90,
+        % CaltechDarkBlue,
+        fg,
+        postaction=decorate,
+        decoration={
+            markings,
+            mark = between positions 0 and 1 step 1/8 with {
+                \draw[fillsquare1] (-\themeCaltech@squaresize, -\themeCaltech@squaresize) rectangle (\themeCaltech@squaresize, \themeCaltech@squaresize);
+            },
+        },
+    },
+    fillsquare2/.style={
+        % CaltechDarkBlue!90!CaltechLightGrey,
+        fg!90!CaltechLightGrey,
+        line width=0.8pt,
+        },
+    fillsquarepath2/.style={
+        % CaltechDarkBlue,
+        fg,
+        postaction=decorate,
+        decoration={
+            markings,
+            mark = between positions 0 and 1 step 1/8 with {
+                \draw[fillsquare2] (-\themeCaltech@squaresize, -\themeCaltech@squaresize) rectangle (\themeCaltech@squaresize, \themeCaltech@squaresize);
+            },
+        },
+    },
+}
+
+
+\newlength{\themeCaltech@MeanFootHeight}
+% \setlength{\themeCaltech@MeanFootHeight}{0.08\paperwidth}
+\setlength{\themeCaltech@MeanFootHeight}{0.1\paperwidth}
+
+% \def\RelShift{-\themeCaltech@MeanFootHeight}
+% \def\RelShift{-0.5\themeCaltech@MeanFootHeight}
+
+\newlength{\themeCaltech@PatternCommonShift}
+\newlength{\themeCaltech@PatternRelativeShift}
+
+\setlength{\themeCaltech@PatternCommonShift}{0pt}
+\setlength{\themeCaltech@PatternRelativeShift}{-0.5\themeCaltech@MeanFootHeight}  % Roughly matches website
+
+
+\newlength{\themeCaltech@footupshift}
+\newlength{\themeCaltech@footvertshift}
+\setlength{\themeCaltech@footupshift}{0.25\themeCaltech@MeanFootHeight}
+\setlength{\themeCaltech@footvertshift}{0.25\themeCaltech@MeanFootHeight}
+
+\pgfdeclareimage[height=0.1\paperheight]{themeCaltech@background_logo}{logos/MPI-AEI_wide_E_neg_cmyk}
+
+
+\defbeamertemplate*{background}{Caltech}{%
+    \begin{tikzpicture}[overlay,remember picture]%
+        \clip (current page.south west) -- +(0, 0.85\themeCaltech@MeanFootHeight) -- +(\paperwidth, 1.15\themeCaltech@MeanFootHeight) -- (current page.south east) -- cycle;
+        \fill[fg] (current page.south west) -- +(0, \themeCaltech@MeanFootHeight+5pt) -- +(\paperwidth, \themeCaltech@MeanFootHeight+5pt) -- (current page.south east) -- cycle;
+
+    
+        \begin{scope}[
+            shift=(current page.south west),
+        ]
+            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeCaltech@MeanFootHeight)}
+            \pgfmathsetmacro{\LastIndex}{2*\LastIndex+1}  % +1 to make sure we do not encounter rounding errors
+            \pgfmathround{\LastIndex}
+            \let\LastIndexInt\pgfmathresult
+            \foreach \i in {0, 2, 4, ..., \LastIndexInt} {
+                \draw[
+                    fillsquarepath1,
+                    shift={(\i*\themeCaltech@MeanFootHeight + \themeCaltech@PatternCommonShift, 0)},
+                ] (0, 0)
+                    -- ++(\themeCaltech@MeanFootHeight, \themeCaltech@MeanFootHeight)
+                    -- ++(\themeCaltech@MeanFootHeight, -\themeCaltech@MeanFootHeight);
+                
+                \draw[
+                    fillsquarepath2,
+                    shift={(\i*\themeCaltech@MeanFootHeight + \themeCaltech@PatternCommonShift + \themeCaltech@PatternRelativeShift, 0)},
+                ] (0, 0)
+                    -- ++(\themeCaltech@MeanFootHeight, \themeCaltech@MeanFootHeight)
+                    -- ++(\themeCaltech@MeanFootHeight, -\themeCaltech@MeanFootHeight);
+            }
+        \end{scope}
+            
+        % -- Order matters, we want this in foreground
+        \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeCaltech@footvertshift,yshift=\themeCaltech@footupshift] at (current page.south east) {\pgfuseimage{themeCaltech@background_logo}};
+    \end{tikzpicture}%
+}
+% -- No need to use \setbeamertemplate{background}[Caltech]
+
+
+% -- Footline and navigation symbols ----------
+\setbeamertemplate{navigation symbols}{}
+
+
+% \defbeamertemplate*{footline}{%
+%     \vskip0.15\paperheight%
+% }
+
+% \defbeamertemplate*{footline}{}  % Don't see how previous one makes a difference
+
+% \defbeamertemplate*{footline}{%
+%   \leavevmode%
+%   \hbox{%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{author in head/foot}%
+%     \usebeamerfont{author in head/foot}%
+%     \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+%     \strut\MakeUppercase\insertshortauthor{}\strut\par%
+%     % \vspace\themeCaltech@footupshift%
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{framenumber in head/foot}%
+%     \usebeamerfont{framenumber in head/foot}%
+%     % \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+%     \insertframenumber{}/\inserttotalframenumber{}%
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+%     % 
+%   \end{beamercolorbox}%
+%   }%
+%   \vskip0pt%
+% }
+
+
+\RequirePackage{appendixnumberbeamer}
+\RequirePackage{etoolbox}
+
+% -- Initialize a toggle for appendix
+\newtoggle{inappendix}
+\settoggle{inappendix}{false}
+
+% -- Patch the \appendix command to set the toggle to true
+\pretocmd{\appendix}{\global\toggletrue{inappendix}}{}{}
+% -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
+
+
+\defbeamertemplate*{footline}{MPI}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+    \hspace\themeCaltech@footvertshift
+    {%
+        \usebeamerfont{author in head/foot}%
+        % \MakeUppercase\insertauthor%
+        \MakeUppercase\insertshortauthor% Does not actually make stuff uppercase, for some reason -> thus, if you intend to use this, define the short author with MakeUppercase already
+    }%
+    \iftoggle{inappendix}{%
+        % -- Do not show framenumber in appendix (where progressbar also stops)
+    }{%
+    \hfill%
+    {%
+        \usebeamerfont{framenumber in head/foot}%
+        \insertframenumber/\inserttotalframenumber%
+        }%
+    }%
+    \vspace{0.5\themeCaltech@footupshift}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+    % \hspace\themeCaltech@footvertshift%\vspace\themeCaltech@footupshift%
+  \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+% -- No need to use \setbeamertemplate{footline}[MPI]
+
+
+
+\mode
+<all>
