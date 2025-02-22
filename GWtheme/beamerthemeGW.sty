@@ -20,13 +20,6 @@
 
 
 % -- Following just copied to make stuff work for Berkeley theme
-\newcommand{\smallframetitle}{%
-  % % \setbeamertemplate{frametitle}{\vskip0.15\paperheight\insertframetitle}
-  % \setbeamertemplate{frametitle}{\vskip0.08\paperheight\insertframetitle}
-  % \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-}
-
-
 \RequirePackage{array}
 \RequirePackage{colortbl}
 
@@ -40,11 +33,10 @@
 \definecolor{BerkeleyTableBlue2}{RGB}{232,241,245}
 \definecolor{BerkeleyBlue}{HTML}{003262}
 
-% \renewcommand{\arraystretch}{1.2}
-% \newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
-% \newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
-% \rowcolors{2}{BerkeleyTableBlue1}{BerkeleyTableBlue2}
-% \AtBeginEnvironment{tabular}{\color{black}}
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
+\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
+\AtBeginEnvironment{tabular}{\color{black}}
 
 \mode
 <all>

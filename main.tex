@@ -1,12 +1,17 @@
 %% Requires compilation with XeLaTeX or LuaLaTeX
-\documentclass[10pt]{beamer}
-\usepackage[dvipsnames,table,x11names]{xcolor}
+\documentclass[10pt,xcolor={dvipsnames,table,x11names}]{beamer}
+% -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
 
 % -- Include theme
 \makeatletter
-\def\input@path{{./MPItheme/}}
+\def\input@path{{./GWtheme/}}
 \makeatother
-\usetheme{MPI}
+\usetheme{GW}
+
+
+\pgfdeclareimage[height=0.1\paperheight]{logo}{logos/MPI-AEI_wide_E_neg_cmyk}
+% \logo{\includegraphics[height=0.1\paperheight]{logos/MPI-AEI_wide_E_neg_cmyk.pdf}}
+% \logo{\pgfdeclareimage[height=0.1\paperheight]{themeCaltech@background_logo}{logos/MPI-AEI_wide_E_neg_cmyk}}
 
 
 \usepackage{appendixnumberbeamer}  % Use of \appendix stops framenumber counting
@@ -69,8 +74,6 @@ denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{
 
 \subsection{Tables and Figures}
 
-\smallframetitle
-
 \begin{frame}{Tables and Figures}
 
 \begin{itemize}
@@ -84,7 +87,9 @@ denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{
 \begin{tabular}{l r}
 \tableheadrow
 \tableheadcol{Item} & \tableheadcol{Quantity} \\
+\rowcolor{BerkeleyTableBlue1}
 Widgets & 42 \\
+\rowcolor{BerkeleyTableBlue2}
 Gadgets & 13
 \end{tabular}
 \caption{\label{tab:widgets}An example table.}
