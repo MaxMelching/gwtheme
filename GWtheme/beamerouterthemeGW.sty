@@ -49,59 +49,6 @@
 % -- to change the submode: \setbeamertemplate{frametitle}[GW][submode]
 
 
-% -- To automatically put section in the title -> does not work :/
-% \defbeamertemplate{frametitle}{GWsection}[1][default]{%
-%     \vskip\themeGW@headerskip%
-%     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-%     % \let\hyperlink\@secondoftwo\insertsection%
-%     \ifx\insertframetitle\@empty%
-%         \strut\secname\strut%
-%         % \strut\insertsection\strut%
-%         % \strut Test\strut%
-%         % \strut\par\let\hyperlink\@secondoftwo\insertsection%
-%         % \strut\par\thesection.~\insertsection\strut\par
-%     \else%
-%         \strut\insertframetitle\strut%
-%     \fi%
-%     {%
-%         % -- Activating font is important because length of \par depends on it
-%         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-%         \ifstrequal{#1}{none}{%
-%             \par%
-%         }{%
-%             \ifstrequal{#1}{default}{%
-%                 \ifx\insertframesubtitle\@empty%
-%                     \ifx\insertsubsection\@empty%
-%                         \par%
-%                     \else%
-%                         ~\ \textbf{--} \ \insertsubsection\strut\par%
-%                         % \ \textbullet \ \insertsubsection\strut\par%
-%                     \fi%
-%                 \else%
-%                     ~\ \textbf{--} \ \insertframesubtitle\strut\par%
-%                     % \ \textbullet \ \insertframesubtitle\strut\par%
-%                 \fi%
-%             }{}%
-%             \ifstrequal{#1}{newline}{%
-%             \ifx\insertframesubtitle\@empty%
-%                 \ifx\insertsubsection\@empty%
-%                     \par%
-%                 \else%
-%                     \par\insertsubsection\strut\par%
-%                 \fi%
-%             \else%
-%                 \par\insertframesubtitle\strut\par%
-%             \fi%
-%             }{}%
-%         }%
-%     }%
-%     % -- Comment following line to hide framenumber
-%     % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
-% }
-% -- Not the default. To activate, uncomment next line
-% \setbeamertemplate{frametitle}[GWsection]
-
-% -- Above does not work. Alternative:
 % -- Following code is posted on several threads in Stackoverflow. I took it
 % -- from https://tex.stackexchange.com/questions/109816/automatic-frame-titles-subtitles-with-condition
 % -- and modified it for my needs (in particular, I addressed offset on plain pages)
@@ -123,22 +70,8 @@
         \settoheight{\themeGW@framesubtitleheight}{\usebeamerfont{framesubtitle}Subtitlename}%
         % 
         % \vspace*{-2\themeGW@frametitleheight}\par% 2 accounts for parskip that is happening there
-        \vspace*{-2\themeGW@frametitleheight-\themeGW@framesubtitleheight}\par% 2 accounts for parskip that is happening there
+        \vspace*{-2\themeGW@frametitleheight-\themeGW@framesubtitleheight}% 2 accounts for parskip that is happening there
     \else%
-        % \ifx\insertframetitle\@empty%
-        %     \ifx\insertframesubtitle\@empty%
-        %         \ifx\insertsubsection\@empty%
-        %             % \frametitle{\insertsectionhead}%
-        %             \frametitle{\secname}%
-        %         \else%
-        %             % \frametitle{\insertsubsectionhead}\framesubtitle{\insertsectionhead}%
-        %             \frametitle{\secname}\framesubtitle{\subsecname}%
-        %         \fi%
-        %     \else%
-        %     \fi%
-        % \else%
-        % \fi%
-        % 
         \ifx\insertframetitle\@empty%
             \frametitle{\secname}%
         \fi%
@@ -148,10 +81,6 @@
                 \framesubtitle{\subsecname}%
             \fi%
         \fi%
-        % \else%
-        % \fi%
-        % \else%
-        % \fi%
     \fi%
 }
 % -- To activate, use:
