@@ -1,7 +1,10 @@
 %% start of file `beamerfontthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
-% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme.
+% The file structure, however, follows the DTU template from
+% https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 
 \RequirePackage{etoolbox}
 \newtoggle{xetexorluatex}
@@ -17,28 +20,47 @@
     \togglefalse{xetexorluatex}
 \fi
 
-% -- Note: my personal preference is to switch on LuaTex in the Overleaf compiler, because the Trebuchet Font looks much better than the sans-version of Heuristica (or any replacement for the sans font I to date)
+% -- Note: my personal preference is to use LuaTex because the Trebuchet MS
+% -- font looks much better than the sans-version of Heuristica (or any
+% -- replacement for the sans font I to date).
+
 
 \iftoggle{xetexorluatex}{
-    % -- Loading Fonts ----------
+    % -- Loading Fonts --------------------------------------------------------
     \RequirePackage{fontspec}
     \setmainfont{Georgia}
     % \setmainfont{Heuristica}  % Really similar to Georgia, which is good
+    % \setromanfont{Georgia}  % Not needed when we set mainfont
     \usefonttheme{serif}
+    % \usefonttheme{default}  % Actually decent, but prefer serif -> I think this activates Trebuchet in main body, still nice
     
     % \newfontfamily\trebuchet{Trebuchet MS}
     \setsansfont{Trebuchet MS}  % Better, can use \sffamily instead of having to use \trebuchet
+    % \setsansfont[Scale=MatchLowercase]{Trebuchet MS}  % Better, can use \sffamily instead of having to use \trebuchet
     % \setsansfont[Scale=MatchLowercase]{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
     % \setsansfont{Open Sans}  % Try out? Used by Berkeley theme -> like Trebuchet more
     % \setsansfont{HelveticaNeue}
+
+    % \setromanfont{Georgia}
+    % \setromanfont{Trebuchet MS}
+    % \setromanfont{Trebuchet MS}
+    % \setromanfont{Times}
+
+    % \usefonttheme[onlymath]{serif}
+    % \usefonttheme[onlymath]{structureitalicserif}
+
+    \usepackage{unicode-math}
+    \setmathfont{Latin Modern Math} 
+    % \setmathfont{Times}  % Both are very much alike, no preference
 
     % -- Other sans families to test
     % \RequirePackage{caladea,carlito}
     
 
-    % -- Actual Settings ----------
+    % -- Actual Settings ------------------------------------------------------
     \setbeamerfont{title}{family=\sffamily,size=\Huge}
-    \setbeamerfont{author}{family=\sffamily,size=\Large}
+    \setbeamerfont{subtitle}{family=\sffamily,size=\Large}
+    \setbeamerfont{author}{family=\sffamily,size=\large}
     \setbeamerfont{date}{family=\sffamily,size=\normalsize}
     \setbeamerfont{institute}{family=\sffamily,size=\small}
     
@@ -55,14 +77,16 @@
     
     \setbeamerfont{caption}{size=\footnotesize}
 }{
-    % -- Loading Fonts ----------
+    % -- Loading Fonts --------------------------------------------------------
     \RequirePackage{heuristica}
     \usefonttheme{serif}
+    % \usefonttheme{default}
 
 
-    % -- Actual Settings ----------
+    % -- Actual Settings ------------------------------------------------------
     \setbeamerfont{title}{family=\rmfamily,size=\Huge}
-    \setbeamerfont{author}{family=\rmfamily,size=\Large}
+    \setbeamerfont{subtitle}{family=\rmfamily,size=\Large}
+    \setbeamerfont{author}{family=\rmfamily,size=\large}
     \setbeamerfont{date}{family=\rmfamily,size=\normalsize}
     \setbeamerfont{institute}{family=\rmfamily,size=\small}
     
