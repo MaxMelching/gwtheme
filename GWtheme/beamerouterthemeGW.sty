@@ -1,79 +1,168 @@
 %% start of file `beamerouterthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
-% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme.
+% The file structure, however, follows the DTU template from
+% https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 
 \mode<presentation>
-% -- Purpose of this file: specify stuff that does not belong to content of the slide, such as headline, footline, background, frametitle
+% -- Purpose of this file: specify stuff that does not belong to content of the
+% -- slide, such as headline, footline, background, frametitle.
 
 
-% -- Frametitle and headline ----------
+% -- Frametitle and headline --------------------------------------------------
+\newlength{\themeGW@headerskip}  % Padding from top of frame
+\setlength{\themeGW@headerskip}{0.0667\paperheight}  % Good if only title
+\setlength{\themeGW@headerskip}{0.0333\paperheight}  % Good if subtitle in line below
 
-\def\themeGW@headerskip{0.0667\paperheight}  % Padding from top
-
-% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle}
-% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle\par\insertframesubtitle} 
-% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ \insertframesubtitle} 
-% \defbeamertemplate{frametitle}{GW}{\vskip\themeGW@headerskip\insertframetitle{} \ -- \ {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}}
-
-\defbeamertemplate*{frametitle}{GW}{%
+% -- Allowed input for optional argument (controls mode in which framesubtitle
+% -- is displayed): default, newline, none.
+\defbeamertemplate*{frametitle}{GW}[1][default]{%
     \vskip\themeGW@headerskip%
     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-    % \insertframetitle%
-    \strut\insertframetitle{} \strut%\par%
-    \ifx\insertframesubtitle\@empty%
-    \else%
-        % \ -- \ \insertframesubtitle%
-        {%
-            \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-            \ \textbf{---} \ \insertframesubtitle%
-            % \ \textbullet \ \insertframesubtitle%
-            % \strut\par%
-        }%
-    \fi%
-    % -- Comment following line to hide framenumber
-    % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
-}
-% -- No need to use \setbeamertemplate{frametitle}[GW]
-
-% TODO: check if section is defined and use this? Or check frametitle first and then section?
-
-\defbeamertemplate{frametitle}{GWsection}{%
-    \vskip\themeGW@headerskip%
-    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
-    % \insertframetitle%
-    \ifx\insertframetitle\@empty%
-    \strut\insertsection%
-    \else%
-    \strut\insertframetitle%
-    \fi%
+    \strut\insertframetitle\strut%
     {%
+        % -- Activating font is important because length of \par depends on it
         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
-        \ifx\insertframesubtitle\@empty%
-            \ifx\insertsubsection\@empty%
+        \ifstrequal{#1}{none}{%
+            \par%
+        }{%
+            \ifx\insertframesubtitle\@empty%
+                \par%
             \else%
-                \ \textbf{---} \ \insertsubsection%
-                % \ \textbullet \ \insertsubsection%
+                \ifstrequal{#1}{default}{%
+                    ~\ \textbf{--} \ \insertframesubtitle\strut\par%
+                    % \ \textbullet \ \insertframesubtitle\strut\par%
+                }{}%
+                \ifstrequal{#1}{newline}{%
+                    \strut\par\insertframesubtitle\strut\par%
+                }{}%
             \fi%
-        \else%
-            \ \textbf{---} \ \insertframesubtitle%
-            % \ \textbullet \ \insertframesubtitle%
-        \fi%
+        }%
     }%
     % -- Comment following line to hide framenumber
     % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
 }
+% \setbeamertemplate{frametitle}[GW][default]
+% -- No need to use \setbeamertemplate{frametitle}[GW], except you wish
+% -- to change the submode: \setbeamertemplate{frametitle}[GW][submode]
 
+
+% -- To automatically put section in the title -> does not work :/
+% \defbeamertemplate{frametitle}{GWsection}[1][default]{%
+%     \vskip\themeGW@headerskip%
+%     \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+%     % \let\hyperlink\@secondoftwo\insertsection%
+%     \ifx\insertframetitle\@empty%
+%         \strut\secname\strut%
+%         % \strut\insertsection\strut%
+%         % \strut Test\strut%
+%         % \strut\par\let\hyperlink\@secondoftwo\insertsection%
+%         % \strut\par\thesection.~\insertsection\strut\par
+%     \else%
+%         \strut\insertframetitle\strut%
+%     \fi%
+%     {%
+%         % -- Activating font is important because length of \par depends on it
+%         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+%         \ifstrequal{#1}{none}{%
+%             \par%
+%         }{%
+%             \ifstrequal{#1}{default}{%
+%                 \ifx\insertframesubtitle\@empty%
+%                     \ifx\insertsubsection\@empty%
+%                         \par%
+%                     \else%
+%                         ~\ \textbf{--} \ \insertsubsection\strut\par%
+%                         % \ \textbullet \ \insertsubsection\strut\par%
+%                     \fi%
+%                 \else%
+%                     ~\ \textbf{--} \ \insertframesubtitle\strut\par%
+%                     % \ \textbullet \ \insertframesubtitle\strut\par%
+%                 \fi%
+%             }{}%
+%             \ifstrequal{#1}{newline}{%
+%             \ifx\insertframesubtitle\@empty%
+%                 \ifx\insertsubsection\@empty%
+%                     \par%
+%                 \else%
+%                     \par\insertsubsection\strut\par%
+%                 \fi%
+%             \else%
+%                 \par\insertframesubtitle\strut\par%
+%             \fi%
+%             }{}%
+%         }%
+%     }%
+%     % -- Comment following line to hide framenumber
+%     % \hfill{\scriptsize\insertframenumber/\inserttotalframenumber}%
+% }
 % -- Not the default. To activate, uncomment next line
 % \setbeamertemplate{frametitle}[GWsection]
 
+% -- Above does not work. Alternative:
+% -- Following code is posted on several threads in Stackoverflow. I took it
+% -- from https://tex.stackexchange.com/questions/109816/automatic-frame-titles-subtitles-with-condition
+% -- and modified it for my needs (in particular, I addressed offset on plain pages)
+\CheckCommand*\beamer@checkframetitle{%
+    \@ifnextchar\bgroup\beamer@inlineframetitle{}}
+\renewcommand*\beamer@checkframetitle{%
+    \global\let\beamer@frametitle\relax\@ifnextchar%
+    \bgroup\beamer@inlineframetitle{}}
 
-% TODO: rather start new line for subsection?
+\newlength{\themeGW@frametitleheight}
+\newlength{\themeGW@framesubtitleheight}
 
+
+\newcommand{\autoinsertsection}{%
+    % \settoheight{\themeGW@frametitleheight}{{\usebeamerfont{frametitle}Titlename}}%
+    \ifbeamer@plainframe%
+        % -- Correct for offset that empty title introduces
+        \settoheight{\themeGW@frametitleheight}{\usebeamerfont{frametitle}Titlename}%
+        \settoheight{\themeGW@framesubtitleheight}{\usebeamerfont{framesubtitle}Subtitlename}%
+        % 
+        % \vspace*{-2\themeGW@frametitleheight}\par% 2 accounts for parskip that is happening there
+        \vspace*{-2\themeGW@frametitleheight-\themeGW@framesubtitleheight}\par% 2 accounts for parskip that is happening there
+    \else%
+        % \ifx\insertframetitle\@empty%
+        %     \ifx\insertframesubtitle\@empty%
+        %         \ifx\insertsubsection\@empty%
+        %             % \frametitle{\insertsectionhead}%
+        %             \frametitle{\secname}%
+        %         \else%
+        %             % \frametitle{\insertsubsectionhead}\framesubtitle{\insertsectionhead}%
+        %             \frametitle{\secname}\framesubtitle{\subsecname}%
+        %         \fi%
+        %     \else%
+        %     \fi%
+        % \else%
+        % \fi%
+        % 
+        \ifx\insertframetitle\@empty%
+            \frametitle{\secname}%
+        \fi%
+        \ifx\insertframesubtitle\@empty%
+            \ifx\insertsubsection\@empty%
+            \else%
+                \framesubtitle{\subsecname}%
+            \fi%
+        \fi%
+        % \else%
+        % \fi%
+        % \else%
+        % \fi%
+    \fi%
+}
+% -- To activate, use:
+% \addtobeamertemplate{frametitle}{\autoinsertsection}{}
 
 
 \RequirePackage{calc}  % For length calculations to work
+
+\newlength{\themeGW@gwbarshift}
+\setlength{\themeGW@gwbarshift}{-\themeGW@headerskip-24pt}  % Padding from top of frame and estimate of font height
+
 
 % -- Note: for this particular package, paths are strange because we compile from main.tex
 \RequirePackage[
@@ -93,22 +182,19 @@
     signalheight=20pt,  % Using em here is bad, has different values depending on fontsize, i.e. in particular different when using in frametitle or headline
     % -- Activate following two for above code to be used
     declaretitlebox=false,
-    signalupshift=-0.0667\paperheight-24pt,  % \themeGW@headerskip minus estimate of font height. Only use if gwbar is added to beamertheme
-% ]{gwbar_v1}
+    signalupshift=\themeGW@gwbarshift,  % Only use if gwbar is added to beamertheme
 ]{gwbar}
-
 
 
 \RequirePackage{tikz}
 
 \tikzset{
-    gwbar@linelayerone/.style={
+    gwbar@linestyle/.style={
         fg,
         smooth,
         thick,
 	},
-    gwbar@linelayertwo/.style={
-        % opacity=0.2,
+    gwbar@bglinestyle/.style={
         bg!50,  % Nicer for transparent titlebox
         % gray!50!bg,  % Nicer for gwbar titlebox (default)
 		smooth,
@@ -120,28 +206,33 @@
 \setbeamertemplate{headline}[gwbar]  % -- Requires frametitle that is transparent, otherwise invisible
 % \addtobeamertemplate{frametitle}{}{\drawgwbar}  % For use with gwbar, in case you do not want to use above frametitle template and headline is hidden behind frametitle
 
-
 % -- For use of default frametitle with GW, activate following template
 % \setbeamertemplate{frametitle}[gwbar]
 
 
-% -- Background ----------
-
-% \def\themeGW@footupshift{0.025\paperheight}
-% \def\themeGW@footvertshift{0.025\paperheight}
+% -- Background ---------------------------------------------------------------
 \newlength{\themeGW@footupshift}
 \newlength{\themeGW@footvertshift}
+
+\newlength{\themeGW@upperleftbg}
+\newlength{\themeGW@upperrightbg}
+
+
 \setlength{\themeGW@footupshift}{0.025\paperheight}
 \setlength{\themeGW@footvertshift}{0.025\paperheight}
+
+\setlength{\themeGW@upperleftbg}{0.1\paperheight}
+\setlength{\themeGW@upperrightbg}{0.14\paperheight}
 
 
 \defbeamertemplate*{background}{GW}{%
     \begin{tikzpicture}[overlay,remember picture]%
-        \fill[fg] (current page.south west) -- +(0, 0.08\paperheight) -- +(\paperwidth, 0.16\paperheight) -- (current page.south east) -- cycle;
+        \fill[fg] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
 
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
         % TODO: figure out why this inserts two pictures on normal frame
-        \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\pgfuseimage{logo}};
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@titlegraphicvertshift,yshift=\themeGW@titlegraphicupshift] at (current page.south east) {\pgfuseimage{logo}};
+        \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
 
     % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
     % % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
@@ -156,7 +247,8 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{calc}
 
-\def\themeGW@squaresize{4pt}
+\newlength{\themeGW@squaresize}
+\setlength{\themeGW@squaresize}{3.6pt}
 
 \tikzset{
     fillsquare1/.style={
@@ -191,57 +283,71 @@
 }
 
 
-\newlength{\themeGW@MeanFootHeight}
-% \setlength{\themeGW@MeanFootHeight}{0.08\paperwidth}
-\setlength{\themeGW@MeanFootHeight}{0.1\paperwidth}
-
-
+\newlength{\themeGW@MaxFootHeight}
 \newlength{\themeGW@PatternCommonShift}
 \newlength{\themeGW@PatternRelativeShift}
+\newlength{\themeGW@SquarePathHeight}
 
+
+% \setlength{\themeGW@footupshift}{0.25\themeGW@MaxFootHeight}
+% \setlength{\themeGW@footvertshift}{0.25\themeGW@MaxFootHeight}
+
+% \setlength{\themeGW@upperleftbg}{0.1\paperheight}
+% \setlength{\themeGW@upperrightbg}{0.14\paperheight}
+
+
+\setlength{\themeGW@MaxFootHeight}{\themeGW@upperrightbg}
+\setlength{\themeGW@SquarePathHeight}{\themeGW@MaxFootHeight - \themeGW@squaresize}
+% \setlength{\themeGW@SquarePathHeight}{\themeGW@upperleftbg}
 \setlength{\themeGW@PatternCommonShift}{0pt}
-\setlength{\themeGW@PatternRelativeShift}{-0.5\themeGW@MeanFootHeight}  % Roughly matches website
-
-
-% \newlength{\themeGW@footupshift}
-% \newlength{\themeGW@footvertshift}
-% \setlength{\themeGW@footupshift}{0.25\themeGW@MeanFootHeight}
-% \setlength{\themeGW@footvertshift}{0.25\themeGW@MeanFootHeight}
+\setlength{\themeGW@PatternRelativeShift}{-0.5\themeGW@SquarePathHeight}  % So that we have shift by one square
 
 
 \defbeamertemplate{background}{GWWithPattern}{%
     \begin{tikzpicture}[overlay,remember picture]%
-        \clip (current page.south west) -- +(0, 0.85\themeGW@MeanFootHeight) -- +(\paperwidth, 1.15\themeGW@MeanFootHeight) -- (current page.south east) -- cycle;
-        \fill[fg] (current page.south west) -- +(0, \themeGW@MeanFootHeight+5pt) -- +(\paperwidth, \themeGW@MeanFootHeight+5pt) -- (current page.south east) -- cycle;
+        % \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
+        % \clip (current page.south west) -- ++(0, 0.8\themeGW@MaxFootHeight) -- ++(\paperwidth, \themeGW@squaresize) -- (current page.south east) -- cycle;
+        % % \clip (current page.south west) -- +(0, 0.8\themeGW@MaxFootHeight) -- +(\paperwidth, \themeGW@MaxFootHeight) -- (current page.south east) -- cycle;
+        % % \clip (current page.south west) -- +(0, 0.85\themeGW@MaxFootHeight) -- +(\paperwidth, 1.15\themeGW@MaxFootHeight) -- (current page.south east) -- cycle;
+        % \fill[fg] (current page.south west) -- +(0, \themeGW@upperrightbg) -- +(\paperwidth, \themeGW@upperrightbg) -- (current page.south east) -- cycle;
 
-    
+        % -- We can just do clipping in other scope and immediately draw correct thing here
+        \fill[fg] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
+        
+
         \begin{scope}[
             shift=(current page.south west),
         ]
-            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeGW@MeanFootHeight)}
+            \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
+
+            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeGW@SquarePathHeight)}
             \pgfmathsetmacro{\LastIndex}{2*\LastIndex+1}  % +1 to make sure we do not encounter rounding errors
             \pgfmathround{\LastIndex}
             \let\LastIndexInt\pgfmathresult
             \foreach \i in {0, 2, 4, ..., \LastIndexInt} {
                 \draw[
                     fillsquarepath1,
-                    shift={(\i*\themeGW@MeanFootHeight + \themeGW@PatternCommonShift, 0)},
+                    shift={(\i*\themeGW@SquarePathHeight + \themeGW@PatternCommonShift, 0)},
                 ] (0, 0)
-                    -- ++(\themeGW@MeanFootHeight, \themeGW@MeanFootHeight)
-                    -- ++(\themeGW@MeanFootHeight, -\themeGW@MeanFootHeight);
+                    -- ++(\themeGW@SquarePathHeight, \themeGW@SquarePathHeight)
+                    -- ++(\themeGW@SquarePathHeight, -\themeGW@SquarePathHeight);
                 
                 \draw[
                     fillsquarepath2,
-                    shift={(\i*\themeGW@MeanFootHeight + \themeGW@PatternCommonShift + \themeGW@PatternRelativeShift, 0)},
+                    shift={(\i*\themeGW@SquarePathHeight + \themeGW@PatternCommonShift + \themeGW@PatternRelativeShift, 0)},
                 ] (0, 0)
-                    -- ++(\themeGW@MeanFootHeight, \themeGW@MeanFootHeight)
-                    -- ++(\themeGW@MeanFootHeight, -\themeGW@MeanFootHeight);
+                    -- ++(\themeGW@SquarePathHeight, \themeGW@SquarePathHeight)
+                    -- ++(\themeGW@SquarePathHeight, -\themeGW@SquarePathHeight);
             }
         \end{scope}
             
         % -- Order matters, we want this in foreground
-        % \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
-        \node[draw=none,anchor=south east,inner sep=0pt,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\pgfuseimage{logo}};
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
+        \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+        
+        % -- Is overpainting better than clipping?
+        % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight + \themeGW@squaresize) -- +(\paperwidth, \themeGW@MaxFootHeight + \themeGW@squaresize) -- cycle;
+        % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight) -- +(\paperwidth, \themeGW@MaxFootHeight) -- cycle;
     \end{tikzpicture}%
 }
 
@@ -249,36 +355,15 @@
 % \setbeamertemplate{background}[GWWithPattern]
 
 
-% -- Footline and navigation symbols ----------
+% -- Footline and navigation symbols ------------------------------------------
 \setbeamertemplate{navigation symbols}{}
-
 
 % \defbeamertemplate*{footline}{%
 %     \vskip0.15\paperheight%
 % }
+% -- Default template of Berkeley, but I want something in footline
 
 % \defbeamertemplate*{footline}{}  % Don't see how previous one makes a difference
-
-% \defbeamertemplate*{footline}{%
-%   \leavevmode%
-%   \hbox{%
-%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{author in head/foot}%
-%     \usebeamerfont{author in head/foot}%
-%     \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
-%     \strut\MakeUppercase\insertshortauthor{}\strut\par%
-%     % \vspace\themeGW@footupshift%
-%   \end{beamercolorbox}%
-%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%{framenumber in head/foot}%
-%     \usebeamerfont{framenumber in head/foot}%
-%     % \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
-%     \insertframenumber{}/\inserttotalframenumber{}%
-%   \end{beamercolorbox}%
-%   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
-%     % 
-%   \end{beamercolorbox}%
-%   }%
-%   \vskip0pt%
-% }
 
 
 \RequirePackage{appendixnumberbeamer}
@@ -296,7 +381,7 @@
 \defbeamertemplate*{footline}{GW}{%
   \leavevmode%
   \hbox{%
-  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+  \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
     \hspace\themeGW@footvertshift%
     {%
         \usebeamerfont{author in head/foot}%
@@ -313,7 +398,7 @@
         }%
     }%
   \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex]{footline}%
+  \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
     % \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
   \end{beamercolorbox}%
   }%
