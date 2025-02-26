@@ -1,13 +1,16 @@
 %% start of file `beamerinnerthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
-% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme.
+% The file structure, however, follows the DTU template from
+% https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 
 \mode<presentation>
+% -- Purpose of this file: specify how things look that make up content of the
+% -- frame. For example style of enumerations etc or the table of contents.
 
-% -- Purpose of this file: specify how things look that make up content of the frame. For example style of enumerations etc or the table of contents
-
-% -- Appearance and margins for items ----------
+% -- Appearance and margins for items -----------------------------------------
 % \setbeamertemplate{itemize item}{\textbullet}
 \setbeamertemplate{itemize item}{$\blacktriangleright$}
 \setbeamertemplate{itemize subitem}{--}
@@ -28,14 +31,15 @@
 \setbeamertemplate{subsection in toc}[square]%[subsections numbered]
 
 
-% -- Section and subsection page ----------
+% -- Section and subsection page ----------------------------------------------
 % -> adapted from: https://github.com/pcafrica/focus-beamertheme/blob/main/beamerinnerthemefocus.sty
+
 \defbeamertemplate*{section page}{GW}{%
     {%
         \begin{tikzpicture}[overlay, remember picture]
             \usebeamercolor[bg]{section page}
             % \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
-            \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.52\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
+            \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.56\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
         \end{tikzpicture}%
     }
     
@@ -79,28 +83,32 @@
 }
 
 
-\AtBeginSection[]{%
-    \begin{frame}[plain, noframenumbering]{}
-        \sectionpage
-    \end{frame}%
-}
-% -- This at most. Looks not too bad
 
-% \AtBeginSubsection[]{%
-%     \begin{frame}[plain, noframenumbering]{}
-%         \subsectionpage
-%     \end{frame}%
-% }
-
-
-% -- Title page ----------
+% -- Title page ---------------------------------------------------------------
 \RequirePackage{tikz}
 \RequirePackage{calc}
 
 
 \def\themeGW@titlepage@leftskip{0.1\paperwidth}
 
-\defbeamertemplate{title page}{GW}{%
+\titlegraphic{
+  \def\themeGW@logoheight{1.8\baselineskip}
+  \def\themeGW@logoboxwidth{0.3\paperwidth}
+  \begin{beamercolorbox}[center]{titlegraphic}%
+      \begin{minipage}{\themeGW@logoboxwidth}%
+        \tikz[overlay, remember picture]{\node (0,0) {};}  % Just need to make it non-empty
+      \end{minipage}%
+      \begin{minipage}{\themeGW@logoboxwidth}%
+        \tikz[overlay, remember picture]{\node (0,0) {};}  % Just need to make it non-empty
+      \end{minipage}%
+      \begin{minipage}{\themeGW@logoboxwidth}%
+        \centering
+        \tikz{\node[anchor=south, yshift=10pt] at (current page.south) {\pgfuseimage{logo}};}
+      \end{minipage}%
+  \end{beamercolorbox}%
+}
+
+\defbeamertemplate*{title page}{GW}{%
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
@@ -118,8 +126,9 @@
             fg,
         ] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
     
-        \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
-    \end{tikzpicture}%
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
+        \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
+      \end{tikzpicture}%
     % 
     \par%
     \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
@@ -146,7 +155,7 @@
 
 
 
-\titlegraphic{
+\def\GWthemestandardtitlegraphic{
   \def\themeGW@logoheight{1.8\baselineskip}
   \def\themeGW@logoboxwidth{0.3\paperwidth}
   \begin{beamercolorbox}[center]{titlegraphic}%
@@ -165,6 +174,7 @@
   \end{beamercolorbox}%
 }
 
+\def\themeGW@titlepage@leftskip{0.05\paperwidth}
 
 \defbeamertemplate{title page}{MPIGrav}{%
     \begin{tikzpicture}[overlay,remember picture]%
@@ -195,7 +205,8 @@
     \end{tikzpicture}%
     % 
     \par%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
+    \begin{beamercolorbox}[wd=0.6\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
+      \centering%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
       \else%
@@ -204,22 +215,29 @@
       \fi%     
     \end{beamercolorbox}%
     \vskip2.5em\par%
-    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{author}%
+    \begin{beamercolorbox}[wd=0.6\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{author}%
+      \centering%
       \usebeamerfont{author}\insertauthor
     \end{beamercolorbox}%
     \par%
-    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{institute}%
+    \begin{beamercolorbox}[wd=0.6\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{institute}%
+      \centering%
       \usebeamerfont{institute}\insertinstitute
     \end{beamercolorbox}%
     \par%
-    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{date}%
+    \begin{beamercolorbox}[wd=0.6\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{date}%
+      \centering%
       \usebeamerfont{date}\insertdate
     \end{beamercolorbox}%
 }
 
 
 % \setbeamertemplate{title page}[default][left]
-\setbeamertemplate{title page}[GW]
+
+% \titlegraphic{\BMGrouptitlegraphic}
+% \setbeamertemplate{title page}[BMGroup]
+
+% \titlegraphic{\GWthemestandardtitlegraphic}
 % \setbeamertemplate{title page}[MPIGrav]
 
 
