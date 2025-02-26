@@ -1,7 +1,10 @@
 %% start of file `beamerthemeGW.sty'.
 % Author: Max Melching (m-melching@web.de), 2025
 %
-% Acknowledgements: this theme is a based on the UC Berkeley beamer theme. The file structure, however, follows the DTU template from https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme.
+% The file structure, however, follows the DTU template from
+% https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
 
 \mode<presentation>
 
@@ -9,6 +12,7 @@
 \useoutertheme{GW}
 \useinnertheme{GW}
 % \usecolortheme{MPI}
+% \usecolortheme{MPIMixed}
 % \usecolortheme{MPIGrav}
 \usecolortheme{MPIGravMixed}
 % \usecolortheme{Caltech}
@@ -18,25 +22,6 @@
 \fontdimen2\font=3pt % Increase space between words, found original one too small -> see https://tex.stackexchange.com/questions/23921/how-to-shorten-shrink-spaces-between-words. Has to be IN document for some reason
 \linespread{1.1} % Increase space between lines (found original one too small)
 
-
-% -- Following just copied to make stuff work for Berkeley theme
-\RequirePackage{array}
-\RequirePackage{colortbl}
-
-\definecolor{BerkeleyGold}{RGB}{193,129,45}
-\definecolor{Medalist}{HTML}{C4820E}
-\definecolor{BerkeleyBlueText}{RGB}{48,99,126}
-\definecolor{FoundersRock}{HTML}{3B7EA1}
-\definecolor{BerkeleyTableGold}{RGB}{222,157,46}
-\definecolor{CaliforniaGold}{HTML}{FDB515}
-\definecolor{BerkeleyTableBlue1}{RGB}{207,226,234}
-\definecolor{BerkeleyTableBlue2}{RGB}{232,241,245}
-\definecolor{BerkeleyBlue}{HTML}{003262}
-
-\renewcommand{\arraystretch}{1.2}
-\newcommand{\tableheadrow}{\rowcolor{BerkeleyTableGold}}
-\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
-\AtBeginEnvironment{tabular}{\color{black}}
 
 \mode
 <all>

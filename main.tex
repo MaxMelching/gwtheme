@@ -1,12 +1,42 @@
 %% Requires compilation with XeLaTeX or LuaLaTeX
-\documentclass[10pt,xcolor={dvipsnames,table,x11names}]{beamer}
-% -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
 
 % -- Include theme
 \makeatletter
 \def\input@path{{./GWtheme/}}
 \makeatother
 \usetheme{GW}
+
+% \usecolortheme{MPIGrav}
+% \usecolortheme{MPI}
+% \usecolortheme{Caltech}
+
+% \setbeamertemplate{background}[GWWithPattern]
+
+% \setbeamertemplate{headline}{}  % Hide GW progressbar to speed up compilation
+
+% \setbeamertemplate{frametitle}[GW][newline]
+% \setbeamertemplate{frametitle}[GW][none]
+% \setbeamertemplate{frametitle}[GWsection]%[newline]
+
+
+% -- Activate/deactivate at will
+\AtBeginSection[]{%
+    \begin{frame}[plain, noframenumbering]{}{}
+        \sectionpage
+    \end{frame}%
+}
+
+% \AtBeginSubsection[]{%
+%     \begin{frame}[plain, noframenumbering]{}{}
+%         \subsectionpage
+%     \end{frame}%
+% }
 
 
 \pgfdeclareimage[height=0.1\paperheight]{logo}{logos/MPI-AEI_wide_E_neg_cmyk}
@@ -26,6 +56,16 @@
 \date{Date of Presentation}
 
 
+% -- Make Berkeley examples work
+\usepackage{array}
+\usepackage{colortbl}
+
+
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\tableheadrow}{\rowcolor{block title.fg}}
+\newcommand{\tableheadcol}[1]{{\bfseries\color{white}#1}}
+\AtBeginEnvironment{tabular}{\color{black}}
+
 
 \begin{document}
 
@@ -44,8 +84,9 @@
 \end{frame}
 
 \section{Introduction}
+  \subsection{Test}
 
-\begin{frame}{Introduction}{Test}
+\begin{frame}%{overwritten}{overwritten, again}
 
 \begin{itemize}
   \item Your introduction goes here!
@@ -87,9 +128,9 @@ denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{
 \begin{tabular}{l r}
 \tableheadrow
 \tableheadcol{Item} & \tableheadcol{Quantity} \\
-\rowcolor{BerkeleyTableBlue1}
+\rowcolor{gray!42}
 Widgets & 42 \\
-\rowcolor{BerkeleyTableBlue2}
+\rowcolor{gray!24}
 Gadgets & 13
 \end{tabular}
 \caption{\label{tab:widgets}An example table.}
