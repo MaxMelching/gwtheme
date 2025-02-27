@@ -140,6 +140,10 @@
 
 
 % -- Background ---------------------------------------------------------------
+\RequirePackage{etoolbox}
+\newtoggle{themeGW@logoinfoot}  % Determines if logo in background or footline
+\toggletrue{themeGW@logoinfoot}
+
 \newlength{\themeGW@footupshift}
 \newlength{\themeGW@footvertshift}
 
@@ -161,7 +165,9 @@
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
         % TODO: figure out why this inserts two pictures on normal frame
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@titlegraphicvertshift,yshift=\themeGW@titlegraphicupshift] at (current page.south east) {\pgfuseimage{logo}};
-        \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+        \iftoggle{themeGW@logoinfoot}{}{
+            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+        }
 
     % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
     % % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\insertframenumber/\inserttotalframenumber \ \normalsize\MakeUppercase\insertauthor}};
@@ -272,8 +278,10 @@
             
         % -- Order matters, we want this in foreground
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
-        \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
-        
+        \iftoggle{themeGW@logoinfoot}{}{
+            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+        }
+
         % -- Is overpainting better than clipping?
         % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight + \themeGW@squaresize) -- +(\paperwidth, \themeGW@MaxFootHeight + \themeGW@squaresize) -- cycle;
         % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight) -- +(\paperwidth, \themeGW@MaxFootHeight) -- cycle;
@@ -307,7 +315,7 @@
 % -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
 
 
-\defbeamertemplate*{footline}{GW}{%
+\defbeamertemplate*{footline}{GW}[1][true]{%
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
@@ -323,17 +331,25 @@
     \hfill%
     {%
         \usebeamerfont{framenumber in head/foot}%
-        \insertframenumber/\inserttotalframenumber%
+        % \ifstrequal{#1}{true}{%
+        \ifbool{#1}{%
+            \insertframenumber/\inserttotalframenumber%
+        }{}%
         }%
     }%
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
-    % \hspace\themeGW@footvertshift%\vspace\themeGW@footupshift%
+    \iftoggle{themeGW@logoinfoot}{%
+        \tikz[overlay,remember picture]{\node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};}%
+    }{}%
   \end{beamercolorbox}%
   }%
   \vspace{\themeGW@footupshift}%
 }
 % -- No need to use \setbeamertemplate{footline}[GW]
+
+
+% TODO: put logo in footline rather than background?
 
 
 \mode
