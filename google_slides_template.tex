@@ -1,0 +1,77 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{./GWtheme/}}
+\makeatother
+\usetheme{GW}
+
+
+% -- Adjust following for different templates
+% \usecolortheme{MPIGravMixed}
+\usecolortheme{MPIMixed}
+% \usecolortheme{MPI}
+% \usecolortheme{MPIGrav}
+% \usecolortheme{Caltech}
+
+% \setbeamertemplate{background}[GWWithPattern]
+
+
+\makeatletter
+
+% \setlength{\themeGW@headerskip}{0.05\paperheight}
+\setlength{\themeGW@headerskip}{0.0667\paperheight}
+
+\setlength{\themeGW@footupshift}{0.036\paperheight}  % Adjust author position
+
+% -- Hide footline stuff
+% \pgfdeclareimage[height=0.1\paperheight]{logo}{}
+\pgfdeclareimage[height=0.1\paperheight]{logo}{logos/MPI-AEI_wide_E_neg_cmyk}  % Avoid error, not shown anyway
+\togglefalse{themeGW@logoinfoot}  % Determines if logo shown on sectionpages or not
+% \titlegraphic{}  % Determines if logo shown on titlepage or not
+\setbeamertemplate{footline}[GW][false]  % Hide framenumbers, shall be set manually in Google slides
+
+\makeatother
+
+
+\usepackage{appendixnumberbeamer}  % Use of \appendix stops framenumber counting
+
+
+\title{}
+\subtitle{}
+\author[YOUR NAME]{}
+\institute{}
+\date{}
+
+
+
+\begin{document}
+
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+\setbeamertemplate{background}{}
+\begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
+  \titlepage
+\end{frame}
+}
+
+
+\section{}
+
+\begin{frame}[plain, noframenumbering]{}{}
+    \sectionpage
+\end{frame}%
+
+
+\begin{frame}
+    
+\end{frame}
+
+
+\end{document}
