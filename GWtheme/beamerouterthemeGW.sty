@@ -62,7 +62,8 @@
 \newlength{\themeGW@framesubtitleheight}
 
 
-\newcommand{\autoinsertsection}{%
+\newcommand{\FramTitleAutoInsertSection}{%
+    \addtobeamertemplate{frametitle}{%
     % \settoheight{\themeGW@frametitleheight}{{\usebeamerfont{frametitle}Titlename}}%
     \ifbeamer@plainframe%
         % -- Correct for offset that empty title introduces
@@ -82,9 +83,9 @@
             \fi%
         \fi%
     \fi%
+    }{}%
 }
-% -- To activate, use:
-% \addtobeamertemplate{frametitle}{\autoinsertsection}{}
+% -- To activate, simply use the command \FramTitleAutoInsertSection
 
 
 \RequirePackage{calc}  % For length calculations to work
@@ -95,21 +96,18 @@
 
 % -- Note: for this particular package, paths are strange because we compile from main.tex
 \RequirePackage[
-    % templatefile="GWtheme/generic_template.txt",
-    % templatefile="GWtheme/eccentric_template.txt",
-    % templatefile="GWtheme/generic_template_w_noise.txt",
-    % -- Fancy:
+    % -- Adjust the paths for templatefile and backgroundsignal here to
+    % -- the location where you store the templates.
     % templatefile="GWtheme/generic_template_no_noise.txt",
     templatefile="GWtheme/generic_template_no_noise_whitened.txt",
     backgroundsignal="GWtheme/generic_template_w_noise.txt",
+    % backgroundsignal="GWtheme/generic_template_w_noise_whitened.txt",
     % 
-    % templatefile="GWtheme/eccentric_template_no_noise.txt",
-    % backgroundsignal="GWtheme/eccentric_template_w_noise.txt",
     % -- General stuff
     leftpadding=0.6\paperwidth,
     rightpadding=0.006\paperwidth,
     signalheight=20pt,  % Using em here is bad, has different values depending on fontsize, i.e. in particular different when using in frametitle or headline
-    % -- Activate following two for above code to be used
+    % -- Activate following two for above template to be used
     declaretitlebox=false,
     signalupshift=\themeGW@gwbarshift,  % Only use if gwbar is added to beamertheme
 ]{gwbar}
@@ -117,6 +115,7 @@
 
 \RequirePackage{tikz}
 
+% -- Optional: set TikZ styles
 \tikzset{
     gwbar@linestyle/.style={
         fg,
@@ -139,6 +138,11 @@
 % \setbeamertemplate{frametitle}[gwbar]
 
 
+% -- In order to avoid division by zero in appendix (where totalframenumber
+% -- is set to zero), we deactivate the progressbar effect as appendix starts.
+\pretocmd{\appendix}{\global\togglefalse{gwbar@progressbar}}{}{}
+
+
 % -- Background ---------------------------------------------------------------
 \RequirePackage{etoolbox}
 \newtoggle{themeGW@logoinfoot}  % Determines if logo in background or footline
@@ -151,8 +155,8 @@
 \newlength{\themeGW@upperrightbg}
 
 
-\setlength{\themeGW@footupshift}{0.025\paperheight}
-\setlength{\themeGW@footvertshift}{0.025\paperheight}
+\setlength{\themeGW@footupshift}{0.03\paperheight}
+\setlength{\themeGW@footvertshift}{0.03\paperheight}
 
 \setlength{\themeGW@upperleftbg}{0.1\paperheight}
 \setlength{\themeGW@upperrightbg}{0.14\paperheight}
@@ -202,7 +206,7 @@
     },
     fillsquare2/.style={
         % fg!90!gray,
-        fg!92!white,
+        white!5!fg,
         line width=0.8pt,
         },
     fillsquarepath2/.style={
@@ -231,7 +235,7 @@
 % \setlength{\themeGW@upperrightbg}{0.14\paperheight}
 
 
-\setlength{\themeGW@MaxFootHeight}{\themeGW@upperrightbg}
+\setlength{\themeGW@MaxFootHeight}{\themeGW@upperrightbg}  % In current mode, where we have rising slope from left to right
 \setlength{\themeGW@SquarePathHeight}{\themeGW@MaxFootHeight - \themeGW@squaresize}
 % \setlength{\themeGW@SquarePathHeight}{\themeGW@upperleftbg}
 \setlength{\themeGW@PatternCommonShift}{0pt}
@@ -240,15 +244,11 @@
 
 \defbeamertemplate{background}{GWWithPattern}{%
     \begin{tikzpicture}[overlay,remember picture]%
-        % \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
-        % \clip (current page.south west) -- ++(0, 0.8\themeGW@MaxFootHeight) -- ++(\paperwidth, \themeGW@squaresize) -- (current page.south east) -- cycle;
-        % % \clip (current page.south west) -- +(0, 0.8\themeGW@MaxFootHeight) -- +(\paperwidth, \themeGW@MaxFootHeight) -- (current page.south east) -- cycle;
-        % % \clip (current page.south west) -- +(0, 0.85\themeGW@MaxFootHeight) -- +(\paperwidth, 1.15\themeGW@MaxFootHeight) -- (current page.south east) -- cycle;
-        % \fill[fg] (current page.south west) -- +(0, \themeGW@upperrightbg) -- +(\paperwidth, \themeGW@upperrightbg) -- (current page.south east) -- cycle;
-
         % -- We can just do clipping in other scope and immediately draw correct thing here
+        \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
         \fill[fg] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
-        
+        % -- Add-on: clipping twice + drawing within limits yields results with best rendering, by far
+
 
         \begin{scope}[
             shift=(current page.south west),
@@ -275,16 +275,12 @@
                     -- ++(\themeGW@SquarePathHeight, -\themeGW@SquarePathHeight);
             }
         \end{scope}
-            
+
         % -- Order matters, we want this in foreground
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
         \iftoggle{themeGW@logoinfoot}{}{
             \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
         }
-
-        % -- Is overpainting better than clipping?
-        % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight + \themeGW@squaresize) -- +(\paperwidth, \themeGW@MaxFootHeight + \themeGW@squaresize) -- cycle;
-        % \fill[bg] (0, 0.8\themeGW@MaxFootHeight) -- +(0, \themeGW@MaxFootHeight) -- +(\paperwidth, \themeGW@MaxFootHeight) -- cycle;
     \end{tikzpicture}%
 }
 
@@ -313,6 +309,7 @@
 % -- Patch the \appendix command to set the toggle to true
 \pretocmd{\appendix}{\global\toggletrue{inappendix}}{}{}
 % -> luckily, is still added when appendixnumberbeamer is loaded again e.g. in main document
+% \pretocmd{\appendix}{\global\togglefalse{gwbar@progressbar}}{}{}  % Avoid division by zero
 
 
 \defbeamertemplate*{footline}{GW}[1][true]{%
