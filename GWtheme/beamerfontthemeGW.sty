@@ -31,6 +31,9 @@
     \setmainfont{Georgia}
     % \setmainfont{Heuristica}  % Really similar to Georgia, which is good
     % \setromanfont{Georgia}  % Not needed when we set mainfont
+    \setmainfont{Merriweather}  % Looks awesome
+    % \setmainfont{Roboto}  % Used by MPG as main font, but not sure about it...
+
     \usefonttheme{serif}
     % \usefonttheme{default}  % Actually decent, but prefer serif -> I think this activates Trebuchet in main body, still nice
     
@@ -69,6 +72,9 @@
     
     \setbeamerfont{frametitle}{family=\sffamily,series=\mdseries,size=\LARGE}
     \setbeamerfont{framesubtitle}{family=\sffamily,series=\mdseries,size=\Large}
+    % \setbeamerfont{frametitle}{family=\sffamily,series=\bfseries,size=\LARGE}
+    % \setbeamerfont{framesubtitle}{family=\sffamily,series=\bfseries,size=\Large}
+    % -- \mdseries vs \bfseries doesn't do anything for these here
     \setbeamerfont{headline}{family=\rmfamily,series=\mdseries,size=\small}
     \setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
     
@@ -78,23 +84,36 @@
     \setbeamerfont{caption}{size=\footnotesize}
 }{
     % -- Loading Fonts --------------------------------------------------------
-    \RequirePackage{heuristica}
+    % \RequirePackage{heuristica}
+    \RequirePackage{merriweather}  % Looks awesome
     \usefonttheme{serif}
     % \usefonttheme{default}
 
 
     % -- Actual Settings ------------------------------------------------------
-    \setbeamerfont{title}{family=\rmfamily,size=\Huge}
-    \setbeamerfont{subtitle}{family=\rmfamily,size=\Large}
-    \setbeamerfont{author}{family=\rmfamily,size=\large}
+    % \setbeamerfont{title}{family=\rmfamily,series=\mdseries,size=\Huge}
+    % \setbeamerfont{subtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    \setbeamerfont{title}{family=\rmfamily,series=\bfseries,size=\LARGE}
+    \setbeamerfont{subtitle}{family=\rmfamily,series=\bfseries,size=\Large}
+    % \setbeamerfont{author}{family=\rmfamily,size=\large}
+    \setbeamerfont{author}{family=\rmfamily,series=\scshape,size=\normalsize}
     \setbeamerfont{date}{family=\rmfamily,size=\normalsize}
     \setbeamerfont{institute}{family=\rmfamily,size=\small}
     
-    \setbeamerfont{sectiontitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
-    \setbeamerfont{sectionsubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    % \setbeamerfont{sectiontitle}{family=\rmfamily,series=\bfseries,size=\LARGE}
+    % \setbeamerfont{sectionsubtitle}{family=\rmfamily,series=\bfseries,size=\Large}
+    % \setbeamerfont{sectiontitle}{family=\sffamily,series=\bfseries,size=\LARGE}
+    % \setbeamerfont{sectionsubtitle}{family=\sffamily,series=\bfseries,size=\Large}
+    \setbeamerfont{sectiontitle}{family=\sffamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{sectionsubtitle}{family=\sffamily,series=\mdseries,size=\Large}
     
-    \setbeamerfont{frametitle}{family=\rmfamily,series=\mdseries,size=\LARGE}
-    \setbeamerfont{framesubtitle}{family=\rmfamily,series=\mdseries,size=\Large}
+    % \setbeamerfont{frametitle}{family=\rmfamily,series=\bfseries,size=\LARGE}
+    % \setbeamerfont{framesubtitle}{family=\rmfamily,series=\bfseries,size=\Large}
+    % \setbeamerfont{frametitle}{family=\sffamily,series=\bfseries,size=\LARGE}
+    % \setbeamerfont{framesubtitle}{family=\sffamily,series=\bfseries,size=\Large}
+    \setbeamerfont{frametitle}{family=\sffamily,series=\mdseries,size=\LARGE}
+    \setbeamerfont{framesubtitle}{family=\sffamily,series=\mdseries,size=\Large}
+    % -- Do not like sans family here -> for Merriweather it is quite nice actually
     \setbeamerfont{headline}{family=\rmfamily,series=\mdseries,size=\small}
     \setbeamerfont{block title}{family=\rmfamily,series=\bfseries,size=\large}
     
