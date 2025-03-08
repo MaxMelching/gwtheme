@@ -1,0 +1,55 @@
+%% start of file `beamercolorthemeMPIGrav.sty'.
+% Author: Max Melching (m-melching@web.de), 2025
+%
+% Acknowledgements: this theme is a based on the UC Berkeley beamer theme.
+% The file structure, however, follows the DTU template from
+% https://gitlab.gbar.dtu.dk/latex/dtutemplates/-/tree/master/templates/Beamer
+
+
+\RequirePackage{xcolor}
+
+% -- General MPI Colors -------------------------------------------------------
+% -- Source: https://resources.mpi-inf.mpg.de/logo/mpg/documentation/MPG-Web-Styleguide-2023-Version-1-2.pdf
+\definecolor{MPIGreen}{HTML}{006C66}
+\definecolor{MPIBlack}{HTML}{000000}
+\definecolor{MPIGray}{HTML}{666666}
+\definecolor{MPIBGGray}{HTML}{EEEEEE}
+\definecolor{MPILightGray}{HTML}{F6F6F6}
+\definecolor{MPIBlue}{HTML}{00445F}
+\definecolor{MPISecondaryBlue}{HTML}{006699}
+
+
+% -- MPI for Gravitational Physics Colors -------------------------------------
+\definecolor{MPIGravDarkRed}{HTML}{ad0000}
+\definecolor{MPIGravLightRed}{HTML}{e0969a}
+
+
+% -- Some custom additions for this theme -------------------------------------
+\colorlet{MPILightGreen}{MPIGreen!50}  % Not part of official colortheme, but nice as background
+
+\definecolor{MPDLOrange}{HTML}{f47828}  % From https://www.mpdl.mpg.de/
+
+% \definecolor{FontColor}{HTML}{003262}  % Taken from Berkeley theme (BerkeleyBlue)
+% \definecolor{FontColor}{HTML}{29485d}  % Background color from official Max Planck Powerpoint templates
+\definecolor{FontColor}{HTML}{191970}  % Midnightblue
+
+
+% -- Actual theme definition --------------------------------------------------
+\setbeamercolor{titlelike}{fg=MPIBlue,bg=MPISecondaryBlue}
+\setbeamercolor{headline}{fg=MPIBlue,bg=MPIGray!50}
+\setbeamercolor{footline}{fg=white,bg=}
+\setbeamercolor{background}{fg=MPIBlue!96,bg=white}
+\setbeamercolor{title page}{fg=MPIBlue,bg=MPISecondaryBlue}
+
+\setbeamercolor{normal text}{fg=FontColor}
+\setbeamercolor{structure}{fg=FontColor}
+\setbeamercolor{block title}{fg=MPIBlue,bg=MPISecondaryBlue!50}
+% \setbeamercolor{block body}{fg=black,bg=MPIGravRed!20}
+\setbeamercolor{block body}{fg=black,bg=gray!20}
+
+\setbeamercolor{itemize item}{fg=MPIBlue}
+\setbeamercolor{itemize subitem}{fg=MPIBlue}
+\setbeamercolor{itemize subsubitem}{fg=MPIBlue}
+
+\setbeamercolor{section page}{fg=MPIBlue, bg=MPISecondaryBlue}
+\setbeamercolor{subsection page}{fg=MPIBlue, bg=MPISecondaryBlue}
