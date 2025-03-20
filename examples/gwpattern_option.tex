@@ -1,0 +1,102 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+
+
+% -- Prevent error from graphicspath
+\usepackage{graphicx}
+\graphicspath{{./}{../}}
+
+
+% -- How To Use GWPattern -----------------------------------------------------
+\setbeamertemplate{background}[GWWithPattern]
+
+
+% -- The rendering on diagonal lines can look strange if used in combination
+% -- with GWPattern. Therefore, having upperleftbg and upperrightbg on same
+% -- value usually looks much better. A convenient way to do this (that also
+% -- adjusts the pattern height automatically) is to use the following command:
+\LevelledBGLine{0.12\paperheight}  % Argument = height of colored box
+
+
+% TODO: show style customization
+
+% -----------------------------------------------------------------------------
+
+
+% -- Other Stuff
+% \setbeamertemplate{headline}{}  % Hide GW progressbar to speed up compilation
+\UpdateGWBarOptions[templatefile="none", backgroundsignal="none", progressbar=false]  % Deactivate GW signal plotting, still showing headline
+
+% \pgfdeclareimage[height=0.1\paperheight]{logo}{example-image}
+
+\title[Your Short Title]{Your Presentation}
+\subtitle{Your subtitle (if there's one)}
+% \author{Your Name \and Another Name}
+% \author[Your name (short)]{Your Name}
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
+\institute{Your Faculty/Department}
+\date{Date of Presentation}
+
+
+
+\begin{document}
+
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+\setbeamertemplate{background}{}
+% \setbeamertemplate{frametitle}{}
+% \FrametitleAutoinsertSection
+\begin{frame}[plain, noframenumbering]  % Equivalent to previous line
+  \vspace*{-4\baselineskip}%  Adjusts until it fits
+  \titlepage
+\end{frame}
+}
+
+
+\begin{frame}{Outline}
+  \hypersetup{linkcolor=black}
+  \tableofcontents[sectionstyle=shaded/show, hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+  \subsection{Test}
+
+\begin{frame}{Introduction}
+
+\begin{itemize}
+  \item Your introduction goes here!
+  \item Use \texttt{itemize} to organize your main points.
+\end{itemize}
+
+\begin{block}{Examples}
+Some examples of commonly used commands and features are included, to help you get started.
+\end{block}
+
+\end{frame}
+
+\section{Some \LaTeX{} Examples}
+
+\subsection{Mathematics}
+
+\begin{frame}{Readable Mathematics 42}
+
+Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+$$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+      = \frac{1}{n}\sum_{i}^{n} X_i$$
+denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+
+\end{frame}
+
+
+\end{document}

@@ -159,8 +159,6 @@
 }
 
 \defbeamertemplate*{title page}{GW}{%
-    \vskip-\themeGW@headerskip%  Cancel shift coming in from frametitle
-    \vskip0.0667\paperheight%  Gives good separation
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
@@ -184,7 +182,6 @@
         % \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
       \end{tikzpicture}%
     % 
-    \par%
     \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
@@ -238,8 +235,6 @@
 \def\themeGW@titlepage@leftskip{0.05\paperwidth}
 
 \defbeamertemplate{title page}{MPIGrav}{%
-    \vskip-\themeGW@headerskip%  Cancel shift coming in from frametitle
-    \vskip0.0667\paperheight%  Gives good separation
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
@@ -267,7 +262,6 @@
     
     \end{tikzpicture}%
     % 
-    \par%
     \begin{beamercolorbox}[wd=0.6\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
       \centering%
       \usebeamerfont{title}\inserttitle\par%
