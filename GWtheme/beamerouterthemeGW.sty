@@ -16,6 +16,29 @@
 \setlength{\themeGW@headerskip}{0.0667\paperheight}  % Good if only title
 \setlength{\themeGW@headerskip}{0.0333\paperheight}  % Good if subtitle in line below
 
+% \def\themeGW@SecSubsecSeparator{\textbf{--}}
+% % \def\themeGW@SecSubsecSeparator{\textbf{\textbar}}  % Does not look nice
+\RequirePackage{tikz}
+\def\themeGW@SecSubsecSeparator{%
+    \raisebox{-0.1em}{\tikz{
+    \draw[
+        fill,
+        % anchor=south,
+        % anchor=center,
+        % shift={(0, -0.05em)},
+    ] (-0.04em, -0.1em) rectangle (0.04em, 1.05em);
+    % \draw[
+    %     fill,
+    % ] (-0.04em, 0) rectangle (0.04em, 0.99em);
+    % -- We use em here as unit to have some effect upon change of font size
+}}}
+% \def\themeGW@SecSubsecSeparator{\textbullet}
+\RequirePackage{fourier-orns}
+% \def\themeGW@SecSubsecSeparator{\starredbullet}
+% \def\themeGW@SecSubsecSeparator{\raisebox{-0.2em}{\Huge\starredbullet}}
+% \def\themeGW@SecSubsecSeparator{\decoone}  % Too big
+
+
 % -- Allowed input for optional argument (controls mode in which framesubtitle
 % -- is displayed): default, newline, none.
 \defbeamertemplate*{frametitle}{GW}[1][default]{%
@@ -32,8 +55,7 @@
                 \par%
             \else%
                 \ifstrequal{#1}{default}{%
-                    ~\ \textbf{--} \ \insertframesubtitle\strut\par%
-                    % \ \textbullet \ \insertframesubtitle\strut\par%
+                    ~\ \themeGW@SecSubsecSeparator{} \ \insertframesubtitle\strut\par%
                 }{}%
                 \ifstrequal{#1}{newline}{%
                     \strut\par\insertframesubtitle\strut\par%
@@ -155,11 +177,11 @@
 \newlength{\themeGW@upperrightbg}
 
 
-\setlength{\themeGW@footupshift}{0.03\paperheight}
-\setlength{\themeGW@footvertshift}{0.03\paperheight}
+\setlength{\themeGW@footupshift}{0.02\paperheight}
+\setlength{\themeGW@footvertshift}{0.02\paperheight}
 
-\setlength{\themeGW@upperleftbg}{0.1\paperheight}
-\setlength{\themeGW@upperrightbg}{0.14\paperheight}
+\setlength{\themeGW@upperleftbg}{0.08\paperheight}
+\setlength{\themeGW@upperrightbg}{0.12\paperheight}
 
 
 \defbeamertemplate*{background}{GW}{%
@@ -187,7 +209,8 @@
 \usetikzlibrary{calc}
 
 \newlength{\themeGW@squaresize}
-\setlength{\themeGW@squaresize}{3.6pt}
+% \setlength{\themeGW@squaresize}{3.6pt}
+\setlength{\themeGW@squaresize}{5pt}
 
 \tikzset{
     fillsquare1/.style={
@@ -200,7 +223,7 @@
         decoration={
             markings,
             mark = between positions 0 and 1 step 1/8 with {
-                \draw[fillsquare1] (-\themeGW@squaresize, -\themeGW@squaresize) rectangle (\themeGW@squaresize, \themeGW@squaresize);
+                \draw[fillsquare1] (-\themeGW@squaresize/2, -\themeGW@squaresize/2) rectangle (\themeGW@squaresize/2, \themeGW@squaresize/2);
             },
         },
     },
@@ -215,7 +238,7 @@
         decoration={
             markings,
             mark = between positions 0 and 1 step 1/8 with {
-                \draw[fillsquare2] (-\themeGW@squaresize, -\themeGW@squaresize) rectangle (\themeGW@squaresize, \themeGW@squaresize);
+                \draw[fillsquare2] (-\themeGW@squaresize/2, -\themeGW@squaresize/2) rectangle (\themeGW@squaresize/2, \themeGW@squaresize/2);
             },
         },
     },
@@ -236,10 +259,11 @@
 
 
 \setlength{\themeGW@MaxFootHeight}{\themeGW@upperrightbg}  % In current mode, where we have rising slope from left to right
-\setlength{\themeGW@SquarePathHeight}{\themeGW@MaxFootHeight - \themeGW@squaresize}
+% \setlength{\themeGW@SquarePathHeight}{\themeGW@MaxFootHeight - \themeGW@squaresize}
+\setlength{\themeGW@SquarePathHeight}{\themeGW@MaxFootHeight - \themeGW@squaresize * 707 / 1000}
 % \setlength{\themeGW@SquarePathHeight}{\themeGW@upperleftbg}
 \setlength{\themeGW@PatternCommonShift}{0pt}
-\setlength{\themeGW@PatternRelativeShift}{-0.5\themeGW@SquarePathHeight}  % So that we have shift by one square
+\setlength{\themeGW@PatternRelativeShift}{-\themeGW@SquarePathHeight / 2}  % So that we have shift by one square
 
 
 \defbeamertemplate{background}{GWWithPattern}{%
@@ -288,6 +312,31 @@
 % \setbeamertemplate{background}[GWWithPattern]
 
 
+% \newcommand{\LevelledBGLine}[1][(\themeGW@upperleftbg + \themeGW@upperrightbg)/2]{
+\newcommand{\LevelledBGLine}[1]{
+    % \setlength{\themeGW@upperleftbg}{#1}
+    % \setlength{\themeGW@upperrightbg}{#1}
+    % \setlength{\themeGW@SquarePathHeight}{#1 - \themeGW@squaresize/1.4142135624}  % Avoid calculation of sqrt(2)
+    % \setlength{\themeGW@SquarePathHeight}{#1 - \themeGW@squaresize * 707 / 1000}  % Avoid calculation of sqrt(2)
+
+    % \ifx#1\empty
+    %     \newlength{\@tmp}{(\themeGW@upperleftbg + \themeGW@upperrightbg)/2}
+    % \else
+    %     \newlength{\@tmp}{#1}
+    % \fi
+    \newlength{\@tmp}
+    \setlength{\@tmp}{#1}
+    \setlength{\themeGW@upperleftbg}{\@tmp}
+    \setlength{\themeGW@upperrightbg}{\@tmp}
+    \setlength{\themeGW@SquarePathHeight}{\@tmp - \themeGW@squaresize * 707 / 1000}  % Avoid calculation of sqrt(2)
+    % \setlength{\themeGW@SquarePathHeight}{\@tmp - \themeGW@squaresize / 1.4142135624}  % Avoid calculation of sqrt(2)
+    % \setlength{\themeGW@SquarePathHeight}{\@tmp}
+    % % \addtolength{- \dimexpr\themeGW@squaresize / 1.4142135624\relax}  % Avoid calculation of sqrt(2)
+    % \addtolength{\themeGW@SquarePathHeight}{\dimexpr\themeGW@squaresize / 1.4142135624\relax}  % Avoid calculation of sqrt(2)
+    \setlength{\themeGW@PatternRelativeShift}{-\themeGW@SquarePathHeight / 2}  % So that we have shift by one square
+}
+
+
 % -- Footline and navigation symbols ------------------------------------------
 \setbeamertemplate{navigation symbols}{}
 
@@ -322,16 +371,19 @@
         % \MakeUppercase\insertauthor%
         \MakeUppercase\insertshortauthor% Does not actually make stuff uppercase, for some reason -> thus, if you intend to use this, define the short author with MakeUppercase already
     }%
-    \iftoggle{inappendix}{%
-        % -- Do not show framenumber in appendix (where progressbar also stops)
-    }{%
     \hfill%
     {%
-        \usebeamerfont{framenumber in head/foot}%
+    \usebeamerfont{framenumber in head/foot}%
+        \iftoggle{inappendix}{%
+            \phantom{42/96}%
+        % -- Do not show framenumber in appendix (where progressbar also stops)
+        }{%
         % \ifstrequal{#1}{true}{%
         \ifbool{#1}{%
             \insertframenumber/\inserttotalframenumber%
-        }{}%
+        }{%
+            \phantom{42/96}%
+        }%
         }%
     }%
   \end{beamercolorbox}%
