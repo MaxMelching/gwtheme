@@ -13,27 +13,19 @@
 
 % -- Frametitle and headline --------------------------------------------------
 \newlength{\themeGW@headerskip}  % Padding from top of frame
-\setlength{\themeGW@headerskip}{0.0667\paperheight}  % Good if only title
+% \setlength{\themeGW@headerskip}{0.0667\paperheight}  % Good if only title
 \setlength{\themeGW@headerskip}{0.0333\paperheight}  % Good if subtitle in line below
 
-% \def\themeGW@SecSubsecSeparator{\textbf{--}}
-% % \def\themeGW@SecSubsecSeparator{\textbf{\textbar}}  % Does not look nice
+
 \RequirePackage{tikz}
 \def\themeGW@SecSubsecSeparator{%
     \raisebox{-0.1em}{\tikz{
     \draw[
         fill,
-        % anchor=south,
-        % anchor=center,
-        % shift={(0, -0.05em)},
     ] (-0.04em, -0.1em) rectangle (0.04em, 1.05em);
-    % \draw[
-    %     fill,
-    % ] (-0.04em, 0) rectangle (0.04em, 0.99em);
-    % -- We use em here as unit to have some effect upon change of font size
 }}}
 % \def\themeGW@SecSubsecSeparator{\textbullet}
-\RequirePackage{fourier-orns}
+% \RequirePackage{fourier-orns}
 % \def\themeGW@SecSubsecSeparator{\starredbullet}
 % \def\themeGW@SecSubsecSeparator{\raisebox{-0.2em}{\Huge\starredbullet}}
 % \def\themeGW@SecSubsecSeparator{\decoone}  % Too big
@@ -86,7 +78,6 @@
 
 \newcommand{\FrametitleAutoinsertSection}{%
     \addtobeamertemplate{frametitle}{%
-    % \settoheight{\themeGW@frametitleheight}{{\usebeamerfont{frametitle}Titlename}}%
     \ifbeamer@plainframe%
         % -- Correct for offset that empty title introduces
         \settoheight{\themeGW@frametitleheight}{\usebeamerfont{frametitle}Titlename}%
@@ -120,11 +111,8 @@
 \RequirePackage[
     % -- Adjust the paths for templatefile and backgroundsignal here to
     % -- the location where you store the templates.
-    % templatefile="GWtheme/generic_template_no_noise.txt",
     templatefile="GWtheme/generic_template_no_noise_whitened.txt",
     backgroundsignal="GWtheme/generic_template_w_noise.txt",
-    % backgroundsignal="GWtheme/generic_template_w_noise_whitened.txt",
-    % 
     % -- General stuff
     leftpadding=0.6\paperwidth,
     rightpadding=0.006\paperwidth,
@@ -133,6 +121,8 @@
     declaretitlebox=false,
     signalupshift=\themeGW@gwbarshift,  % Only use if gwbar is added to beamertheme
 ]{gwbar}
+% -- Change default arguments in this file or just use \UpdateGWBarOptions in
+% -- the file where you use this theme.
 
 
 \RequirePackage{tikz}
@@ -312,29 +302,16 @@
 % \setbeamertemplate{background}[GWWithPattern]
 
 
-% \newcommand{\LevelledBGLine}[1][(\themeGW@upperleftbg + \themeGW@upperrightbg)/2]{
 \newcommand{\LevelledBGLine}[1]{
-    % \setlength{\themeGW@upperleftbg}{#1}
-    % \setlength{\themeGW@upperrightbg}{#1}
-    % \setlength{\themeGW@SquarePathHeight}{#1 - \themeGW@squaresize/1.4142135624}  % Avoid calculation of sqrt(2)
-    % \setlength{\themeGW@SquarePathHeight}{#1 - \themeGW@squaresize * 707 / 1000}  % Avoid calculation of sqrt(2)
-
-    % \ifx#1\empty
-    %     \newlength{\@tmp}{(\themeGW@upperleftbg + \themeGW@upperrightbg)/2}
-    % \else
-    %     \newlength{\@tmp}{#1}
-    % \fi
     \newlength{\@tmp}
     \setlength{\@tmp}{#1}
     \setlength{\themeGW@upperleftbg}{\@tmp}
     \setlength{\themeGW@upperrightbg}{\@tmp}
     \setlength{\themeGW@SquarePathHeight}{\@tmp - \themeGW@squaresize * 707 / 1000}  % Avoid calculation of sqrt(2)
-    % \setlength{\themeGW@SquarePathHeight}{\@tmp - \themeGW@squaresize / 1.4142135624}  % Avoid calculation of sqrt(2)
-    % \setlength{\themeGW@SquarePathHeight}{\@tmp}
-    % % \addtolength{- \dimexpr\themeGW@squaresize / 1.4142135624\relax}  % Avoid calculation of sqrt(2)
-    % \addtolength{\themeGW@SquarePathHeight}{\dimexpr\themeGW@squaresize / 1.4142135624\relax}  % Avoid calculation of sqrt(2)
     \setlength{\themeGW@PatternRelativeShift}{-\themeGW@SquarePathHeight / 2}  % So that we have shift by one square
 }
+
+% TODO: account for linewidth?
 
 
 % -- Footline and navigation symbols ------------------------------------------
@@ -398,7 +375,8 @@
 % -- No need to use \setbeamertemplate{footline}[GW]
 
 
-% TODO: put logo in footline rather than background?
+% -- Define default logo, to prevent errors
+\pgfdeclareimage[height=0.1\paperheight]{logo}{example-image}
 
 
 \mode
