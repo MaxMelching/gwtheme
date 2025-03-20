@@ -16,13 +16,40 @@
 
 
 % -- Appearance and margins for items -----------------------------------------
+\def\themeGW@ItemSquareSize{0.22em}
+\def\themeGW@ItemInsetWidth{0.012em}
+
+\def\GWthemeRotatedsquareItem{%
+  \begin{tikzpicture}[scale=1]% scale can easily be changed here
+      \draw[fill, rotate around={45:(0,0)}] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
+      \draw[fill, white, rotate around={45:(0,0)}] (-\themeGW@ItemInsetWidth,-1.01*\themeGW@ItemSquareSize) rectangle (\themeGW@ItemInsetWidth,1.01*\themeGW@ItemSquareSize);
+      \draw[fill, white, rotate around={45:(0,0)}] (-1.01*\themeGW@ItemSquareSize,-\themeGW@ItemInsetWidth) rectangle (1.01*\themeGW@ItemSquareSize,\themeGW@ItemInsetWidth);
+  \end{tikzpicture}%
+}
+
+\def\GWthemeShiftedsquareItem{%
+  \begin{tikzpicture}[scale=1]% scale can easily be changed here
+    \draw[fill, shift={(0.3*\themeGW@ItemSquareSize,-0.3*\themeGW@ItemSquareSize)}] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
+    \draw[line width=0.14*\themeGW@ItemSquareSize,fill=white] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
+  \end{tikzpicture}%
+}
+
+\def\GWthemeBullet{\raisebox{-3pt}{\LARGE\textbullet}}
+
+\IfFileExists{fourier-orns.sty}{
+  \RequirePackage{fourier-orns}
+  \def\GWthemeStarredbullet{\raisebox{-2pt}{\LARGE\starredbullet}}
+}{}
+
+
 % \setbeamertemplate{itemize item}{\textbullet}
 \setbeamertemplate{itemize item}{$\blacktriangleright$}
-\setbeamertemplate{itemize subitem}{--}
-% \RequirePackage{fourier-orns}
-% \setbeamertemplate{itemize subitem}{{\LARGE\starredbullet}}
+\setbeamertemplate{itemize subitem}{{\bfseries--}}
+% \setbeamertemplate{itemize subitem}{\CustomStarredbullet}
 % \setbeamertemplate{itemize subitem}{\leftblackhand}  % Not available yet...
-\setbeamertemplate{itemize subsubitem}{\textbullet}
+\setbeamertemplate{itemize subsubitem}{\GWthemeBullet}
+
+
 \setlength{\leftmargini}{1.25em}
 \setlength{\leftmarginii}{1em}
 \setlength{\leftmarginiii}{1em}
@@ -49,21 +76,22 @@
             % \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
             \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.56\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
         \end{tikzpicture}%
-    }
-    
-    \vspace{-2.5\baselineskip}
-    \begin{minipage}[b][0.45\paperheight]{\textwidth}
-        \usebeamerfont{sectiontitle}
-        \usebeamercolor[fg]{section page}
-        \let\hyperlink\@secondoftwo\insertsection
-    \end{minipage}
-
-    \vspace{\baselineskip}
-    \begin{minipage}[t][0.5\paperheight]{\textwidth}
-        % \usebeamerfont{subsectiontitle}
-        % \usebeamercolor[bg]{section page}
-        % \insertsubsection
-    \end{minipage}
+    }%
+    % 
+    \begin{minipage}[b][0.45\paperheight]{\textwidth}%
+        \usebeamerfont{sectiontitle}%
+        \usebeamercolor[fg]{section page}%
+        \let\hyperlink\@secondoftwo\insertsection%
+    \end{minipage}%
+    % 
+    \par%
+    % 
+    \begin{minipage}[t][0.5\paperheight]{\textwidth}%
+        % -- Keep this for spacing reasons
+        % \usebeamerfont{subsectiontitle}%
+        % \usebeamercolor[bg]{section page}%
+        % \insertsubsection%
+    \end{minipage}%
 }
 
 
@@ -71,23 +99,37 @@
     {%
         \begin{tikzpicture}[overlay, remember picture]
             \usebeamercolor[bg]{subsection page}
-            \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
-        \end{tikzpicture}%
-    }
-    
-    \vspace{-2.5\baselineskip}
-    \begin{minipage}[b][0.45\paperheight]{\textwidth}
-        \usebeamerfont{sectiontitle}
-        \usebeamercolor[fg]{subsection page}
-        \let\hyperlink\@secondoftwo\insertsection
-    \end{minipage}
-    
-    \vspace{\baselineskip}
-    \begin{minipage}[t][0.5\paperheight]{\textwidth}
-        \usebeamerfont{subsectiontitle}
-        \usebeamercolor[bg]{subsection page}
-        \insertsubsection
-    \end{minipage}
+            % \fill (current page.north west) rectangle ([shift = {(0, -0.45\paperheight)}] current page.north east);
+            \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.56\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
+          \end{tikzpicture}%
+    }%
+    % 
+    \begin{minipage}[b][0.45\paperheight]{\textwidth}%
+        \usebeamerfont{sectiontitle}%
+        \usebeamercolor[fg]{subsection page}%
+        \let\hyperlink\@secondoftwo\insertsection%
+    \end{minipage}%
+    % 
+    \par%
+    % 
+    \begin{minipage}[t][0.5\paperheight]{\textwidth}%
+        \usebeamerfont{sectionsubtitle}%
+        \usebeamercolor[fg]{subsection page}%
+        \let\hyperlink\@secondoftwo\insertsubsection%
+    \end{minipage}%
+}
+
+
+\newcommand{\insertsectionpage}{%
+  \begin{frame}[plain, noframenumbering]{}{}
+    \sectionpage
+  \end{frame}%
+}
+
+\newcommand{\insertsubsectionpage}{%
+  \begin{frame}[plain, noframenumbering]{}{}
+    \subsectionpage
+  \end{frame}%
 }
 
 
@@ -98,10 +140,10 @@
 
 
 \def\themeGW@titlepage@leftskip{0.1\paperwidth}
+\def\themeGW@logoheight{1.8\baselineskip}
+\def\themeGW@logoboxwidth{0.3\paperwidth}
 
 \titlegraphic{
-  \def\themeGW@logoheight{1.8\baselineskip}
-  \def\themeGW@logoboxwidth{0.3\paperwidth}
   \begin{beamercolorbox}[center]{titlegraphic}%
       \begin{minipage}{\themeGW@logoboxwidth}%
         \tikz[overlay, remember picture]{\node (0,0) {};}  % Just need to make it non-empty
@@ -117,6 +159,8 @@
 }
 
 \defbeamertemplate*{title page}{GW}{%
+    \vskip-\themeGW@headerskip%  Cancel shift coming in from frametitle
+    \vskip0.0667\paperheight%  Gives good separation
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
@@ -136,6 +180,8 @@
     
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
         \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
+        
+        % \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
       \end{tikzpicture}%
     % 
     \par%
@@ -162,10 +208,17 @@
 }
 
 
+% \addtobeamertemplate{titlepage}{}{%
+%     \begin{tikzpicture}[overlay, remember picture]
+%         \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
+%     \end{tikzpicture}%
+% }
+
+
+\def\themeGW@logoheight{1.8\baselineskip}
+\def\themeGW@logoboxwidth{0.3\paperwidth}
 
 \def\GWthemestandardtitlegraphic{
-  \def\themeGW@logoheight{1.8\baselineskip}
-  \def\themeGW@logoboxwidth{0.3\paperwidth}
   \begin{beamercolorbox}[center]{titlegraphic}%
       \begin{minipage}{\themeGW@logoboxwidth}%
         % \centering
@@ -185,6 +238,8 @@
 \def\themeGW@titlepage@leftskip{0.05\paperwidth}
 
 \defbeamertemplate{title page}{MPIGrav}{%
+    \vskip-\themeGW@headerskip%  Cancel shift coming in from frametitle
+    \vskip0.0667\paperheight%  Gives good separation
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
