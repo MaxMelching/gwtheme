@@ -171,14 +171,14 @@
 \toggletrue{themeGW@logoinfoot}
 
 \newlength{\themeGW@footupshift}
-\newlength{\themeGW@footvertshift}
+\newlength{\themeGW@footrightshift}
 
 \newlength{\themeGW@upperleftbg}
 \newlength{\themeGW@upperrightbg}
 
 
 \setlength{\themeGW@footupshift}{0.02\paperheight}
-\setlength{\themeGW@footvertshift}{0.02\paperheight}
+\setlength{\themeGW@footrightshift}{0.02\paperheight}
 
 \setlength{\themeGW@upperleftbg}{0.08\paperheight}
 \setlength{\themeGW@upperrightbg}{0.12\paperheight}
@@ -188,11 +188,11 @@
     \begin{tikzpicture}[overlay,remember picture]%
         \fill[fg] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
 
-        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footrightshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
         % TODO: figure out why this inserts two pictures on normal frame
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@titlegraphicvertshift,yshift=\themeGW@titlegraphicupshift] at (current page.south east) {\pgfuseimage{logo}};
         \iftoggle{themeGW@logoinfoot}{}{
-            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footrightshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
         }
 
     % \node[anchor=south west,inner sep=0pt,draw=none,xshift=0.025\paperheight,yshift=0.025\paperheight] at (current page.south west) {\textcolor{bg}{\sffamily\bfseries\small\MakeUppercase\insertauthor}};
@@ -252,7 +252,7 @@
 
 
 % \setlength{\themeGW@footupshift}{0.25\themeGW@MaxFootHeight}
-% \setlength{\themeGW@footvertshift}{0.25\themeGW@MaxFootHeight}
+% \setlength{\themeGW@footrightshift}{0.25\themeGW@MaxFootHeight}
 
 % \setlength{\themeGW@upperleftbg}{0.1\paperheight}
 % \setlength{\themeGW@upperrightbg}{0.14\paperheight}
@@ -301,9 +301,9 @@
         \end{scope}
 
         % -- Order matters, we want this in foreground
-        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
+        % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-\themeGW@footrightshift,yshift=\themeGW@footupshift] at (current page.south east) {\insertlogo};
         \iftoggle{themeGW@logoinfoot}{}{
-            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
+            \node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footrightshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};
         }
     \end{tikzpicture}%
 }
@@ -365,7 +365,7 @@
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
-    \hspace\themeGW@footvertshift%
+    \hspace\themeGW@footrightshift%
     {%
         \usebeamerfont{author in head/foot}%
         % \MakeUppercase\insertauthor%
@@ -389,7 +389,7 @@
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth]{footline}%
     \iftoggle{themeGW@logoinfoot}{%
-        \tikz[overlay,remember picture]{\node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footvertshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};}%
+        \tikz[overlay,remember picture]{\node[anchor=east,inner sep=0pt,draw=none,xshift=-\themeGW@footrightshift,yshift=\themeGW@upperrightbg/2] at (current page.south east) {\pgfuseimage{logo}};}%
     }{}%
   \end{beamercolorbox}%
   }%
