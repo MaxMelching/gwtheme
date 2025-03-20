@@ -1,0 +1,140 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+
+
+\UpdateGWBarOptions[templatefile="none", backgroundsignal="none", progressbar=false]  % We still want headline
+
+\pgfdeclareimage[height=0.2\paperheight]{logo}{example-image}
+
+
+% -- Craft command that visualizes involved lengths ---------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows.meta,
+    math,
+    calc,
+    shapes,
+}
+
+\makeatletter
+\tikzset{
+    lengthvis/.style={
+        ->,
+        >={Stealth[inset=0,angle'=42]},
+        line width=3pt,
+    },
+}
+
+
+\newlength{\TitleHeight}
+\settoheight{\TitleHeight}{\usebeamerfont{frametitle}Titlename}
+\addtolength{\TitleHeight}{1em}  % Account for parskip(s) in title
+
+
+\newcommand{\ShowGWthemeFrame}{%
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw[
+            lengthvis,
+            red,
+            shift={($(current page.south west) + (0, 1.2*\themeGW@footupshift)$)},
+        ] (0, 0) -- (\themeGW@footrightshift, 0);
+
+        \draw[
+            lengthvis,
+            red,
+            shift={($(current page.south east) + (0, 2*\themeGW@footupshift)$)},
+        ] (0, 0) -- (-\themeGW@footrightshift, 0);
+
+        \draw[
+            lengthvis,
+            blue,
+            shift={($(current page.south west) + (2*\themeGW@footrightshift, 0)$)},
+        ] (0, 0) -- (0, \themeGW@footupshift);
+
+        \draw[
+            lengthvis,
+            yellow,
+            shift={($(current page.south west) + (0.5pt, 0)$)},
+        ] (0, 0) -- (0, \themeGW@upperleftbg);
+
+        \draw[
+            lengthvis,
+            orange,
+            shift={($(current page.south east) + (-0.5pt, 0)$)},
+        ] (0, 0) -- (0, \themeGW@upperrightbg);
+
+        \draw[
+            lengthvis,
+            green,
+            shift={($(current page.north west) + (1.5*\themeGW@footrightshift, 0)$)},
+        ] (0, 0) -- (0, -\themeGW@headerskip);
+
+        \draw[
+            lengthvis,
+            brown,
+            shift={($(current page.north west) + (3*\themeGW@footrightshift, 0)$)},
+        ] (0, 0) -- (0, -\themeGW@gwbarshift - \TitleHeight);
+
+        \draw[
+            lengthvis,
+            pink,
+            shift={($(current page.south east) + (-\themeGW@footrightshift, 0)$)},
+        ] (0, 0) -- (0, \themeGW@upperrightbg/2);
+  \end{tikzpicture}
+}
+
+
+% -- Now make stuff more visible by blowing things out of proportion
+\UpdateGWthemeOptions[%
+    footrightshift=0.1\paperheight,
+    footupshift=0.1\paperheight,
+    upperleftbg=0.28\paperheight,
+    upperrightbg=0.32\paperheight,
+    headerskip=0.16\paperheight,
+    gwbarshift=0.2\paperheight,  % Comment to see default value
+    logoinfoot=false,  % Then it is in background, makes arrows more visible
+]
+
+
+\makeatother
+
+
+\title[Your Short Title]{Your Presentation}
+\subtitle{Your subtitle (if there's one)}
+% \author{Your Name \and Another Name}
+% \author[Your name (short)]{Your Name}
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
+\institute{Your Faculty/Department}
+\date{Date of Presentation}
+
+
+\begin{document}
+
+\begin{frame}{Title}
+    % \begin{tikzpicture}[overlay, remember picture]
+    %     \draw[->, red] (0, 0) -- (2em, 0);
+    % \end{tikzpicture}
+    \ShowGWthemeFrame
+
+    \ttfamily
+    \bfseries
+
+    \textcolor{red}{footrightshift}, \textcolor{blue}{footupshift},
+    \textcolor{yellow}{upperleftbg}, \textcolor{orange}{upperrightbg},
+    \textcolor{green}{headerskip}, \textcolor{brown}{gwbarshift},
+    \textcolor{pink}{point from which logo is drawn (has TikZ coordinates
+    (\$(current page.south east) + (-footrightshift, upperrightbg/2))\$)}
+\end{frame}
+
+\end{document}
