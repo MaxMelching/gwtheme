@@ -18,6 +18,45 @@
 % \usecolortheme{Caltech}
 
 
+
+% -- Define keys for easy updating
+\RequirePackage{pgf}
+\RequirePackage{calc}
+
+\pgfkeys{
+	/gwtheme/.is family, /gwtheme,
+    % -- No need to define default style, every variable has one already
+    % 
+    % -- outertheme keys ------------------------------------------------------
+    % headerskip/.estore in = \themeGW@headerskip,
+    % headerskip/.code = {\setlength{\themeGW@headerskip}{#1}\setlength{\themeGW@gwbarshift}{#1-24pt}},
+    % headerskip/.code = {\setlength{\themeGW@headerskip}{#1}\setlength{\gwbar@signalupshift}{-#1-24pt}},
+    headerskip/.code = {\setlength{\themeGW@headerskip}{#1}\setlength{\themeGW@gwbarshift}{#1-24pt}\setlength{\gwbar@signalupshift}{-#1-24pt}},
+    % secsubsecseparator/.estore in = \themeGW@SecSubsecSeparator,
+    secsubsecseparator/.code = {\renewcommand{\themeGW@SecSubsecSeparator}{#1}},
+    % gwbarshift/.estore in = \themeGW@gwbarshift,
+    % gwbarshift/.code = {\setlength{\themeGW@gwbarshift}{#1}},
+    gwbarshift/.code = {\setlength{\themeGW@gwbarshift}{#1}\setlength{\gwbar@signalupshift}{-#1-24pt}},
+    footupshift/.estore in = \themeGW@footupshift,
+    footrightshift/.estore in = \themeGW@footrightshift,
+    upperleftbg/.estore in = \themeGW@upperleftbg,
+    upperrightbg/.estore in = \themeGW@upperrightbg,
+    squaresize/.estore in = \themeGW@squaresize,
+    maxfootheight/.estore in = \themeGW@MaxFootHeight,
+    patterncommonshift/.estore in = \themeGW@PatternCommonShift,
+    patternrelativeshift/.estore in = \themeGW@PatternRelativeShift,
+    squarepathheight/.estore in = \themeGW@SquarePathHeight,
+    logoinfoot/.code = {\settoggle{themeGW@logoinfoot}{#1}},
+    % -- innertheme keys ------------------------------------------------------
+    itemsquaresize/.estore in = \themeGW@ItemSquareSize,
+    iteminsetwidthwidth/.estore in = \themeGW@ItemInsetWidth,
+}
+
+\newcommand{\UpdateGWthemeOptions}[1][]{%
+    \pgfkeys{/gwtheme, #1}%
+}
+
+
 % -- Change spacing in document
 \fontdimen2\font=3pt % Increase space between words, found original one too small -> see https://tex.stackexchange.com/questions/23921/how-to-shorten-shrink-spaces-between-words. Has to be IN document for some reason
 \linespread{1.1} % Increase space between lines (found original one too small)
