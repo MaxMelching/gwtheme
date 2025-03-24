@@ -15,37 +15,57 @@
 
 % -- Adjust following for different templates
 % \usecolortheme{MPIGravMixed}
-\usecolortheme{MPIMixed}
+% \usecolortheme{MPIMixed}
 % \usecolortheme{MPI}
 % \usecolortheme{MPIGrav}
 % \usecolortheme{Caltech}
-% \usecolortheme{MPIBlue}
+\usecolortheme{MPIBlue}
 
-\togglefalse{gwbar@progressbar}  % Avoid errors from divisions through zero or so
+% \definecolor{MPIBlue}{HTML}{006699}
+% \definecolor{MPISecondaryBlue}{HTML}{00445F}
+% -- Revert for LightBlue theme
 
 
 \makeatletter
 
-% -- Adjust heights of design elements
-\setlength{\themeGW@headerskip}{0.0667\paperheight}
-% \setlength{\themeGW@headerskip}{0.08\paperheight}
+% -- Global Options
+\UpdateGWBarOptions[progressbar=false,]  % Avoid errors from divisions through zero or so
 
-\setlength{\themeGW@footupshift}{0.036\paperheight}  % Adjust author position
 
-% -- Hide footline stuff
-\pgfdeclareimage[height=0.1\paperheight]{logo}{logos/MPI-AEI_wide_E_neg_cmyk}
-% -- To hide logo, uncomment above line
-\togglefalse{themeGW@logoinfoot}  % Determines if logo shown on sectionpages or not
-% \titlegraphic{}  % Determines if logo shown on titlepage or not
-\setbeamertemplate{footline}[GW][false]  % Hide framenumbers, shall be set manually in Google slides
+% -- Design 1
+\UpdateGWthemeOptions[%
+  headerskip=0.0667\paperheight,
+  % headerskip=0.08\paperheight,
+  footupshift=0.036\paperheight,  % Adjust author position
+  logoinfoot=false,  % Determines if logo shown on sectionpages or not
+]
 
+
+% -- Design 2
+\UpdateGWthemeOptions[%
+  headerskip=0.0667\paperheight,
+  % headerskip=0.08\paperheight,
+  % footupshift=0.036\paperheight,  % Adjust author position
+  footupshift=0.022\paperheight,  % Adjust author position
+  logoinfoot=false,  % Determines if logo shown on sectionpages or not
+]
+
+
+% -- Design 3
+% \UpdateGWthemeOptions[%
+%   headerskip=0.0667\paperheight,
+%   % headerskip=0.08\paperheight,
+%   footupshift=0.036\paperheight,  % Adjust author position
+%   logoinfoot=true,  % Determines if logo shown on sectionpages or not
+%   % upperleftbg=0.1\paperheight,  % Default: 0.1\paperheight
+%   % % upperrightbg=0.14\paperheight,  % Default: 0.14\paperheight
+%   % upperrightbg=0.1\paperheight,
+% ]
+% \LevelledBGLine{0.1\paperheight}
 
 % \setbeamertemplate{background}[GWWithPattern]
-% \setlength{\themeGW@upperleftbg}{0.1\paperheight}  % Default: 0.1\paperheight
-% \setlength{\themeGW@upperrightbg}{0.14\paperheight}  % Default: 0.14\paperheight
-% % \setlength{\themeGW@upperrightbg}{0.1\paperheight}  % Default: 0.14\paperheight
 
-
+% -- Some testing with GWPattern styles
 % \tikzset{
 %   fillsquare1/.style={
 %     CaltechDarkGrey!80!fg,
@@ -56,6 +76,16 @@
 %     line width=0.8pt,
 %   },
 % }
+
+
+% -- Design-independent settings
+% \titlegraphic{}  % Determines if logo shown on titlepage or not
+
+\pgfdeclareimage[height=0.1\paperheight]{logo}{logos/MPI-AEI_wide_E_neg_cmyk}
+% \pgfdeclareimage[height=0.1\paperheight]{logo}{}  % Hide logo
+
+\setbeamertemplate{footline}[GW][false]  % Hide framenumbers, shall be set manually in Google slides
+% \setbeamertemplate{footline}{}  % Hide entire footline to create bare template
 \makeatother
 
 
