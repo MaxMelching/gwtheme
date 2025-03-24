@@ -1,0 +1,75 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+\usecolortheme{MPIGrav}
+
+
+% -- Prevent error from graphicspath
+\usepackage{graphicx}
+\graphicspath{{./}{../}}
+
+
+% -- Update GWTheme Options
+\setbeamertemplate{footline}{}  % Put nothing in there
+\setbeamertemplate{background}{}  % Put nothing in there
+% \UpdateGWthemeOptions[% The percent sign here is super important, otherwise Latex thinks we want to access " templatefile", i.e. a space is inserted
+%     upperleftbg=0pt,
+%     upperrightbg=0pt,
+% ]
+
+% -- Update GWBar Options
+\UpdateGWBarOptions[% The percent sign here is super important, otherwise Latex thinks we want to access " templatefile", i.e. a space is inserted
+    templatefile="../GWtheme/generic_template.txt",
+    backgroundsignal="none",
+    progressbar=false,
+]
+
+
+% -- Other stuff
+% \pgfdeclareimage[height=0.1\paperheight]{logo}{example-image}
+
+\title[Your Short Title]{Your Presentation}
+\subtitle{Your subtitle (if there's one)}
+% \author{Your Name \and Another Name}
+% \author[Your name (short)]{Your Name}
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
+\institute{Your Faculty/Department}
+\date{Date of Presentation}
+
+
+
+\begin{document}
+
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+\setbeamertemplate{background}{}
+\begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
+  \vspace*{-2\baselineskip}%  Adjusts until it fits
+  \titlepage
+\end{frame}
+}
+
+
+
+\begin{frame}{Introduction}{Test}
+
+A rather simple theme
+
+\begin{block}{Examples}
+This is what a block looks like
+\end{block}
+
+\end{frame}
+
+
+\end{document}

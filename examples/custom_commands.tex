@@ -1,0 +1,141 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+
+
+% -- Prevent error from graphicspath
+\usepackage{graphicx}
+\graphicspath{{./}{../}}
+
+
+% -- How To Use Custom Commands From GWtheme ----------------------------------
+
+% -- If you are like me and annoyed by inserting a frametitle manually on each
+% -- frame, although they simply match the name of the current section, consider
+% -- using \FrametitleAutoinsertSection. As the name suggests, it automatically
+% -- inserts the section name into the frametitle, unless a frametitle is
+% -- specified (same goes for framesubtitle and subsection).
+\FrametitleAutoinsertSection
+
+% -- Want nothing in title at all? Use plain frames (\begin{frame}[plain]...)
+
+
+% -- Although they are not specific to GWtheme, here is how you can activate
+% -- automatic insertion of a sectionpage
+% -- Activate/deactivate at will
+\AtBeginSection[]{\insertsectionpage}
+\AtBeginSubsection[]{\insertsubsectionpage}
+
+% -- Equivalent to:
+% \AtBeginSection[]{%
+%     \begin{frame}[plain, noframenumbering]{}{}
+%         \sectionpage
+%     \end{frame}%
+% }
+% \AtBeginSubsection[]{%
+%     \begin{frame}[plain, noframenumbering]{}{}
+%         \subsectionpage
+%     \end{frame}%
+% }
+
+% -- If you want to do this for selected sections only, you can just
+% -- stick to using \insertsectionpage after the section is created.
+
+
+
+
+% -----------------------------------------------------------------------------
+
+
+% -- Other Stuff
+% \setbeamertemplate{headline}{}
+\UpdateGWBarOptions[templatefile="none", backgroundsignal="none", progressbar=false]  % Deactivate GW signal plotting
+
+\title[Your Short Title]{Your Presentation}
+\subtitle{Your subtitle (if there's one)}
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
+\institute{Your Faculty/Department}
+\date{Date of Presentation}
+
+
+
+\begin{document}
+
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+\setbeamertemplate{background}{}
+\setbeamertemplate{background canvas}{
+  \begin{tikzpicture}[overlay,remember picture]
+    \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
+  \end{tikzpicture}
+}
+\begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
+  \titlepage
+\end{frame}
+}
+
+
+
+\section{Introduction}
+  \subsection{Test}
+
+\begin{frame}
+  This frame has the section, subsection as frametitle, framesubtitle.
+\end{frame}
+
+
+
+\begin{frame}{Overwritten}{Overwritten, again}
+  This frame has a custom frametitle, framesubtitle.
+\end{frame}
+
+
+
+\section{A new section}
+  \subsection{Mathematics}
+
+\insertsectionpage
+
+\begin{frame}{Readable Mathematics 42}
+  There should be a sectionpage before this frame (potentially two, if you
+  have activated the AtBeginSection part above, or even three if a
+  subsectionpage is also inserted).
+\end{frame}
+
+
+
+\UpdateGWthemeOptions[secsubsecseparator=\GWthemeStarredbullet]
+
+\begin{frame}
+  This frame should have a new separator between section and subsection
+\end{frame}
+
+
+{
+\LevelledBGLine{0.2\paperheight}
+
+\begin{frame}
+  This frame should have a levelled background with different height than before
+\end{frame}
+
+}
+
+% -- Equivalent
+
+\UpdateGWthemeOptions[upperleftbg=0.06\paperheight, upperrightbg=0.06\paperheight]
+
+\begin{frame}
+  This frame should also have a levelled background, but again with different height
+\end{frame}
+
+\end{document}

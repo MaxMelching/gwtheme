@@ -1,0 +1,118 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+
+
+% -- Prevent error from graphicspath
+\usepackage{graphicx}
+\graphicspath{{./}{../}}
+
+
+% -- Some possible styles -----------------------------------------------------
+
+% TODO: show frametitle stuff here and also different itemize symbols
+% TODO: show possibility to disable page numbers here? Or in custom commands?
+
+% -- Argument in brackets after [GW] determines how subtitle is displayed
+% \setbeamertemplate{frametitle}[GW]  % Show with separator (stored in \themeGW@SecSubsecSeparator)
+\setbeamertemplate{frametitle}[GW][default]  % Equivalent to above line
+% \setbeamertemplate{frametitle}[GW][newline]  % Show in new line
+% \setbeamertemplate{frametitle}[GW][none]  % Do not show
+
+% \setbeamertemplate{footline}[GW][false]
+
+
+\setbeamertemplate{background canvas}{
+  \begin{tikzpicture}[overlay,remember picture]
+    \node[xshift=0.1\paperheight, opacity=0.1] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
+  \end{tikzpicture}
+}
+
+% -----------------------------------------------------------------------------
+
+
+% -- Other stuff
+\FrametitleAutoinsertSection
+
+\UpdateGWBarOptions[templatefile="none", backgroundsignal="none"]  % Deactivate GW signal plotting
+
+\title[Your Short Title]{Your Presentation}
+\subtitle{Your subtitle (if there's one)}
+\author[\MakeUppercase{Your name (short)}]{Your Name \and Another Name}  % For use with \insertshortauthor in footline
+\institute{Your Faculty/Department}
+\date{Date of Presentation}
+
+
+
+\begin{document}
+
+{  % -- Brackets required for temporary settings related to titlepage
+% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
+\setbeamertemplate{background}{}
+\begin{frame}[t, plain, noframenumbering]  % Equivalent to previous line
+  \vspace*{-\baselineskip}%  Adjusts until it fits
+  \titlepage
+\end{frame}
+}
+
+
+\begin{frame}{Outline}
+  \hypersetup{linkcolor=black}
+  \tableofcontents[sectionstyle=shaded/show, hideallsubsections]
+\end{frame}
+
+
+
+\section{Introduction}
+  \subsection{Test}
+
+\begin{frame}{Overwritten}{Overwritten, again}
+
+  \begin{itemize}
+    \item The default item
+    \begin{itemize}
+      \item The default subitem
+      
+      \begin{itemize}
+        \item The default subsubitem
+      \end{itemize}
+    \end{itemize}
+    \item[\GWthemeRotatedsquareItem] The first custom item (adapted from Google slides)
+    
+    \item[\GWthemeShiftedsquareItem] The second custom item (adapted from Google slides)
+    
+    \item[\GWthemeStarredbullet] The third custom item (adapted from \texttt{fourier-orns})
+    
+    \item[$\bigstar$] This is a custom item
+  \end{itemize}
+
+\end{frame}
+
+
+
+\section{Readable Mathematics 42}
+  \subsection{A \LaTeX{} Example}
+
+\UpdateGWthemeOptions[secsubsecseparator=\GWthemeStarredbullet]  % If default frametitle theme acive
+
+\begin{frame}
+
+  Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+  $$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+        = \frac{1}{n}\sum_{i}^{n} X_i$$
+  denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+
+\end{frame}
+
+
+\end{document}
