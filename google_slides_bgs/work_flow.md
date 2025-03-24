@@ -20,3 +20,7 @@ Tutorial for the GWtheme Google Slides template defined at https://github.com/Ma
 
    A good overview about editing themes in Google slides is given in
    https://www.slideson.com/edit-theme-builder-master-slides-in-google-slides/.
+
+***Note***: I do not own the rights to certain corporate design elements (like
+logos) used here and do not claim to do so. Use them at you own risk and only
+if you have permission!

@@ -13,6 +13,14 @@ corresponding `.sty`, `.txt` files into the `GWtheme/` folder (you can also
 put it in some other folder, but in that case you have to adjust the usage
 of the package in `GWtheme/beameroutertheme`, particularly the involved paths).
 
+A strange observation (maybe not so strange, but rather very LaTeX-like) is that
+if some warnings or errors are emitted during compilation, compiling again often
+resolves all issues.
+
+***Note***: I do not own the rights to certain corporate design elements (like
+logos) used here and do not claim to do so. Use them at you own risk and only
+if you have permission!
+
 ## Usage (Google Slides)
 
 Please refer to the  `work_flow` Markdown file in this repository.
