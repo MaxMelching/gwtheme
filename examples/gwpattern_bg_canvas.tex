@@ -1,0 +1,53 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+\usecolortheme{Caltech}
+
+
+% -- How To Use GWPattern -----------------------------------------------------
+\setbeamertemplate{background}[GWWithPattern]
+\addtobeamertemplate{backgroud}{}{%
+  \begin{tikzpicture}%
+    % Potentially add logo
+  \end{tikzpicture}%
+}
+
+
+\UpdateGWthemeOptions[%
+  patternnsquarepertriangle=13,
+  patternsquaresize=4.5pt,
+  patternnsquarecommonshift=-2,
+  patternnsquarerelativeshift=4,
+  patterninsetsize=10pt,
+]
+\LevelledBGLine{0.1\paperheight}  % Argument = height of colored box
+
+
+% -- Make frame empty
+\setbeamertemplate{frametitle}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+
+
+\begin{document}
+
+% -- Just show one frame that is empty except for the GWpattern background.
+% -- The resulting pdf can then be included as a background.
+
+\begin{frame}
+    
+\end{frame}
+
+
+\end{document}

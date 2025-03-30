@@ -1,0 +1,46 @@
+%% Requires compilation with XeLaTeX or LuaLaTeX
+\documentclass[
+  10pt,
+  aspectratio=169,
+  xcolor={dvipsnames,table,x11names},  % -- To avoid option clash, this seems to load xcolor before theme and thus avoid clash
+]{beamer}
+
+
+% -- Include theme
+\makeatletter
+\def\input@path{{../GWtheme/}}
+\makeatother
+\usetheme{GW}
+\usecolortheme{Caltech}
+
+
+% -- How To Use GWPattern -----------------------------------------------------
+\setbeamertemplate{background}{}
+\setbeamertemplate{background canvas}{%
+  \includegraphics[width=\paperwidth]{gwpattern_bg_canvas.pdf}%
+}
+% Could set to background template as well
+
+
+% -- Other theme options
+\UpdateGWthemeOptions[%
+  logoinfoot=true,
+]
+
+\UpdateGWBarOptions[% The percent sign here is super important, otherwise Latex thinks we want to access " templatefile", i.e. a space is inserted
+  templatefile="../GWtheme/generic_template.txt",
+  backgroundsignal="none",
+  progressbar=false,
+]
+
+
+
+\begin{document}
+
+
+\begin{frame}{Title}
+    
+\end{frame}
+
+
+\end{document}

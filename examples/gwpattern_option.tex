@@ -13,11 +13,6 @@
 \usetheme{GW}
 
 
-% -- Prevent error from graphicspath
-\usepackage{graphicx}
-\graphicspath{{./}{../}}
-
-
 % -- How To Use GWPattern -----------------------------------------------------
 \setbeamertemplate{background}[GWWithPattern]
 
@@ -26,19 +21,51 @@
 % -- with GWPattern. Therefore, having upperleftbg and upperrightbg on same
 % -- value usually looks much better. A convenient way to do this (that also
 % -- adjusts the pattern height automatically) is to use the following command:
-\LevelledBGLine{0.12\paperheight}  % Argument = height of colored box
+\UpdateGWthemeOptions[%
+  % % patternnsquarepertriangle=13,
+  % % patternsquaresize=3.6pt,
+  % patternnsquarepertriangle=7,
+  % patternsquaresize=7pt,
+  % 
+  % patternnsquarepertriangle=9,
+  % patternsquaresize=5pt,
+  % patternnsquarecommonshift=2,
+  % patternnsquarerelativeshift=-4,
+  % 
+  patternnsquarepertriangle=13,
+  % patternsquaresize=3.6pt,
+  % patternnsquarepertriangle=9,
+  % patternsquaresize=5pt,
+  patternsquaresize=4.5pt,
+  patternnsquarecommonshift=-3,
+  patternnsquarerelativeshift=6,
+  % 
+  patterninsetsize=15pt,
+  % patternnsquaredownshift=1,
+  % levelledbgline=0.1\paperheight,  % Putting as last argument here is important!!
+]
+\LevelledBGLine{0.1\paperheight}  % Argument = height of colored box
 
 
-% TODO: show style customization
+% -- Appearance can also be changed to your liking
+\tikzset{
+  fillsquare1/.style={
+    red,
+    line width=1pt,
+  },
+  fillsquare2/.style={
+    blue,
+    line width=1pt,
+  },
+}
+
 
 % -----------------------------------------------------------------------------
 
 
 % -- Other Stuff
-% \setbeamertemplate{headline}{}  % Hide GW progressbar to speed up compilation
 \UpdateGWBarOptions[templatefile="none", backgroundsignal="none", progressbar=false]  % Deactivate GW signal plotting, still showing headline
 
-% \pgfdeclareimage[height=0.1\paperheight]{logo}{example-image}
 
 \title[Your Short Title]{Your Presentation}
 \subtitle{Your subtitle (if there's one)}
@@ -53,10 +80,7 @@
 \begin{document}
 
 {  % -- Brackets required for temporary settings related to titlepage
-% \setbeamertemplate{headline}{}  % We do not want GW on here -> done by plain already, also disables footline
 \setbeamertemplate{background}{}
-% \setbeamertemplate{frametitle}{}
-% \FrametitleAutoinsertSection
 \begin{frame}[plain, noframenumbering]  % Equivalent to previous line
   \vspace*{-4\baselineskip}%  Adjusts until it fits
   \titlepage
