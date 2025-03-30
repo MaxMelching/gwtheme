@@ -41,32 +41,32 @@
     footrightshift/.estore in = \themeGW@footrightshift,
     upperleftbg/.estore in = \themeGW@upperleftbg,
     upperrightbg/.estore in = \themeGW@upperrightbg,
-    maxpatternheight/.estore in = \themeGW@MaxPatternHeight,
-    patternsquaresize/.estore in = \themeGW@squaresize,
-    patterncommonshift/.estore in = \themeGW@PatternCommonShift,
-    patternrelativeshift/.estore in = \themeGW@PatternRelativeShift,
+    maxpatternheight/.estore in = \themeGW@Pattern@MaxHeight,
+    patternsquaresize/.estore in = \themeGW@Pattern@SquareSize,
+    patterncommonshift/.estore in = \themeGW@Pattern@CommonShift,
+    patternrelativeshift/.estore in = \themeGW@Pattern@RelativeShift,
     squarepathheight/.code = {%
-        \renewcommand{\themeGW@SquarePathHeight}{#1}%
-        \themeGW@CalcPatternLengths%
+        \renewcommand{\themeGW@Pattern@SquarePathHeight}{#1}%
+        \themeGW@Pattern@CalcLengths%
     },
-    patternnsquarepertriangle/.code = {\themeGW@SetNSquarePerTriangle{#1}},
+    patternnsquarepertriangle/.code = {\themeGW@Pattern@SetNSquarePerTriangle{#1}},
     patternnsquarecommonshift/.code = {%
-        \renewcommand{\themeGW@NSquareCommonShift}{#1}%
-        % \setlength{\themeGW@PatternCommonShift}{-\themeGW@SquarePathHeight*\themeGW@NSquareCommonShift*2*\themeGW@PatternStepSize}  % So that we have shift by one square
-        \themeGW@CalcPatternLengths%
+        \renewcommand{\themeGW@Pattern@NSquareCommonShift}{#1}%
+        % \setlength{\themeGW@Pattern@CommonShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareCommonShift*2*\themeGW@Pattern@StepSize}  % So that we have shift by one square
+        \themeGW@Pattern@CalcLengths%
     },
     patternnsquarerelativeshift/.code = {%
-        \renewcommand{\themeGW@NSquareRelativeShift}{#1}%
-        % \setlength{\themeGW@PatternRelativeShift}{-\themeGW@SquarePathHeight*\themeGW@NSquareRelativeShift*2*\themeGW@PatternStepSize}  % So that we have shift by one square
-        \themeGW@CalcPatternLengths%
+        \renewcommand{\themeGW@Pattern@NSquareRelativeShift}{#1}%
+        % \setlength{\themeGW@Pattern@RelativeShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareRelativeShift*2*\themeGW@Pattern@StepSize}  % So that we have shift by one square
+        \themeGW@Pattern@CalcLengths%
     },
-    patterninsetsize/.estore in = \themeGW@PatternInsetSize,
-    patterndownshift/.estore in = \themeGW@PatternDownShift,
+    patterninsetsize/.estore in = \themeGW@Pattern@InsetSize,
+    patterndownshift/.estore in = \themeGW@Pattern@DownShift,
     patternnsquaredownshift/.code = {%
-        \addtolength{\themeGW@SquarePathHeight}{-\themeGW@PatternDownShift}%  Reset
+        \addtolength{\themeGW@Pattern@SquarePathHeight}{-\themeGW@Pattern@DownShift}%  Reset
         % TODO: what if custom squarepathheight was set?
-        \renewcommand{\themeGW@NSquareDownShift}{#1}%
-        \themeGW@CalcPatternLengths%
+        \renewcommand{\themeGW@Pattern@NSquareDownShift}{#1}%
+        \themeGW@Pattern@CalcLengths%
     },
     levelledbgline/.code = {\LevelledBGLine{#1}},
     logoinfoot/.code = {\settoggle{themeGW@logoinfoot}{#1}},

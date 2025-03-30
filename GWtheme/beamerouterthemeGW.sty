@@ -198,16 +198,19 @@
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{calc}
 
-\newlength{\themeGW@squaresize}
-\setlength{\themeGW@squaresize}{5pt}
+\newlength{\themeGW@Pattern@SquareSize}
+\setlength{\themeGW@Pattern@SquareSize}{5pt}
 
-\newcommand{\themeGW@SetNSquarePerTriangle}[1]{%
-    \def\themeGW@NSquarePerTriangle{#1}%
-    \def\themeGW@PatternStepSize{1/(#1 - 1)}%
+
+\def\themeGW@Pattern@NSquarePerTriangle{9}  % Should be odd number, otherwise things will probably look strange
+\def\themeGW@Pattern@StepSize{1/8}
+
+\newcommand{\themeGW@Pattern@SetNSquarePerTriangle}[1]{%
+    \renewcommand{\themeGW@Pattern@NSquarePerTriangle}{#1}%
+    \renewcommand{\themeGW@Pattern@StepSize}{1/(#1 - 1)}%
 }
 % -- This allows easier access of step size
 
-\themeGW@SetNSquarePerTriangle{9}  % Should be odd number, otherwise things will probably look strange
 
 
 \tikzset{
@@ -220,8 +223,8 @@
         postaction=decorate,
         decoration={
             markings,
-            mark = between positions 0 and 1 step \themeGW@PatternStepSize with {
-                \draw[fillsquare1] (-\themeGW@squaresize/2, -\themeGW@squaresize/2) rectangle (\themeGW@squaresize/2, \themeGW@squaresize/2);
+            mark = between positions 0 and 1 step \themeGW@Pattern@StepSize with {
+                \draw[fillsquare1] (-\themeGW@Pattern@SquareSize/2, -\themeGW@Pattern@SquareSize/2) rectangle (\themeGW@Pattern@SquareSize/2, \themeGW@Pattern@SquareSize/2);
             },
         },
     },
@@ -235,42 +238,42 @@
         postaction=decorate,
         decoration={
             markings,
-            mark = between positions 0 and 1 step \themeGW@PatternStepSize with {
-                \draw[fillsquare2] (-\themeGW@squaresize/2, -\themeGW@squaresize/2) rectangle (\themeGW@squaresize/2, \themeGW@squaresize/2);
+            mark = between positions 0 and 1 step \themeGW@Pattern@StepSize with {
+                \draw[fillsquare2] (-\themeGW@Pattern@SquareSize/2, -\themeGW@Pattern@SquareSize/2) rectangle (\themeGW@Pattern@SquareSize/2, \themeGW@Pattern@SquareSize/2);
             },
         },
     },
 }
 
 
-\newlength{\themeGW@MaxPatternHeight}  % Basically the pattern height
-\newlength{\themeGW@SquarePathHeight}  % Height used to draw pattern, accounting for square height
+\newlength{\themeGW@Pattern@MaxHeight}  % Basically the pattern height
+\newlength{\themeGW@Pattern@SquarePathHeight}  % Height used to draw pattern, accounting for square height
 
-\newlength{\themeGW@PatternCommonShift}  % Shift of the whole pattern
-\def\themeGW@NSquareCommonShift{-1}  % Default shift in multiples of squares
+\newlength{\themeGW@Pattern@CommonShift}  % Shift of the whole pattern
+\def\themeGW@Pattern@NSquareCommonShift{-1}  % Default shift in multiples of squares
 
-\newlength{\themeGW@PatternRelativeShift}  % Shift of different pattern elements against each other
-\def\themeGW@NSquareRelativeShift{2}  % Default shift in multiples of squares
+\newlength{\themeGW@Pattern@RelativeShift}  % Shift of different pattern elements against each other
+\def\themeGW@Pattern@NSquareRelativeShift{2}  % Default shift in multiples of squares
 
-\def\themeGW@NSquareDownShift{1}  % Determines if pattern starts on bottom of frame of slightly below/above (may look nicer)
-\newlength{\themeGW@PatternDownShift}  % Default shift in multiples of squares
+\def\themeGW@Pattern@NSquareDownShift{1}  % Determines if pattern starts on bottom of frame of slightly below/above (may look nicer)
+\newlength{\themeGW@Pattern@DownShift}  % Default shift in multiples of squares
 
 
-\setlength{\themeGW@MaxPatternHeight}{\themeGW@upperrightbg}  % In current mode, where we have rising slope from left to right. But also good for levelled bg line
-\setlength{\themeGW@SquarePathHeight}{\themeGW@MaxPatternHeight - \themeGW@squaresize * 707 / 1000}  % Very rough approximation of 1/sqrt(2), avoiding overflow. We do not account for linewidth (like Caltech website).
+\setlength{\themeGW@Pattern@MaxHeight}{\themeGW@upperrightbg}  % In current mode, where we have rising slope from left to right. But also good for levelled bg line
+\setlength{\themeGW@Pattern@SquarePathHeight}{\themeGW@Pattern@MaxHeight - \themeGW@Pattern@SquareSize * 707 / 1000}  % Very rough approximation of 1/sqrt(2), avoiding overflow. We do not account for linewidth (like Caltech website).
 
-\newcommand{\themeGW@CalcPatternLengths}{%
+\newcommand{\themeGW@Pattern@CalcLengths}{%
     % -- Idea: re-calculate all default values that are related to SquarePathHeight
-    \setlength{\themeGW@PatternDownShift}{\themeGW@SquarePathHeight*\themeGW@NSquareDownShift*2*\themeGW@PatternStepSize}% Step size is relative to triangle width, which is 2*SquarePathHeight
-    \addtolength{\themeGW@SquarePathHeight}{\themeGW@PatternDownShift}%
+    \setlength{\themeGW@Pattern@DownShift}{\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareDownShift*2*\themeGW@Pattern@StepSize}% Step size is relative to triangle width, which is 2*SquarePathHeight
+    \addtolength{\themeGW@Pattern@SquarePathHeight}{\themeGW@Pattern@DownShift}%
     % 
-    \setlength{\themeGW@PatternCommonShift}{-\themeGW@SquarePathHeight*\themeGW@NSquareCommonShift*2*\themeGW@PatternStepSize}% Shift by NSquareCommonShift
-    \setlength{\themeGW@PatternRelativeShift}{-\themeGW@SquarePathHeight*\themeGW@NSquareRelativeShift*2*\themeGW@PatternStepSize}% Shift by NSquareRelativeShift
+    \setlength{\themeGW@Pattern@CommonShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareCommonShift*2*\themeGW@Pattern@StepSize}% Shift by NSquareCommonShift
+    \setlength{\themeGW@Pattern@RelativeShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareRelativeShift*2*\themeGW@Pattern@StepSize}% Shift by NSquareRelativeShift
 }
 
 
-\newlength{\themeGW@PatternInsetSize}  % How large inset in middle of background is
-\setlength{\themeGW@PatternInsetSize}{0pt}
+\newlength{\themeGW@Pattern@InsetSize}  % How large inset in middle of background is
+\setlength{\themeGW@Pattern@InsetSize}{0pt}
 
 
 \defbeamertemplate{background}{GWWithPattern}{%
@@ -283,11 +286,10 @@
 
         \begin{scope}[
             shift=(current page.south),
-            % shift=(current page.south west),
         ]
             \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
 
-            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeGW@SquarePathHeight)}
+            \pgfmathsetmacro{\LastIndex}{\paperwidth/(2*\themeGW@Pattern@SquarePathHeight)}
             \pgfmathsetmacro{\LastIndex}{2*\LastIndex+1}  % +1 to make sure we do not encounter rounding errors
             \pgfmathround{\LastIndex}
             \let\LastIndexInt\pgfmathresult
@@ -301,30 +303,30 @@
                 \draw[
                     fillsquarepath1,
                     shift={(
-                        \i*\themeGW@SquarePathHeight
-                        + \themeGW@PatternCommonShift
-                        - \themeGW@SquarePathHeight
-                        - \HalfShift*2*\themeGW@SquarePathHeight,
-                        -\themeGW@PatternDownShift
+                        \i*\themeGW@Pattern@SquarePathHeight
+                        + \themeGW@Pattern@CommonShift
+                        - \themeGW@Pattern@SquarePathHeight
+                        - \HalfShift*2*\themeGW@Pattern@SquarePathHeight,
+                        -\themeGW@Pattern@DownShift
                     )},
                 ] (0, 0)
-                    -- ++(\themeGW@SquarePathHeight, \themeGW@SquarePathHeight)
-                    -- ++(\themeGW@SquarePathHeight, -\themeGW@SquarePathHeight);
+                    -- ++(\themeGW@Pattern@SquarePathHeight, \themeGW@Pattern@SquarePathHeight)
+                    -- ++(\themeGW@Pattern@SquarePathHeight, -\themeGW@Pattern@SquarePathHeight);
                 
                 
                 \draw[
                     fillsquarepath2,
                     shift={(
-                        \i*\themeGW@SquarePathHeight
-                        + \themeGW@PatternCommonShift
-                        + \themeGW@PatternRelativeShift
-                        - \themeGW@SquarePathHeight
-                        - \HalfShift*2*\themeGW@SquarePathHeight,
-                        -\themeGW@PatternDownShift
+                        \i*\themeGW@Pattern@SquarePathHeight
+                        + \themeGW@Pattern@CommonShift
+                        + \themeGW@Pattern@RelativeShift
+                        - \themeGW@Pattern@SquarePathHeight
+                        - \HalfShift*2*\themeGW@Pattern@SquarePathHeight,
+                        -\themeGW@Pattern@DownShift
                     )},
                 ] (0, 0)
-                    -- ++(\themeGW@SquarePathHeight, \themeGW@SquarePathHeight)
-                    -- ++(\themeGW@SquarePathHeight, -\themeGW@SquarePathHeight);
+                    -- ++(\themeGW@Pattern@SquarePathHeight, \themeGW@Pattern@SquarePathHeight)
+                    -- ++(\themeGW@Pattern@SquarePathHeight, -\themeGW@Pattern@SquarePathHeight);
             }
         \end{scope}
 
@@ -343,7 +345,7 @@
                 fill,
                 shift={(0, \themeGW@upperleftbg/2 + \themeGW@upperrightbg/2)},
                 rotate=45,
-            ] (-\themeGW@PatternInsetSize/2, -\themeGW@PatternInsetSize/2) rectangle (\themeGW@PatternInsetSize/2, \themeGW@PatternInsetSize/2);
+            ] (-\themeGW@Pattern@InsetSize/2, -\themeGW@Pattern@InsetSize/2) rectangle (\themeGW@Pattern@InsetSize/2, \themeGW@Pattern@InsetSize/2);
         \end{scope}
     \end{tikzpicture}%
 }
@@ -352,12 +354,12 @@
 % \setbeamertemplate{background}[GWWithPattern]
 
 
-\newcommand{\LevelledBGLine}[1]{
-    \def\@tmp{#1}
-    \setlength{\themeGW@upperleftbg}{\@tmp}
-    \setlength{\themeGW@upperrightbg}{\@tmp}
-    \setlength{\themeGW@SquarePathHeight}{\@tmp - \themeGW@squaresize * 707 / 1000}  % Very rough approximation of 1/sqrt(2), avoiding overflow. We do not account for linewidth (like Caltech website).
-    \themeGW@CalcPatternLengths%
+\newcommand{\LevelledBGLine}[1]{%
+    \def\@tmp{#1}%
+    \setlength{\themeGW@upperleftbg}{\@tmp}%
+    \setlength{\themeGW@upperrightbg}{\@tmp}%
+    \setlength{\themeGW@Pattern@SquarePathHeight}{\@tmp - \themeGW@Pattern@SquareSize * 707 / 1000}% Very rough approximation of 1/sqrt(2), avoiding overflow. We do not account for linewidth (like Caltech website).
+    \themeGW@Pattern@CalcLengths%
 }
 
 
