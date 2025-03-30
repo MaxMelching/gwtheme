@@ -276,7 +276,7 @@
 \setlength{\themeGW@Pattern@InsetSize}{0pt}
 
 
-\defbeamertemplate{background}{GWWithPattern}{%
+\defbeamertemplate{background}{GWPattern}{%
     \begin{tikzpicture}[overlay,remember picture]%
         % -- We can just do clipping in other scope and immediately draw correct thing here
         \clip[smooth] (current page.south west) -- ++(0, \themeGW@upperleftbg) -- ++(\paperwidth, \themeGW@upperrightbg-\themeGW@upperleftbg) -- (current page.south east) -- cycle;
@@ -351,7 +351,7 @@
 }
 
 % -- Not the default. To activate, uncomment next line
-% \setbeamertemplate{background}[GWWithPattern]
+% \setbeamertemplate{background}[GWPattern]
 
 
 \newcommand{\LevelledBGLine}[1]{%
