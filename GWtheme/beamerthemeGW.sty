@@ -45,29 +45,13 @@
     patternsquaresize/.estore in = \themeGW@Pattern@SquareSize,
     patterncommonshift/.estore in = \themeGW@Pattern@CommonShift,
     patternrelativeshift/.estore in = \themeGW@Pattern@RelativeShift,
-    squarepathheight/.code = {%
-        \renewcommand{\themeGW@Pattern@SquarePathHeight}{#1}%
-        \themeGW@Pattern@CalcLengths%
-    },
+    squarepathheight/.code = {\renewcommand{\themeGW@Pattern@SquarePathHeight}{#1}},
     patternnsquarepertriangle/.code = {\themeGW@Pattern@SetNSquarePerTriangle{#1}},
-    patternnsquarecommonshift/.code = {%
-        \renewcommand{\themeGW@Pattern@NSquareCommonShift}{#1}%
-        % \setlength{\themeGW@Pattern@CommonShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareCommonShift*2*\themeGW@Pattern@StepSize}  % So that we have shift by one square
-        \themeGW@Pattern@CalcLengths%
-    },
-    patternnsquarerelativeshift/.code = {%
-        \renewcommand{\themeGW@Pattern@NSquareRelativeShift}{#1}%
-        % \setlength{\themeGW@Pattern@RelativeShift}{-\themeGW@Pattern@SquarePathHeight*\themeGW@Pattern@NSquareRelativeShift*2*\themeGW@Pattern@StepSize}  % So that we have shift by one square
-        \themeGW@Pattern@CalcLengths%
-    },
+    patternnsquarecommonshift/.code = {\renewcommand{\themeGW@Pattern@NSquareCommonShift}{#1}},
+    patternnsquarerelativeshift/.code = {\renewcommand{\themeGW@Pattern@NSquareRelativeShift}{#1}},
     patterninsetsize/.estore in = \themeGW@Pattern@InsetSize,
     patterndownshift/.estore in = \themeGW@Pattern@DownShift,
-    patternnsquaredownshift/.code = {%
-        \addtolength{\themeGW@Pattern@SquarePathHeight}{-\themeGW@Pattern@DownShift}%  Reset
-        % TODO: what if custom squarepathheight was set?
-        \renewcommand{\themeGW@Pattern@NSquareDownShift}{#1}%
-        \themeGW@Pattern@CalcLengths%
-    },
+    patternnsquaredownshift/.code = {\renewcommand{\themeGW@Pattern@NSquareDownShift}{#1}},
     levelledbgline/.code = {\LevelledBGLine{#1}},
     logoinfoot/.code = {\settoggle{themeGW@logoinfoot}{#1}},
     % -- innertheme keys ------------------------------------------------------
