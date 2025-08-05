@@ -178,8 +178,6 @@
     
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
         \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
-        
-        % \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
       \end{tikzpicture}%
     % 
     \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
@@ -205,17 +203,11 @@
 }
 
 
-% \addtobeamertemplate{titlepage}{}{%
-%     \begin{tikzpicture}[overlay, remember picture]
-%         \node[xshift=0.1\paperheight, opacity=0.2] at (current page.west) {\includegraphics[height=0.8\paperheight]{logos/Max_Planck_Minerva_DarkGray.pdf}};
-%     \end{tikzpicture}%
-% }
-
-
 \def\themeGW@logoheight{1.8\baselineskip}
 \def\themeGW@logoboxwidth{0.3\paperwidth}
 
-\def\GWthemestandardtitlegraphic{
+\def\MPIplusLUHtitlegraphic{
+  \message{MPIplusLUHtitlegraphic title graphic called. This might cause errors, if you do not have the appropriate logos.}%
   \begin{beamercolorbox}[center]{titlegraphic}%
       \begin{minipage}{\themeGW@logoboxwidth}%
         % \centering
@@ -235,6 +227,7 @@
 \def\themeGW@titlepage@leftskip{0.05\paperwidth}
 
 \defbeamertemplate{title page}{MPIGrav}{%
+    \message{MPIGrav title page called. This might cause errors, if you do not have the appropriate logos.}%
     \begin{tikzpicture}[overlay,remember picture]%
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
@@ -294,7 +287,7 @@
 % \titlegraphic{\BMGrouptitlegraphic}
 % \setbeamertemplate{title page}[BMGroup]
 
-% \titlegraphic{\GWthemestandardtitlegraphic}
+% \titlegraphic{\MPIplusLUHtitlegraphic}
 % \setbeamertemplate{title page}[MPIGrav]
 
 
