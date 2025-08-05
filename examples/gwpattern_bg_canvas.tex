@@ -25,12 +25,23 @@
 
 \UpdateGWthemeOptions[%
   patternnsquarepertriangle=13,
-  patternsquaresize=4.5pt,
+  patternsquaresize=4pt,
   patternnsquarecommonshift=-2,
   patternnsquarerelativeshift=4,
   patterninsetsize=10pt,
 ]
 \LevelledBGLine{0.1\paperheight}  % Argument = height of colored box
+
+\tikzset{
+    fillsquare1/.style={
+        black!12!fg,
+        line width=0.42pt,
+    },
+    fillsquare2/.style={
+        white!5!fg,
+        line width=0.42pt,
+    },
+}
 
 
 % -- Make frame empty
