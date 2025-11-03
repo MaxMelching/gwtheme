@@ -18,6 +18,9 @@
 \graphicspath{{./}{../}}
 
 
+\usepackage{csquotes}
+
+
 % -- Some possible styles -----------------------------------------------------
 
 % TODO: show frametitle stuff here and also different itemize symbols
@@ -85,17 +88,17 @@
     \item The default item
     \begin{itemize}
       \item The default subitem
-      
+
       \begin{itemize}
         \item The default subsubitem
       \end{itemize}
     \end{itemize}
-    \item[\GWthemeRotatedsquareItem] The first custom item (adapted from Google slides)
-    
-    \item[\GWthemeShiftedsquareItem] The second custom item (adapted from Google slides)
-    
+    \item[\GWthemeRotatedsquareItem] The first custom item (adapted from Google slides). Here is how it looks with the \enquote{transparent} option set to true: \GWthemeRotatedsquareItem[transparent=true]
+
+    \item[\GWthemeShiftedsquareItem] The second custom item (adapted from Google slides). Here is how it looks with the \enquote{transparent} option set to true: \GWthemeShiftedsquareItem[transparent=true]
+
     \item[\GWthemeStarredbullet] The third custom item (adapted from \texttt{fourier-orns})
-    
+
     \item[$\bigstar$] This is a custom item
   \end{itemize}
 
@@ -106,7 +109,7 @@
 \section{Readable Mathematics 42}
   \subsection{A \LaTeX{} Example}
 
-\UpdateGWthemeOptions[secsubsecseparator=\GWthemeStarredbullet]  % If default frametitle theme acive
+\UpdateGWthemeOptions[secsubsecseparator=\GWthemeStarredbullet]  % If default frametitle theme active
 
 \begin{frame}
 

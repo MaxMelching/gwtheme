@@ -16,22 +16,66 @@
 
 
 % -- Appearance and margins for items -----------------------------------------
-\def\themeGW@ItemSquareSize{0.22em}
-\def\themeGW@ItemInsetWidth{0.012em}
+\RequirePackage{pgfkeys}
+\RequirePackage{etoolbox}  % for \ifstrequal
 
-\def\GWthemeRotatedsquareItem{%
-  \begin{tikzpicture}[scale=1]% scale can easily be changed here
-      \draw[fill, rotate around={45:(0,0)}] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
-      \draw[fill, white, rotate around={45:(0,0)}] (-\themeGW@ItemInsetWidth,-1.01*\themeGW@ItemSquareSize) rectangle (\themeGW@ItemInsetWidth,1.01*\themeGW@ItemSquareSize);
-      \draw[fill, white, rotate around={45:(0,0)}] (-1.01*\themeGW@ItemSquareSize,-\themeGW@ItemInsetWidth) rectangle (1.01*\themeGW@ItemSquareSize,\themeGW@ItemInsetWidth);
-  \end{tikzpicture}%
+
+\pgfkeys{
+	/themeGW/items/.is family, /themeGW/items,
+	default/.style = {
+    squaresize = 0.5em,
+    insetwidth = 0.054em,
+    offset = 0.04em,
+    transparent = false,
+  },
+  squaresize/.estore in = \themeGW@Item@SquareSize,
+  insetwidth/.estore in = \themeGW@Item@InsetWidth,
+  offset/.estore in = \themeGW@Item@Offset,
+  transparent/.estore in = \themeGW@Item@Transparent,
 }
 
-\def\GWthemeShiftedsquareItem{%
-  \begin{tikzpicture}[scale=1]% scale can easily be changed here
-    \draw[fill, shift={(0.3*\themeGW@ItemSquareSize,-0.3*\themeGW@ItemSquareSize)}] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
-    \draw[line width=0.14*\themeGW@ItemSquareSize,fill=white] (-\themeGW@ItemSquareSize,-\themeGW@ItemSquareSize) rectangle (\themeGW@ItemSquareSize,\themeGW@ItemSquareSize);
-  \end{tikzpicture}%
+
+\newcommand{\GWthemeRotatedsquareItem}[1][]{%
+  \pgfkeys{/themeGW/items, default, #1}%
+  %
+  \ifdefstring{\themeGW@Item@Transparent}{true}{%
+    \begin{tikzpicture}[scale=1, rotate around={45:(0,0)}]% scale can easily be changed here
+      % -- draw=none important so that we are not impacted by linewidth
+      \draw[draw=none, fill] (-0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (-0.5*\themeGW@Item@InsetWidth,-0.5*\themeGW@Item@InsetWidth);
+      \draw[draw=none, fill] (-0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize) rectangle (-0.5*\themeGW@Item@InsetWidth,0.5*\themeGW@Item@InsetWidth);
+      \draw[draw=none, fill] (0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@InsetWidth,0.5*\themeGW@Item@InsetWidth);
+      \draw[draw=none, fill] (0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@InsetWidth,-0.5*\themeGW@Item@InsetWidth);
+    \end{tikzpicture}%
+  }{%
+    \begin{tikzpicture}[scale=1, rotate around={45:(0,0)}]% scale can easily be changed here
+      % -- draw=none important so that we are not impacted by linewidth
+      \draw[draw=none, fill] (-0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize);
+      \draw[draw=none, fill, white] (-0.5*\themeGW@Item@InsetWidth,-1.01*0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@InsetWidth,1.01*0.5*\themeGW@Item@SquareSize);
+      \draw[draw=none, fill, white] (-1.01*0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@InsetWidth) rectangle (1.01*0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@InsetWidth);
+    \end{tikzpicture}%
+  }%
+}
+
+\newcommand{\GWthemeShiftedsquareItem}[1][]{%
+  \pgfkeys{/themeGW/items, default, #1}%
+  %
+  \ifdefstring{\themeGW@Item@Transparent}{true}{%
+    \begin{tikzpicture}[scale=1]% scale can easily be changed here
+      \draw[line width=0.07*\themeGW@Item@SquareSize] (-0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize);
+      \draw[line width=0.07*\themeGW@Item@SquareSize,fill] (0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize)
+        --++ (0,\themeGW@Item@SquareSize - \themeGW@Item@Offset)
+        --++ (\themeGW@Item@Offset,0)
+        --++ (0,-\themeGW@Item@SquareSize)
+        --++ (-\themeGW@Item@SquareSize,0)
+        --++ (0,\themeGW@Item@Offset)
+        --++ (\themeGW@Item@SquareSize - \themeGW@Item@Offset,0);
+    \end{tikzpicture}%
+  }{%
+    \begin{tikzpicture}[scale=1]% scale can easily be changed here
+      \draw[fill, shift={(0.3*0.5*\themeGW@Item@SquareSize,-0.3*0.5*\themeGW@Item@SquareSize)}] (-0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize);
+      \draw[line width=0.14*0.5*\themeGW@Item@SquareSize,fill=white] (-0.5*\themeGW@Item@SquareSize,-0.5*\themeGW@Item@SquareSize) rectangle (0.5*\themeGW@Item@SquareSize,0.5*\themeGW@Item@SquareSize);
+    \end{tikzpicture}%
+  }%
 }
 
 \def\GWthemeBullet{\raisebox{-3pt}{\LARGE\textbullet}}
@@ -39,7 +83,9 @@
 \IfFileExists{fourier-orns.sty}{
   \RequirePackage{fourier-orns}
   \def\GWthemeStarredbullet{\raisebox{-2pt}{\LARGE\starredbullet}}
-}{}
+}{
+  % TODO: we should definitely also define command if not there! Just as dummy
+}
 
 
 % \setbeamertemplate{itemize item}{\textbullet}
@@ -77,15 +123,15 @@
             \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.56\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
         \end{tikzpicture}%
     }%
-    % 
+    %
     \begin{minipage}[b][0.45\paperheight]{\textwidth}%
         \usebeamerfont{sectiontitle}%
         \usebeamercolor[fg]{section page}%
         \let\hyperlink\@secondoftwo\insertsection%
     \end{minipage}%
-    % 
+    %
     \par%
-    % 
+    %
     \begin{minipage}[t][0.5\paperheight]{\textwidth}%
         % -- Keep this for spacing reasons
         % \usebeamerfont{subsectiontitle}%
@@ -103,15 +149,15 @@
             \fill (current page.north west) -- +(0, -0.6\paperheight) -- +(\paperwidth, -0.56\paperheight) -- (current page.north east) -- cycle;% I do not fully understand this. But anyway, it works...
           \end{tikzpicture}%
     }%
-    % 
+    %
     \begin{minipage}[b][0.45\paperheight]{\textwidth}%
         \usebeamerfont{sectiontitle}%
         \usebeamercolor[fg]{subsection page}%
         \let\hyperlink\@secondoftwo\insertsection%
     \end{minipage}%
-    % 
+    %
     \par%
-    % 
+    %
     \begin{minipage}[t][0.5\paperheight]{\textwidth}%
         \usebeamerfont{sectionsubtitle}%
         \usebeamercolor[fg]{subsection page}%
@@ -163,10 +209,10 @@
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
 
-        
+
         % -- V2
         % \fill[bg] (current page.south west) -- +(0, 0.1\paperheight) -- +(\paperwidth, 0.2\paperheight) -- (current page.south east) -- cycle;
-        
+
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
 
 
@@ -175,18 +221,18 @@
             % fg!50!bg,
             fg,
         ] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
-    
+
         % \node[anchor=south east,inner sep=0pt,draw=none,xshift=-10pt,yshift=10pt] at (current page.south east) {\pgfuseimage{logo}};
         \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
       \end{tikzpicture}%
-    % 
+    %
     \begin{beamercolorbox}[wd=\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
       \else%
         \vskip0.25em%
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-      \fi%     
+      \fi%
     \end{beamercolorbox}%
     \vskip2.5em\par%
     \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{author}%
@@ -232,10 +278,10 @@
         % -- V1
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
 
-        
+
         % -- V2
         % \fill[bg] (current page.south west) -- +(0, 0.1\paperheight) -- +(\paperwidth, 0.2\paperheight) -- (current page.south east) -- cycle;
-        
+
         % \fill[fg!50!bg] (current page.south) -- +(0.25\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
 
 
@@ -244,17 +290,17 @@
             % fg!50!bg,
             fg,
         ] (current page.south east) -- +(-0.4\paperwidth, 0) -- +(-0.24\paperwidth, \paperheight) -- (current page.north east) -- (current page.south east) -- cycle;
-    
+
         \node[anchor=south, yshift=10pt] at (current page.south) {\inserttitlegraphic};
 
         \node[anchor=north east, xshift=8pt, yshift=40pt] at (current page.north east) {\includegraphics[height=0.5\paperheight]{logos/pferd-links_Weiss.png}};
-        
+
         % \node[anchor=south west, xshift=-20pt, yshift=-4pt] at (current page.south west) {\includegraphics[height=0.4\paperheight]{logos/pferd-links_gruen.png}};
-        
+
         \node[anchor=south west, xshift=-20pt, yshift=-4pt] at (current page.south west) {\includegraphics[height=0.4\paperheight]{logos/Leibniz-GanzkФrper-Gruen.png}};
-    
+
     \end{tikzpicture}%
-    % 
+    %
     \begin{beamercolorbox}[wd=0.6\paperwidth,ht=0.333\paperheight,sep=8pt,leftskip=\themeGW@titlepage@leftskip,ignorebg]{title}%
       \centering%
       \usebeamerfont{title}\inserttitle\par%
@@ -262,7 +308,7 @@
       \else%
         \vskip0.25em%
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-      \fi%     
+      \fi%
     \end{beamercolorbox}%
     \vskip2.5em\par%
     \begin{beamercolorbox}[wd=0.6\paperwidth,sep=8pt,leftskip=\themeGW@titlepage@leftskip]{author}%
